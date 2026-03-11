@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "publisher": "npx pub --build --bump-package --push --branch develop"
+    "publisher": "npx pub --build --bump-package --push --branch master"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
