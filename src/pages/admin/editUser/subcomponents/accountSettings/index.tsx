@@ -1,13 +1,13 @@
-import { TextField, Box, Typography, Slider } from '@mui/material';
+import { TextField, Box } from '@mui/material';
 
-import { SettingsContainer, DateRow, CardsRow, SliderContainer } from './styles';
+import { SettingsContainer, DateRow, CardsRow } from './styles';
 import EditSection from '@components/editSection';
 import ToggleGroup from '@components/toggleGroup';
 import ConfigCard from '@components/configCard';
 
 import type { AccountSettingsProps } from './types';
 
-const AccountSettings = ({ formData, onCoinsChange, onStatusChange }: AccountSettingsProps) => {
+const AccountSettings = ({ formData, onStatusChange }: AccountSettingsProps) => {
   const statusOptions = [
     { value: 'loggedIn', label: 'Logado' },
     { value: 'registered', label: 'Registrado' },
@@ -24,37 +24,6 @@ const AccountSettings = ({ formData, onCoinsChange, onStatusChange }: AccountSet
   return (
     <EditSection title="Configurações da Conta">
       <SettingsContainer>
-        <ConfigCard
-          title="Saldo de Créditos"
-          description="Gerencie a quantidade de moedas disponíveis para este usuário."
-          active={formData.coins! > 0}
-          action={
-            <Typography variant="h6" color="primary" fontWeight={700}>
-              {formData.coins}
-            </Typography>
-          }
-        >
-          <SliderContainer>
-            <Slider
-              value={formData.coins || 0}
-              onChange={(_, val) => onCoinsChange(val as number)}
-              min={0}
-              max={1000}
-              step={10}
-              valueLabelDisplay="auto"
-              sx={{ flex: 1 }}
-            />
-            <TextField
-              type="number"
-              size="small"
-              value={formData.coins || 0}
-              onChange={(e) => onCoinsChange(Math.max(0, parseInt(e.target.value) || 0))}
-              sx={{ width: 100 }}
-              inputProps={{ min: 0 }}
-            />
-          </SliderContainer>
-        </ConfigCard>
-
         <CardsRow>
           <ConfigCard
             title="Função"

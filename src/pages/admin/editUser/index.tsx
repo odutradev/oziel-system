@@ -1,30 +1,29 @@
 import FormActions from '@components/formActions';
 import Layout from '@components/layout';
 
-import ProfileHeader from './subcomponents/profileHeader';
 import AccountSettings from './subcomponents/accountSettings';
+import ProfileHeader from './subcomponents/profileHeader';
 import UserInfo from './subcomponents/userInfo';
 import { PageContainer } from './styles';
 import useUserForm from './hooks';
 import metadata from './metadata';
 
 const UserEdit = () => {
-  const { 
-    formData, 
-    loading, 
+  const {
+    formData,
+    loading,
     canSave,
     isSaving,
     uploadingImage,
     cropDialogOpen,
     selectedImageUrl,
     fileInputRef,
-    handleNameChange, 
-    handleCpfChange, 
-    handleDescriptionChange, 
-    handleCoinsChange, 
-    handleStatusChange, 
-    handleSave, 
-    handleDelete, 
+    handleNameChange,
+    handleCpfChange,
+    handleDescriptionChange,
+    handleStatusChange,
+    handleSave,
+    handleDelete,
     handleCancel,
     handleImageClick,
     handleImageChange,
@@ -56,7 +55,6 @@ const UserEdit = () => {
 
         <AccountSettings
           formData={formData}
-          onCoinsChange={handleCoinsChange}
           onStatusChange={handleStatusChange}
         />
 

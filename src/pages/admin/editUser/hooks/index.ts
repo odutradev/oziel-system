@@ -1,6 +1,7 @@
 import { getUserById, updateUserById, deleteUserById, updateProfileImage } from '@actions/user';
 import { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+
 import { validateDocument } from '@utils/validations/documents';
 import { defaultUserFormData } from './defaultValues';
 import useAction from '@hooks/useAction';
@@ -130,7 +131,6 @@ const useUserForm = (): UserHookProps => {
     handleNameChange: (val) => setFormData(prev => ({ ...prev, name: val })),
     handleCpfChange: (val) => setFormData(prev => ({ ...prev, cpfOrRg: val })),
     handleDescriptionChange: (val) => setFormData(prev => ({ ...prev, description: val })),
-    handleCoinsChange: (val) => setFormData(prev => ({ ...prev, coins: val })),
     handleStatusChange: (val) => setFormData(prev => ({ ...prev, status: val as UserFormData['status'] })),
     handleSave,
     handleDelete,

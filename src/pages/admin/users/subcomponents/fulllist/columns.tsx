@@ -32,11 +32,6 @@ export const columns: TableColumn<UserModelType>[] = [
     ),
   },
   {
-    key: "coins",
-    label: "Créditos",
-    render: (user) => <Typography variant="body2">{user.coins || 0}</Typography>,
-  },
-  {
     key: "status",
     label: "Status",
     render: (user) => (

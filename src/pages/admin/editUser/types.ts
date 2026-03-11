@@ -14,7 +14,6 @@ export interface UserHookProps {
   handleNameChange: (value: string) => void;
   handleCpfChange: (value: string) => void;
   handleDescriptionChange: (value: string) => void;
-  handleCoinsChange: (value: number) => void;
   handleStatusChange: (value: string) => void;
   handleSave: () => Promise<void>;
   handleDelete: () => Promise<void>;

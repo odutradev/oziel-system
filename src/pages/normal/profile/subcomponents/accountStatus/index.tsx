@@ -29,16 +29,6 @@ const AccountStatus = ({ user }: AccountStatusProps) => {
             fullWidth
             size="small"
           />
-          <TextField
-            label="Créditos"
-            value={user?.coins || 0}
-            disabled
-            fullWidth
-            size="small"
-            InputProps={{
-              endAdornment: <Typography variant="caption" color="text.secondary">moedas</Typography>
-            }}
-          />
         </Row>
 
         <Row>

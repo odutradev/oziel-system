@@ -15,6 +15,4 @@ export type UserModelType = {
   email?: string;
   order?: number;
   name?: string;
-  coins?: number;
-  currentPlan?: unknown;
 };
