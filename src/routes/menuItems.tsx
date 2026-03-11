@@ -1,4 +1,4 @@
-import { Description, CreditCard, LocalOffer, Dashboard, BarChart, Timeline, People, Email } from '@mui/icons-material';
+import { Description, Dashboard, BarChart, Timeline, People, Email } from '@mui/icons-material';
 
 import type { MenuSection } from '../components/layout/types';
 
@@ -12,9 +12,7 @@ export const menuItemsAdmin: MenuSection[] = [
   {
     sectionName: 'Gestão',
     items: [
-      { name: 'Usuários', path: '/dashboard/admin/users', icon: <People /> },
-      { name: 'Planos', path: '/dashboard/admin/plans', icon: <CreditCard /> },
-      { name: 'Cupons', path: '/dashboard/admin/coupons', icon: <LocalOffer /> },
+      { name: 'Usuários', path: '/dashboard/admin/users', icon: <People /> }
     ],
   },
   {
