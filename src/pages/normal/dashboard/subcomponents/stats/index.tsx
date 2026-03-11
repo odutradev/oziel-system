@@ -1,6 +1,6 @@
 import { AccountBalanceWallet, VerifiedUser, Description, ArrowForward } from '@mui/icons-material';
-import { Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { Typography, Box } from '@mui/material';
 
 import { StatsGrid, StatCard, IconWrapper, ActionButton } from './styles';
 
@@ -9,7 +9,8 @@ import type { ReactNode } from 'react';
 
 const DashboardStats = ({ user, totalProves }: DashboardStatsProps) => {
   const navigate = useNavigate();
-  const hasActivePlan = user?.currentPlan && (user.currentPlan as any).planID;
+  const currentPlan = user?.currentPlan as Record<string, string> | undefined;
+  const hasActivePlan = Boolean(currentPlan?.planID);
 
   const statsConfig: Array<{
     label: string;
@@ -29,7 +30,7 @@ const DashboardStats = ({ user, totalProves }: DashboardStatsProps) => {
     },
     {
       label: 'Plano Atual',
-      value: hasActivePlan ? (user?.currentPlan as any).title : 'Gratuito',
+      value: hasActivePlan ? currentPlan!.title : 'Gratuito',
       icon: <VerifiedUser />,
       color: 'success',
       route: '/dashboard/current-plan',

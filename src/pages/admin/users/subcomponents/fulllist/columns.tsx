@@ -1,9 +1,9 @@
-import { Chip, Typography } from "@mui/material";
+import { Typography, Chip } from "@mui/material";
 
-import { getRoleLabel, getStatusColor, getStatusLabel } from "./utils";
+import { getStatusLabel, getStatusColor, getRoleLabel } from "./utils";
 
-import type { TableColumn } from "@components/fullTable/types";
 import type { UserModelType } from "@utils/types/models/user";
+import type { TableColumn } from "@components/fullTable/types";
 
 export const columns: TableColumn<UserModelType>[] = [
   {
@@ -25,7 +25,7 @@ export const columns: TableColumn<UserModelType>[] = [
     label: "Função",
     render: (user) => (
       <Chip
-        label={getRoleLabel(user.role)}
+        label={getRoleLabel(user.role || "")}
         color={user.role === "admin" ? "secondary" : "default"}
         size="small"
       />
@@ -34,15 +34,15 @@ export const columns: TableColumn<UserModelType>[] = [
   {
     key: "coins",
     label: "Créditos",
-    render: (user) => <Typography variant="body2">{user.coins}</Typography>,
+    render: (user) => <Typography variant="body2">{user.coins || 0}</Typography>,
   },
   {
     key: "status",
     label: "Status",
     render: (user) => (
       <Chip
-        label={getStatusLabel(user.status)}
-        color={getStatusColor(user.status)}
+        label={getStatusLabel(user.status || "")}
+        color={getStatusColor(user.status || "")}
         size="small"
       />
     ),
@@ -52,7 +52,7 @@ export const columns: TableColumn<UserModelType>[] = [
     label: "Cadastro",
     render: (user) => (
       <Typography variant="body2">
-        {new Date(user.createAt).toLocaleDateString("pt-BR")}
+        {user.createAt ? new Date(user.createAt).toLocaleDateString("pt-BR") : "-"}
       </Typography>
     ),
   },
