@@ -1,4 +1,4 @@
-import { Description, Dashboard, BarChart, Timeline, People, Email } from '@mui/icons-material';
+import { Description, Dashboard, People, Email } from '@mui/icons-material';
 
 import type { MenuSection } from '../components/layout/types';
 
@@ -13,13 +13,6 @@ export const menuItemsAdmin: MenuSection[] = [
     sectionName: 'Gestão',
     items: [
       { name: 'Usuários', path: '/dashboard/admin/users', icon: <People /> }
-    ],
-  },
-  {
-    sectionName: 'Relatórios',
-    items: [
-      { name: 'Provas', path: '/dashboard/admin/digitalproves-metrics', icon: <BarChart /> },
-      { name: 'Usuários', path: '/dashboard/admin/users-metrics', icon: <Timeline /> },
     ],
   },
   {

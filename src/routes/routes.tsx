@@ -3,7 +3,6 @@ import { Navigate } from "react-router-dom";
 import InitialRoute from "@routes/components/initialRoute";
 
 import EmailTemplateEdit from "@pages/admin/editTemplate";
-import UsersMetrics from "@pages/admin/usersMetrics";
 import EmailsManagement from "@pages/admin/emails";
 import SendBulkEmail from "@pages/admin/sendBulk";
 import UsersManagement from "@pages/admin/users";
@@ -50,7 +49,6 @@ const routes = [
         path: "/dashboard/admin",
         privateRoute: true,
         routes: [
-            ['/users-metrics', <UsersMetrics />],
             ['/users', <UsersManagement />],
             ['/users/edit/:userID', <UserEdit />],
             ['/emails', <EmailsManagement />],
