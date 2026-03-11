@@ -3,7 +3,6 @@ import { Box, IconButton, Toolbar, Tooltip } from '@mui/material';
 import { useEffect, useRef } from 'react';
 
 import BreadcrumbsDisplay from '../breadcrumbsDisplay';
-import UserCoins from '@components/userCoins';
 import useSystemStore from '@stores/system';
 import { StyledAppBar } from './styles';
 
@@ -92,7 +91,6 @@ const Navbar = ({ breadcrumbs, rightComponent, padding = 3 }: LayoutNavbarProps)
               </IconButton>
             </Tooltip>
           )}
-          <UserCoins enableHoverMenu />
         </Box>
       </Toolbar>
     </StyledAppBar>
