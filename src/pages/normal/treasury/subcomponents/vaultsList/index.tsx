@@ -1,7 +1,7 @@
-import { Typography, IconButton, Tooltip } from "@mui/material";
-import { AddCircle, RemoveCircle, Edit } from "@mui/icons-material";
+import { Typography, IconButton, Tooltip, Button, Box } from "@mui/material";
+import { RemoveCircle, AddCircle, Edit } from "@mui/icons-material";
 
-import { VaultsGrid, VaultCard, CardHeader, CardBody, CardFooter, ProgressWrapper, StyledLinearProgress, ActionGroup } from "./styles";
+import { StyledLinearProgress, ProgressWrapper, ActionGroup, VaultsGrid, CardHeader, CardFooter, VaultCard, CardBody } from "./styles";
 import { formatCurrency } from "@utils/formatters";
 import NoData from "@components/noData";
 
