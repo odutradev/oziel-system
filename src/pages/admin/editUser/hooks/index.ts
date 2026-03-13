@@ -132,6 +132,7 @@ const useUserForm = (): UserHookProps => {
     handleCpfChange: (val) => setFormData(prev => ({ ...prev, cpfOrRg: val })),
     handleDescriptionChange: (val) => setFormData(prev => ({ ...prev, description: val })),
     handleStatusChange: (val) => setFormData(prev => ({ ...prev, status: val as UserFormData['status'] })),
+    handleRoleChange: (val) => setFormData(prev => ({ ...prev, role: val as UserFormData['role'] })),
     handleSave,
     handleDelete,
     handleCancel: () => navigate('/dashboard/admin/users'),

@@ -4,9 +4,9 @@ import Layout from '@components/layout';
 import AccountSettings from './subcomponents/accountSettings';
 import ProfileHeader from './subcomponents/profileHeader';
 import UserInfo from './subcomponents/userInfo';
-import { PageContainer } from './styles';
-import useUserForm from './hooks';
 import metadata from './metadata';
+import useUserForm from './hooks';
+import { PageContainer } from './styles';
 
 const UserEdit = () => {
   const {
@@ -22,6 +22,7 @@ const UserEdit = () => {
     handleCpfChange,
     handleDescriptionChange,
     handleStatusChange,
+    handleRoleChange,
     handleSave,
     handleDelete,
     handleCancel,
@@ -56,6 +57,7 @@ const UserEdit = () => {
         <AccountSettings
           formData={formData}
           onStatusChange={handleStatusChange}
+          onRoleChange={handleRoleChange}
         />
 
         <FormActions

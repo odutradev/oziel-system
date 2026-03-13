@@ -26,6 +26,11 @@ export const ROLES_ARRAY = Object.values(ROLES);
 export const SUPER_ROLES = [ROLES.DIRETOR_VICE_PRESIDENTE, ROLES.DIRETOR_PRESIDENTE, ROLES.ADMIN];
 export const USER_STATUS_ARRAY = Object.values(USER_STATUS);
 
+export const ROLE_OPTIONS = Object.entries(ROLES).map(([key, value]) => ({
+    value,
+    label: key.split('_').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' ')
+}));
+
 export type UserModelType = {
     _id?: string;
     role?: RoleType;

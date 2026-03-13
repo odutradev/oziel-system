@@ -1,3 +1,5 @@
+import type { RoleType, UserStatusType } from "@utils/types/models/user";
+
 export interface AuthData {
     password: string;
     email: string;
@@ -34,7 +36,8 @@ export interface GetAllUsersParams {
 export interface UpdateUserByIdData {
     name?: string;
     description?: string;
-    status?: 'loggedIn' | 'registered' | 'blocked';
+    status?: UserStatusType;
+    role?: RoleType;
     coins?: number;
     cpfOrRg?: string;
 }
