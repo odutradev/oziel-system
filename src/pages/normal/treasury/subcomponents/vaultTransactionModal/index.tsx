@@ -1,8 +1,8 @@
-import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, Typography, Box } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, Typography } from "@mui/material";
 
-import { FormContainer, InfoBox } from "./styles";
 import InputWithCounter from "@components/inputWithCounter";
 import { formatCurrency } from "@utils/formatters";
+import { FormContainer, InfoBox } from "./styles";
 
 import type { VaultTransactionModalProps } from "./types";
 

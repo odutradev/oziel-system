@@ -1,14 +1,14 @@
-import { Typography, IconButton, Button } from "@mui/material";
 import { ChevronRight, ChevronLeft, Add } from "@mui/icons-material";
+import { Typography, IconButton, Button } from "@mui/material";
 import { useState } from "react";
 
 import { PageContainer, HeaderControls, MonthSelector, ViewToggleWrapper, ActionButtonsWrapper } from "./styles";
 import VaultTransactionModal from "./subcomponents/vaultTransactionModal";
-import TransactionTable from "./subcomponents/transactionTable";
 import TransactionModal from "./subcomponents/transactionModal";
+import TransactionTable from "./subcomponents/transactionTable";
 import DashboardCards from "./subcomponents/dashboardCards";
-import VaultModal from "./subcomponents/vaultModal";
 import VaultsList from "./subcomponents/vaultsList";
+import VaultModal from "./subcomponents/vaultModal";
 import ToggleGroup from "@components/toggleGroup";
 import useVaultsHook from "./hooks/useVaults";
 import Layout from "@components/layout";
@@ -23,7 +23,7 @@ const Treasury = () => {
     const [currentView, setCurrentView] = useState<TreasuryViewType>("TRANSACTIONS");
 
     const { meta: transMeta, transactions, currentBalance, modalOpen: transModalOpen, selectedDate, formData: transFormData, handleSave: handleSaveTrans, handleDelete: handleDeleteTrans, handleConfirm, handleOpenModal: handleOpenTransModal, handleCloseModal: handleCloseTransModal, handleFormChange: handleTransFormChange, handleChangeMonth, handlePaginationChange: handleTransPagination } = useTreasuryHook();
-    const { meta: vaultMeta, vaults, vaultModalOpen, transactionModalOpen: vaultTransModalOpen, vaultFormData, transactionFormData: vaultTransFormData, handleSaveVault, handleSaveTransaction: handleSaveVaultTrans, handleCloseVaultModal, handleCloseTransactionModal: handleCloseVaultTransModal, handleOpenVaultModal, handleOpenTransactionModal: handleOpenVaultTransModal, handleVaultFormChange, handleTransactionFormChange, handlePaginationChange: handleVaultPagination } = useVaultsHook();
+    const { vaults, vaultModalOpen, transactionModalOpen: vaultTransModalOpen, vaultFormData, transactionFormData: vaultTransFormData, handleSaveVault, handleSaveTransaction: handleSaveVaultTrans, handleCloseVaultModal, handleCloseTransactionModal: handleCloseVaultTransModal, handleOpenVaultModal, handleOpenTransactionModal: handleOpenVaultTransModal, handleVaultFormChange, handleTransactionFormChange } = useVaultsHook();
 
     const monthName = new Intl.DateTimeFormat("pt-BR", { month: "long", year: "numeric" }).format(selectedDate);
     const isTransactionsView = currentView === "TRANSACTIONS";
