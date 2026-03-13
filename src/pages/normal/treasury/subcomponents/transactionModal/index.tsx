@@ -1,23 +1,48 @@
-import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, MenuItem, Button } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, Box, Switch, FormControlLabel } from "@mui/material";
 
-import { FormContainer, FormRow } from "./styles";
+import InputWithCounter from "@components/inputWithCounter";
+import ToggleGroup from "@components/toggleGroup";
+import { FormContainer, FormRow, TypeToggleWrapper } from "./styles";
 
 import type { TransactionModalProps } from "./types";
 
+const TYPE_OPTIONS = [
+    { value: "INCOME", label: "Entrada" },
+    { value: "EXPENSE", label: "Saída" }
+];
+
 const TransactionModal = ({ open, formData, onClose, onSave, onChange }: TransactionModalProps) => {
     return (
-        <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+        <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
             <DialogTitle>{formData._id ? "Editar Transação" : "Nova Transação"}</DialogTitle>
             <DialogContent>
                 <FormContainer>
-                    <FormRow>
-                        <TextField
-                            label="Título / Descrição Curta"
-                            value={formData.title}
-                            onChange={(e) => onChange("title", e.target.value)}
-                            fullWidth
-                            required
+                    <TypeToggleWrapper varianttype={formData.type}>
+                        <ToggleGroup
+                            options={TYPE_OPTIONS}
+                            value={formData.type}
+                            onChange={(_, v) => v && onChange("type", v)}
                         />
+                    </TypeToggleWrapper>
+
+                    <InputWithCounter
+                        label="Título / Descrição Curta"
+                        value={formData.title}
+                        onChange={(e) => onChange("title", e.target.value)}
+                        maxLength={50}
+                        required
+                    />
+
+                    <InputWithCounter
+                        label="Observações Adicionais"
+                        value={formData.description || ""}
+                        onChange={(e) => onChange("description", e.target.value)}
+                        maxLength={150}
+                        multiline
+                        rows={3}
+                    />
+
+                    <FormRow>
                         <TextField
                             label="Valor (R$)"
                             type="number"
@@ -26,34 +51,6 @@ const TransactionModal = ({ open, formData, onClose, onSave, onChange }: Transac
                             fullWidth
                             required
                         />
-                    </FormRow>
-
-                    <FormRow>
-                        <TextField
-                            select
-                            label="Tipo"
-                            value={formData.type}
-                            onChange={(e) => onChange("type", e.target.value)}
-                            fullWidth
-                            required
-                        >
-                            <MenuItem value="INCOME">Entrada (Receita)</MenuItem>
-                            <MenuItem value="EXPENSE">Saída (Despesa)</MenuItem>
-                        </TextField>
-                        <TextField
-                            select
-                            label="Status Inicial"
-                            value={formData.status}
-                            onChange={(e) => onChange("status", e.target.value)}
-                            fullWidth
-                            required
-                        >
-                            <MenuItem value="PENDING">Pendente</MenuItem>
-                            <MenuItem value="CONFIRMED">Confirmado</MenuItem>
-                        </TextField>
-                    </FormRow>
-
-                    <FormRow>
                         <TextField
                             type="date"
                             label="Data"
@@ -63,22 +60,14 @@ const TransactionModal = ({ open, formData, onClose, onSave, onChange }: Transac
                             required
                             InputLabelProps={{ shrink: true }}
                         />
-                        <TextField
-                            label="Categoria"
-                            value={formData.category}
-                            onChange={(e) => onChange("category", e.target.value)}
-                            fullWidth
-                        />
                     </FormRow>
 
-                    <TextField
-                        label="Observações Adicionais"
-                        value={formData.description}
-                        onChange={(e) => onChange("description", e.target.value)}
-                        multiline
-                        rows={3}
-                        fullWidth
-                    />
+                    <Box display="flex" justifyContent="flex-end">
+                        <FormControlLabel
+                            control={<Switch checked={formData.status === "CONFIRMED"} onChange={(e) => onChange("status", e.target.checked ? "CONFIRMED" : "PENDING")} color={formData.type === "INCOME" ? "success" : "error"} />}
+                            label="Transação confirmada?"
+                        />
+                    </Box>
                 </FormContainer>
             </DialogContent>
             <DialogActions sx={{ padding: 2 }}>
