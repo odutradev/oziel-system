@@ -2,11 +2,12 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 
 import { getTreasuryDashboard, createTransaction, updateTransaction, confirmTransaction, deleteTransaction } from "@actions/treasury";
 import { formatInputDate } from "@utils/formatters";
+import usePagination from "@hooks/usePagination";
 import useAction from "@hooks/useAction";
 
-import type { DashboardResponse } from "@actions/treasury/types";
 import type { TransactionModelType } from "@utils/types/models/transaction";
 import type { TreasuryHookProps, TransactionFormData } from "../types";
+import type { PaginationMeta } from "@utils/types/action";
 
 const INITIAL_FORM_DATA: TransactionFormData = {
     title: "",
@@ -19,23 +20,32 @@ const INITIAL_FORM_DATA: TransactionFormData = {
 };
 
 const useTreasuryHook = (): TreasuryHookProps => {
-    const [data, setData] = useState<DashboardResponse | null>(null);
     const [formData, setFormData] = useState<TransactionFormData>(INITIAL_FORM_DATA);
+    const [currentBalance, setCurrentBalance] = useState<number>(0);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
     const [modalOpen, setModalOpen] = useState(false);
-    const [loading, setLoading] = useState(true);
 
-    const fetchDashboard = useCallback(async () => {
-        setLoading(true);
-        const params = { year: selectedDate.getFullYear(), month: selectedDate.getMonth() + 1 };
+    const fetchDashboard = useCallback(async (page: number, limit: number) => {
+        const params = { year: selectedDate.getFullYear(), month: selectedDate.getMonth() + 1, page, limit };
         const response = await getTreasuryDashboard(params);
-        if (response && "currentBalance" in response) setData(response as DashboardResponse);
-        setLoading(false);
+        if (response && !("error" in response)) {
+            setCurrentBalance(response.currentBalance);
+            const defaultMeta: PaginationMeta = { limit, page, pages: 1, total: response.transactions.length };
+            return { data: response.transactions, meta: response.meta || defaultMeta };
+        }
+        return { error: "Falha ao carregar dashboard" };
     }, [selectedDate]);
 
+    const { data: transactions, meta, loading, refresh, setPage, setLimit } = usePagination<TransactionModelType>(fetchDashboard);
+
     useEffect(() => {
-        fetchDashboard();
-    }, [fetchDashboard]);
+        refresh();
+    }, [selectedDate, refresh]);
+
+    const handlePaginationChange = useCallback((pagination: { currentPage: number; rows: number }) => {
+        setPage(pagination.currentPage);
+        setLimit(pagination.rows);
+    }, [setPage, setLimit]);
 
     const handleOpenModal = useCallback((transaction?: TransactionModelType) => {
         if (transaction) {
@@ -78,42 +88,45 @@ const useTreasuryHook = (): TreasuryHookProps => {
             action: async () => formData._id ? await updateTransaction(formData._id, formData) : await createTransaction(formData),
             toastMessages: { success: "Transação salva com sucesso", error: "Erro ao salvar transação", pending: "Salvando..." },
             callback: () => {
-                fetchDashboard();
+                refresh();
                 handleCloseModal();
             }
         });
-    }, [formData, fetchDashboard, handleCloseModal]);
+    }, [formData, refresh, handleCloseModal]);
 
     const handleDelete = useCallback(async (id: string) => {
         await useAction({
             action: async () => await deleteTransaction(id),
             toastMessages: { success: "Transação removida", error: "Erro ao remover transação", pending: "Removendo..." },
-            callback: fetchDashboard
+            callback: refresh
         });
-    }, [fetchDashboard]);
+    }, [refresh]);
 
     const handleConfirm = useCallback(async (id: string) => {
         await useAction({
             action: async () => await confirmTransaction(id),
             toastMessages: { success: "Transação confirmada", error: "Erro ao confirmar transação", pending: "Confirmando..." },
-            callback: fetchDashboard
+            callback: refresh
         });
-    }, [fetchDashboard]);
+    }, [refresh]);
 
     return useMemo(() => ({
-        data,
+        meta,
         loading,
         formData,
         modalOpen,
+        transactions,
         selectedDate,
+        currentBalance,
         handleSave,
         handleDelete,
         handleConfirm,
         handleOpenModal,
         handleCloseModal,
         handleFormChange,
-        handleChangeMonth
-    }), [data, loading, formData, modalOpen, selectedDate, handleSave, handleDelete, handleConfirm, handleOpenModal, handleCloseModal, handleFormChange, handleChangeMonth]);
+        handleChangeMonth,
+        handlePaginationChange
+    }), [meta, loading, formData, modalOpen, transactions, selectedDate, currentBalance, handleSave, handleDelete, handleConfirm, handleOpenModal, handleCloseModal, handleFormChange, handleChangeMonth, handlePaginationChange]);
 };
 
 export default useTreasuryHook;
