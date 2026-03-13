@@ -1,5 +1,3 @@
-import type { Types } from "mongoose";
-
 export const ROLES = {
     DIRETOR_SUPRIMENTOS_CONTRATOS: "diretor_suprimentos_contratos",
     DIRETOR_PRODUCAO_AGROPECUARIA: "diretor_producao_agropecuaria",
@@ -29,13 +27,13 @@ export const SUPER_ROLES = [ROLES.DIRETOR_VICE_PRESIDENTE, ROLES.DIRETOR_PRESIDE
 export const USER_STATUS_ARRAY = Object.values(USER_STATUS);
 
 export type UserModelType = {
-    _id?: Types.ObjectId;
+    _id?: string;
     role?: RoleType;
     status?: UserStatusType;
-    createAt?: Date;
-    lastUpdate?: Date;
-    firstSignup?: Date;
-    lastGetUser?: Date;
+    createAt?: Date | string;
+    lastUpdate?: Date | string;
+    firstSignup?: Date | string;
+    lastGetUser?: Date | string;
     description?: string;
     password?: string;
     cpfOrRg?: string;

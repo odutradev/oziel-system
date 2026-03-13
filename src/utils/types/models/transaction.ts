@@ -1,5 +1,3 @@
-import type { Types } from "mongoose";
-
 export const TRANSACTION_TYPES = {
     INCOME: "INCOME",
     EXPENSE: "EXPENSE"
@@ -17,14 +15,14 @@ export const TRANSACTION_TYPES_ARRAY = Object.values(TRANSACTION_TYPES);
 export const TRANSACTION_STATUS_ARRAY = Object.values(TRANSACTION_STATUS);
 
 export type TransactionModelType = {
-    _id?: Types.ObjectId;
+    _id?: string;
     title: string;
     amount: number;
     type: TransactionType;
     status: TransactionStatusType;
-    date: Date;
+    date: Date | string;
     description?: string;
     category?: string;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
 };

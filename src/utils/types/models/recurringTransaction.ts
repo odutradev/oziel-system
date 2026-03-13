@@ -1,5 +1,3 @@
-import type { Types } from "mongoose";
-
 import type { TransactionType } from "./transaction";
 
 export const RECURRING_FREQUENCIES = {
@@ -15,17 +13,17 @@ export type RecurringFrequencyType = typeof RECURRING_FREQUENCIES[keyof typeof R
 export const RECURRING_FREQUENCIES_ARRAY = Object.values(RECURRING_FREQUENCIES);
 
 export type RecurringTransactionModelType = {
-    _id?: Types.ObjectId;
+    _id?: string;
     title: string;
     amount: number;
     type: TransactionType;
     frequency: RecurringFrequencyType;
     dayOfMonth?: number;
     intervalDays?: number;
-    nextExecution: Date;
+    nextExecution: Date | string;
     active: boolean;
     description?: string;
     category?: string;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
 };

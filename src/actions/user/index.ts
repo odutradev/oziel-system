@@ -1,15 +1,15 @@
-import { hasAdminPosition, manageActionError } from '@utils/functions/action';
-import { setAuthToken } from '@utils/functions/headers';
-import useUserStore from '@stores/user/index.ts';
-import api from '@utils/functions/api.ts';
+import { hasAdminPosition, manageActionError } from "@utils/functions/action";
+import { setAuthToken } from "@utils/functions/headers";
+import useUserStore from "@stores/user/index.ts";
+import api from "@utils/functions/api.ts";
 
-import type { AuthData, PasswordResetRequestData, PasswordResetVerifyData, PasswordResetConfirmData, UpdateProfileData, GetAllUsersParams, UpdateUserByIdData, PasswordResetResponse, ProfileImageUploadResponse, DeleteResponse } from './types';
-import type { TypeOrError, PaginationOrError } from '@utils/types/action';
-import type { UserModelType } from '@utils/types/models/user';
+import type { AuthData, PasswordResetRequestData, PasswordResetVerifyData, PasswordResetConfirmData, UpdateProfileData, GetAllUsersParams, UpdateUserByIdData, PasswordResetResponse, ProfileImageUploadResponse, DeleteResponse } from "./types";
+import type { TypeOrError, PaginationOrError } from "@utils/types/action";
+import type { UserModelType } from "@utils/types/models/user";
 
 export const signUp = async (data: AuthData): TypeOrError<UserModelType> => {
     try {
-        const response = await api.post('/users/signup', data);
+        const response = await api.post("/users/signup", data);
         setAuthToken(response.data?.token);
         return await getUser();
     } catch (error) {
@@ -19,7 +19,7 @@ export const signUp = async (data: AuthData): TypeOrError<UserModelType> => {
 
 export const signIn = async (data: AuthData): TypeOrError<UserModelType> => {
     try {
-        const response = await api.post('/users/signin', data);
+        const response = await api.post("/users/signin", data);
         setAuthToken(response.data?.token);
         return await getUser();
     } catch (error) {
@@ -29,7 +29,7 @@ export const signIn = async (data: AuthData): TypeOrError<UserModelType> => {
 
 export const requestPasswordReset = async (data: PasswordResetRequestData): TypeOrError<PasswordResetResponse> => {
     try {
-        const response = await api.post('/users/password/reset/request', data);
+        const response = await api.post("/users/password/reset/request", data);
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -38,7 +38,7 @@ export const requestPasswordReset = async (data: PasswordResetRequestData): Type
 
 export const verifyPasswordResetCode = async (data: PasswordResetVerifyData): TypeOrError<PasswordResetResponse> => {
     try {
-        const response = await api.post('/users/password/reset/verify', data);
+        const response = await api.post("/users/password/reset/verify", data);
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -47,7 +47,7 @@ export const verifyPasswordResetCode = async (data: PasswordResetVerifyData): Ty
 
 export const confirmPasswordReset = async (data: PasswordResetConfirmData): TypeOrError<PasswordResetResponse> => {
     try {
-        const response = await api.post('/users/password/reset/confirm', data);
+        const response = await api.post("/users/password/reset/confirm", data);
         if (response.data?.token) setAuthToken(response.data.token);
         if (response.data?.user) useUserStore.getState().setUser(response.data.user);
         return response.data;
@@ -58,7 +58,7 @@ export const confirmPasswordReset = async (data: PasswordResetConfirmData): Type
 
 export const getUser = async (): TypeOrError<UserModelType> => {
     try {
-        const response = await api.get('/users/me');
+        const response = await api.get("/users/me");
         if (response.data) useUserStore.getState().setUser(response.data);
         return response.data;
     } catch (error) {
@@ -68,7 +68,7 @@ export const getUser = async (): TypeOrError<UserModelType> => {
 
 export const updateProfile = async (data: UpdateProfileData): TypeOrError<UserModelType> => {
     try {
-        const response = await api.patch('/users/profile', data);
+        const response = await api.patch("/users/profile", data);
         if (response.data) useUserStore.getState().setUser(response.data);
         return response.data;
     } catch (error) {
@@ -79,8 +79,8 @@ export const updateProfile = async (data: UpdateProfileData): TypeOrError<UserMo
 export const updateProfileImage = async (image: File): TypeOrError<ProfileImageUploadResponse> => {
     try {
         const formData = new FormData();
-        formData.append('image', image);
-        const response = await api.patch('/users/profile/image', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+        formData.append("image", image);
+        const response = await api.patch("/users/profile/image", formData, { headers: { "Content-Type": "multipart/form-data" } });
         if (response.data?.user) useUserStore.getState().setUser(response.data.user);
         return response.data;
     } catch (error) {
@@ -101,7 +101,7 @@ export const getUserById = async (userID: string): TypeOrError<UserModelType> =>
 export const getAllUsers = async (params?: GetAllUsersParams): PaginationOrError<UserModelType> => {
     try {
         hasAdminPosition();
-        const response = await api.get('/users/all', { params });
+        const response = await api.get("/users/all", { params });
         return response.data;
     } catch (error) {
         return manageActionError(error);

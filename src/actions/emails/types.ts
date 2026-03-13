@@ -1,14 +1,4 @@
-export interface EmailTemplateModelType {
-    _id?: string;
-    trigger: string;
-    subject: string;
-    markdownBody: string;
-    variables: string[];
-    description?: string;
-    active: boolean;
-    createdAt?: Date;
-    lastUpdate?: Date;
-}
+import type { EmailTemplateModelType } from "@utils/types/models/emailTemplate";
 
 export interface CreateEmailTemplateData {
     trigger: string;
@@ -19,7 +9,7 @@ export interface CreateEmailTemplateData {
     active?: boolean;
 }
 
-export type UpdateEmailTemplateData = Partial<Omit<EmailTemplateModelType, "_id" | "createdAt" | "lastUpdate">>;
+export type UpdateEmailTemplateData = Partial<Omit<EmailTemplateModelType, "_id" | "createdAt" | "updatedAt">>;
 
 export interface EmailRecipient {
     email: string;

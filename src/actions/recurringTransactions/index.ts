@@ -1,12 +1,13 @@
-import { hasAdminPosition, manageActionError } from '@utils/functions/action';
-import api from '@utils/functions/api.ts';
+import { hasAdminPosition, manageActionError } from "@utils/functions/action";
+import api from "@utils/functions/api.ts";
 
-import type { GetRecurringParams, CreateRecurringTransactionData, UpdateRecurringTransactionData, RecurringTransactionModelType } from './types';
-import type { PaginationOrError, TypeOrError } from '@utils/types/action';
+import type { GetRecurringParams, CreateRecurringTransactionData, UpdateRecurringTransactionData } from "./types";
+import type { RecurringTransactionModelType } from "@utils/types/models/recurringTransaction";
+import type { PaginationOrError, TypeOrError } from "@utils/types/action";
 
 export const getRecurringTransactions = async (params?: GetRecurringParams): PaginationOrError<RecurringTransactionModelType> => {
     try {
-        const response = await api.get('/recurring-transactions', { params });
+        const response = await api.get("/recurring-transactions", { params });
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -16,7 +17,7 @@ export const getRecurringTransactions = async (params?: GetRecurringParams): Pag
 export const createRecurringTransaction = async (data: CreateRecurringTransactionData): TypeOrError<RecurringTransactionModelType> => {
     try {
         hasAdminPosition();
-        const response = await api.post('/recurring-transactions', data);
+        const response = await api.post("/recurring-transactions", data);
         return response.data;
     } catch (error) {
         return manageActionError(error);

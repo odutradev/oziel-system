@@ -1,12 +1,13 @@
-import { hasAdminPosition, manageActionError } from '@utils/functions/action';
-import api from '@utils/functions/api.ts';
+import { hasAdminPosition, manageActionError } from "@utils/functions/action";
+import api from "@utils/functions/api.ts";
 
-import type { DashboardParams, DashboardResponse, CreateTransactionData, UpdateTransactionData, TransactionModelType } from './types';
-import type { TypeOrError } from '@utils/types/action';
+import type { DashboardParams, DashboardResponse, CreateTransactionData, UpdateTransactionData } from "./types";
+import type { TransactionModelType } from "@utils/types/models/transaction";
+import type { TypeOrError } from "@utils/types/action";
 
 export const getTreasuryDashboard = async (params: DashboardParams): TypeOrError<DashboardResponse> => {
     try {
-        const response = await api.get('/treasury/dashboard', { params });
+        const response = await api.get("/treasury/dashboard", { params });
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -16,7 +17,7 @@ export const getTreasuryDashboard = async (params: DashboardParams): TypeOrError
 export const createTransaction = async (data: CreateTransactionData): TypeOrError<TransactionModelType> => {
     try {
         hasAdminPosition();
-        const response = await api.post('/treasury', data);
+        const response = await api.post("/treasury", data);
         return response.data;
     } catch (error) {
         return manageActionError(error);

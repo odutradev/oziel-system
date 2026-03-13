@@ -1,22 +1,9 @@
+import type { VaultTransactionModelType } from "@utils/types/models/vaultTransaction";
+import type { VaultModelType } from "@utils/types/models/vault";
+
 export interface GetVaultsParams {
     page?: number;
     limit?: number;
-}
-
-export interface VaultModelType {
-    _id?: string;
-    name: string;
-    balance: number;
-    goal?: number;
-    description?: string;
-}
-
-export interface VaultTransactionModelType {
-    _id?: string;
-    amount: number;
-    type: 'DEPOSIT' | 'WITHDRAWAL';
-    description?: string;
-    createdAt?: string;
 }
 
 export interface GetVaultDetailsResponse {
@@ -36,10 +23,10 @@ export interface CreateVaultData {
     description?: string;
 }
 
-export type UpdateVaultData = Partial<Omit<CreateVaultData, 'balance'>>;
+export type UpdateVaultData = Partial<Omit<CreateVaultData, "balance">>;
 
 export interface VaultTransactionData {
     amount: number;
-    type: 'DEPOSIT' | 'WITHDRAWAL';
+    type: "DEPOSIT" | "WITHDRAWAL";
     description?: string;
 }

@@ -1,17 +1,8 @@
+import type { TransactionModelType } from "@utils/types/models/transaction";
+
 export interface DashboardParams {
     year: number;
     month: number;
-}
-
-export interface TransactionModelType {
-    _id?: string;
-    title: string;
-    amount: number;
-    type: 'INCOME' | 'EXPENSE';
-    date: string;
-    status: 'PENDING' | 'CONFIRMED';
-    description?: string;
-    category?: string;
 }
 
 export interface DashboardResponse {
@@ -23,9 +14,9 @@ export interface DashboardResponse {
 export interface CreateTransactionData {
     title: string;
     amount: number;
-    type: 'INCOME' | 'EXPENSE';
+    type: "INCOME" | "EXPENSE";
     date: string;
-    status?: 'PENDING' | 'CONFIRMED';
+    status?: "PENDING" | "CONFIRMED";
     description?: string;
     category?: string;
 }

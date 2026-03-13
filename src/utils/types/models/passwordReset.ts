@@ -1,12 +1,10 @@
-import type { Types } from "mongoose";
-
 export type PasswordResetModelType = {
-    _id?: Types.ObjectId;
-    userID: Types.ObjectId;
+    _id?: string;
+    userID: string;
     email: string;
     code: string;
-    expiresAt: Date;
-    createdAt: Date;
+    expiresAt: Date | string;
+    createdAt: Date | string;
     verified?: boolean;
     attempts?: number;
 };

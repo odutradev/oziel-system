@@ -1,11 +1,9 @@
-import type { Types } from "mongoose";
-
 export type VaultModelType = {
-    _id?: Types.ObjectId;
+    _id?: string;
     name: string;
     balance: number;
     goal?: number;
     description?: string;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
 };

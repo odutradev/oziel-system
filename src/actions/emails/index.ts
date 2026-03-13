@@ -1,8 +1,9 @@
-import { hasAdminPosition, manageActionError } from '@utils/functions/action';
-import api from '@utils/functions/api.ts';
+import { hasAdminPosition, manageActionError } from "@utils/functions/action";
+import api from "@utils/functions/api.ts";
 
-import type { EmailTemplateModelType, CreateEmailTemplateData, UpdateEmailTemplateData, BulkEmailData, SendAllUsersEmailData } from './types';
-import type { TypeOrError, PaginationOrError } from '@utils/types/action';
+import type { CreateEmailTemplateData, UpdateEmailTemplateData, BulkEmailData, SendAllUsersEmailData } from "./types";
+import type { EmailTemplateModelType } from "@utils/types/models/emailTemplate";
+import type { TypeOrError, PaginationOrError } from "@utils/types/action";
 
 export const getEmailTemplates = async (): PaginationOrError<EmailTemplateModelType> => {
     try {
