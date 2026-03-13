@@ -11,6 +11,8 @@ export interface RowAction<T> {
     label: string;
     onClick: (row: T) => void;
     show?: (row: T) => boolean;
+    icon?: ReactNode;
+    isInline?: boolean;
 }
 
 export interface FullTableProps<T> {

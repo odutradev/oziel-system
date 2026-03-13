@@ -1,4 +1,4 @@
-import { Box, Chip, IconButton, InputAdornment, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Chip, IconButton, InputAdornment, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow, Typography, ListItemIcon } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import SearchIcon from "@mui/icons-material/Search";
 import InboxIcon from "@mui/icons-material/Inbox";
@@ -81,9 +81,18 @@ const FullTable = <T,>({ data = [], columns, title, totalCount, page, limit, onP
                                     ))}
                                     {showActions && (
                                         <TableCell align="right">
-                                            <IconButton size="small" onClick={(e) => handleMenuOpen(e, row)}>
-                                                <MoreHorizIcon fontSize="small" />
-                                            </IconButton>
+                                            <Box display="flex" justifyContent="flex-end" alignItems="center" gap={0.5}>
+                                                {rowActions.filter((a) => a.isInline && (!a.show || a.show(row))).map((action, i) => (
+                                                    <IconButton key={i} size="small" onClick={(e) => { e.stopPropagation(); action.onClick(row); }} title={action.label}>
+                                                        {action.icon}
+                                                    </IconButton>
+                                                ))}
+                                                {rowActions.filter((a) => !a.isInline && (!a.show || a.show(row))).length > 0 && (
+                                                    <IconButton size="small" onClick={(e) => handleMenuOpen(e, row)}>
+                                                        <MoreHorizIcon fontSize="small" />
+                                                    </IconButton>
+                                                )}
+                                            </Box>
                                         </TableCell>
                                     )}
                                 </TableRow>
@@ -100,8 +109,9 @@ const FullTable = <T,>({ data = [], columns, title, totalCount, page, limit, onP
             )}
 
             <Menu anchorEl={menuAnchor} open={Boolean(menuAnchor)} onClose={handleMenuClose} anchorOrigin={{ vertical: "bottom", horizontal: "right" }} transformOrigin={{ vertical: "top", horizontal: "right" }}>
-                {rowActions.filter((action) => !action.show || (selectedRow && action.show(selectedRow))).map((action, index) => (
+                {rowActions.filter((action) => !action.isInline && (!action.show || (selectedRow && action.show(selectedRow)))).map((action, index) => (
                     <MenuItem key={index} onClick={() => { handleMenuClose(); if (selectedRow) action.onClick(selectedRow); }}>
+                        {action.icon && <ListItemIcon>{action.icon}</ListItemIcon>}
                         {action.label}
                     </MenuItem>
                 ))}
