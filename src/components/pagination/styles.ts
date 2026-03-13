@@ -1,52 +1,46 @@
-import { Box, Pagination as MuiPagination, Select } from '@mui/material';
+import { Pagination as MuiPagination, Select, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export const Container = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  width: '100%',
-  [theme.breakpoints.down('sm')]: {
-    flexDirection: 'column',
-    gap: theme.spacing(2)
-  }
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    width: '100%',
+    gap: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+        flexDirection: 'column',
+        gap: theme.spacing(1)
+    }
 }));
 
 export const StyledPagination = styled(MuiPagination)(({ theme }) => ({
-  '& .MuiPaginationItem-root': {
-    color: theme.palette.primary.main,
-    '&.Mui-selected': {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.primary.contrastText
+    '& .MuiPaginationItem-root': {
+        fontWeight: 500,
+        '&.Mui-selected': {
+            color: theme.palette.primary.contrastText,
+            backgroundColor: theme.palette.primary.main,
+            '&:hover': {
+                backgroundColor: theme.palette.primary.dark
+            }
+        }
     }
-  },
-  [theme.breakpoints.down('sm')]: {
-    '& .MuiPagination-ul': {
-      flexWrap: 'wrap',
-      justifyContent: 'center'
-    }
-  }
 }));
 
-export const RowsContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  marginLeft: theme.spacing(2),
-  [theme.breakpoints.down('sm')]: {
-    marginLeft: 0
-  }
-}));
+export const RowsContainer = styled(Box)({
+    alignItems: 'center',
+    display: 'flex'
+});
 
 export const StyledSelect = styled(Select)(({ theme }) => ({
-  '& .MuiOutlinedInput-root': {
-    '& .MuiOutlinedInput-notchedOutline': {
-      borderColor: theme.palette.primary.main
+    color: theme.palette.text.secondary,
+    fontSize: '0.875rem',
+    fontWeight: 500,
+    '& .MuiSelect-select': {
+        paddingRight: '24px !important',
+        paddingBottom: '4px',
+        paddingTop: '4px'
     },
-    '&:hover .MuiOutlinedInput-notchedOutline': {
-      borderColor: theme.palette.primary.main
-    },
-    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-      borderColor: theme.palette.primary.main
+    '& .MuiSvgIcon-root': {
+        color: theme.palette.text.secondary
     }
-  }
 }));
