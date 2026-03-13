@@ -1,4 +1,4 @@
-import { Description, Dashboard, People, Email } from '@mui/icons-material';
+import { Description, Dashboard, People, Email, AccountBalance } from '@mui/icons-material';
 
 import type { MenuSection } from '../components/layout/types';
 
@@ -7,6 +7,12 @@ export const menuItemsAdmin: MenuSection[] = [
     sectionName: 'Visão Geral',
     items: [
       { name: 'Dashboard', path: '/dashboard/general', icon: <Dashboard /> },
+    ],
+  },
+  {
+    sectionName: 'Gestão Financeira',
+    items: [
+      { name: 'Tesouraria', path: '/dashboard/treasury', icon: <AccountBalance /> },
     ],
   },
   {
@@ -29,6 +35,12 @@ export const menuItemsViewer: MenuSection[] = [
     sectionName: 'Visão Geral',
     items: [
       { name: 'Dashboard', path: '/dashboard/general', icon: <Dashboard /> },
+    ],
+  },
+  {
+    sectionName: 'Gestão Financeira',
+    items: [
+      { name: 'Tesouraria', path: '/dashboard/treasury', icon: <AccountBalance /> },
     ],
   }
 ];

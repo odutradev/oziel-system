@@ -13,6 +13,7 @@ import AccountBlocked from "@pages/normal/accountBlocked";
 import PasswordReset from "@pages/normal/passwordReset";
 import PwaInstall from "@pages/normal/pwaInstall";
 import Dashboard from "@pages/normal/dashboard";
+import Treasury from "@pages/normal/treasury";
 import NotFound from "@pages/normal/notFound";
 import Profile from "@pages/normal/profile";
 import SignIn from "@pages/normal/signIn";
@@ -41,6 +42,7 @@ const routes = [
         routes: [
             ['/general', <Dashboard />],
             ['/pwa-install', <PwaInstall />],
+            ['/treasury', <Treasury />],
             ['/profile', <Profile />],
             ['/logs', <Logs />],
         ]
