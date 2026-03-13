@@ -1,24 +1,23 @@
 import { Navigate } from "react-router-dom";
 
-import InitialRoute from "@routes/components/initialRoute";
-
+import RecurringTransactions from "@pages/normal/recurringTransactions";
 import EmailTemplateEdit from "@pages/admin/editTemplate";
+import AccountBlocked from "@pages/normal/accountBlocked";
+import InitialRoute from "@routes/components/initialRoute";
 import EmailsManagement from "@pages/admin/emails";
 import SendBulkEmail from "@pages/admin/sendBulk";
 import UsersManagement from "@pages/admin/users";
-import UserEdit from "@pages/admin/editUser";
-import SystemLogs from "@pages/admin/logs";
-
-import AccountBlocked from "@pages/normal/accountBlocked";
 import PasswordReset from "@pages/normal/passwordReset";
 import PwaInstall from "@pages/normal/pwaInstall";
+import UserEdit from "@pages/admin/editUser";
+import SystemLogs from "@pages/admin/logs";
 import Dashboard from "@pages/normal/dashboard";
-import Treasury from "@pages/normal/treasury";
 import NotFound from "@pages/normal/notFound";
+import Treasury from "@pages/normal/treasury";
 import Profile from "@pages/normal/profile";
+import Logout from "@pages/normal/logout";
 import SignIn from "@pages/normal/signIn";
 import SignUp from "@pages/normal/signUp";
-import Logout from "@pages/normal/logout";
 import Logs from "@pages/normal/viewLogs";
 
 const routes = [
@@ -43,6 +42,7 @@ const routes = [
             ['/general', <Dashboard />],
             ['/pwa-install', <PwaInstall />],
             ['/treasury', <Treasury />],
+            ['/recurring-transactions', <RecurringTransactions />],
             ['/profile', <Profile />],
             ['/logs', <Logs />],
         ]
