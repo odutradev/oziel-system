@@ -52,7 +52,7 @@ const DashboardCards = ({ transactions, currentBalance }: DashboardCardsProps) =
                     <CardTitle>Saldo Atual de Caixa</CardTitle>
                     <AccountBalance color="primary" />
                 </CardHeader>
-                <CardValue variantcolor="primary">{formatCurrency(currentBalance)}</CardValue>
+                <CardValue >{formatCurrency(currentBalance)}</CardValue>
                 <CardSubtext>Valor consolidado geral</CardSubtext>
             </CardWrapper>
         </CardsContainer>
