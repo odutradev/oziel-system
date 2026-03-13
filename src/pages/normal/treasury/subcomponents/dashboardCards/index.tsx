@@ -8,11 +8,12 @@ import type { DashboardCardsProps } from "./types";
 
 const DashboardCards = ({ transactions, currentBalance }: DashboardCardsProps) => {
     const metrics = useMemo(() => transactions.reduce((acc, curr) => {
+        const isConfirmed = curr.status === "CONFIRMED";
         if (curr.type === "INCOME") {
-            if (curr.status === "CONFIRMED") acc.income += curr.amount;
+            if (isConfirmed) acc.income += curr.amount;
             else acc.pendingIncome += curr.amount;
         } else {
-            if (curr.status === "CONFIRMED") acc.expense += curr.amount;
+            if (isConfirmed) acc.expense += curr.amount;
             else acc.pendingExpense += curr.amount;
         }
         return acc;
@@ -21,7 +22,7 @@ const DashboardCards = ({ transactions, currentBalance }: DashboardCardsProps) =
     const monthlyBalance = metrics.income - metrics.expense;
 
     return (
-        <CardsContainer component="section">
+        <CardsContainer>
             <CardWrapper elevation={1}>
                 <CardHeader>
                     <CardTitle>Saldo Atual de Caixa</CardTitle>
@@ -30,7 +31,6 @@ const DashboardCards = ({ transactions, currentBalance }: DashboardCardsProps) =
                 <CardValue>{formatCurrency(currentBalance)}</CardValue>
                 <CardSubtext>Valor consolidado geral</CardSubtext>
             </CardWrapper>
-
             <CardWrapper elevation={1}>
                 <CardHeader>
                     <CardTitle>Balanço do Mês</CardTitle>
@@ -39,7 +39,6 @@ const DashboardCards = ({ transactions, currentBalance }: DashboardCardsProps) =
                 <CardValue variantcolor={monthlyBalance >= 0 ? "success" : "error"}>{formatCurrency(monthlyBalance)}</CardValue>
                 <CardSubtext>Entradas reais vs Saídas reais</CardSubtext>
             </CardWrapper>
-
             <CardWrapper elevation={1}>
                 <CardHeader>
                     <CardTitle>Entradas do Mês</CardTitle>
@@ -48,7 +47,6 @@ const DashboardCards = ({ transactions, currentBalance }: DashboardCardsProps) =
                 <CardValue variantcolor="success">{formatCurrency(metrics.income)}</CardValue>
                 <CardSubtext>{formatCurrency(metrics.pendingIncome)} aguardando confirmação</CardSubtext>
             </CardWrapper>
-
             <CardWrapper elevation={1}>
                 <CardHeader>
                     <CardTitle>Saídas do Mês</CardTitle>

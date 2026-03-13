@@ -8,12 +8,10 @@ import NoData from "@components/noData";
 import type { TransactionListProps } from "./types";
 
 const TransactionList = ({ transactions, onEdit, onDelete, onConfirm }: TransactionListProps) => {
-    if (!transactions || transactions.length === 0) {
-        return <NoData message="Nenhuma transação encontrada neste período." height={300} />;
-    }
+    if (!transactions || transactions.length === 0) return <NoData message="Nenhuma transação encontrada neste período." height={300} />;
 
     return (
-        <ListWrapper component="section">
+        <ListWrapper>
             <Table size="medium">
                 <TableHead>
                     <TableRow>
@@ -32,30 +30,14 @@ const TransactionList = ({ transactions, onEdit, onDelete, onConfirm }: Transact
                             <TableCell>{t.title}</TableCell>
                             <TableCell>{t.category || "-"}</TableCell>
                             <TableCell>{formatDate(t.date)}</TableCell>
-                            <TableCell>
-                                <Typography color={t.type === "INCOME" ? "success.main" : "error.main"} fontWeight={600}>
-                                    {formatCurrency(t.amount)}
-                                </Typography>
-                            </TableCell>
-                            <TableCell>
-                                <TypeChip label={t.type === "INCOME" ? "Entrada" : "Saída"} varianttype={t.type} size="small" />
-                            </TableCell>
-                            <TableCell>
-                                <StatusChip label={t.status === "CONFIRMED" ? "Confirmado" : "Pendente"} variantcolor={t.status === "CONFIRMED" ? "success" : "warning"} size="small" />
-                            </TableCell>
+                            <TableCell><Typography color={t.type === "INCOME" ? "success.main" : "error.main"} fontWeight={600}>{formatCurrency(t.amount)}</Typography></TableCell>
+                            <TableCell><TypeChip label={t.type === "INCOME" ? "Entrada" : "Saída"} varianttype={t.type} size="small" /></TableCell>
+                            <TableCell><StatusChip label={t.status === "CONFIRMED" ? "Confirmado" : "Pendente"} variantcolor={t.status === "CONFIRMED" ? "success" : "warning"} size="small" /></TableCell>
                             <TableCell align="right">
                                 <ActionGroup justifyContent="flex-end">
-                                    {t.status === "PENDING" && (
-                                        <IconButton size="small" color="success" onClick={() => t._id && onConfirm(t._id)} title="Confirmar">
-                                            <CheckCircle fontSize="small" />
-                                        </IconButton>
-                                    )}
-                                    <IconButton size="small" color="primary" onClick={() => onEdit(t)} title="Editar">
-                                        <Edit fontSize="small" />
-                                    </IconButton>
-                                    <IconButton size="small" color="error" onClick={() => t._id && onDelete(t._id)} title="Excluir">
-                                        <Delete fontSize="small" />
-                                    </IconButton>
+                                    {t.status === "PENDING" && <IconButton size="small" color="success" onClick={() => t._id && onConfirm(t._id)} title="Confirmar"><CheckCircle fontSize="small" /></IconButton>}
+                                    <IconButton size="small" color="primary" onClick={() => onEdit(t)} title="Editar"><Edit fontSize="small" /></IconButton>
+                                    <IconButton size="small" color="error" onClick={() => t._id && onDelete(t._id)} title="Excluir"><Delete fontSize="small" /></IconButton>
                                 </ActionGroup>
                             </TableCell>
                         </TableRow>
