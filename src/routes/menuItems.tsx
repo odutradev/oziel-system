@@ -1,6 +1,6 @@
-import { Description, Dashboard, People, Email, AccountBalance, EventRepeat } from '@mui/icons-material';
+import { Description, Dashboard, Settings, People, Email, AccountBalance, EventRepeat } from "@mui/icons-material";
 
-import type { MenuSection } from '../components/layout/types';
+import type { MenuSection } from "../components/layout/types";
 
 export const menuItemsAdmin: MenuSection[] = [
   {
@@ -14,6 +14,12 @@ export const menuItemsAdmin: MenuSection[] = [
     items: [
       { name: 'Tesouraria', path: '/dashboard/treasury', icon: <AccountBalance /> },
       { name: 'Agendamentos', path: '/dashboard/recurring-transactions', icon: <EventRepeat /> },
+    ],
+  },
+  {
+    sectionName: 'Manutenção',
+    items: [
+      { name: 'Operadores', path: '/dashboard/maintenance/operators', icon: <Settings /> },
     ],
   },
   {
@@ -43,6 +49,12 @@ export const menuItemsViewer: MenuSection[] = [
     items: [
       { name: 'Tesouraria', path: '/dashboard/treasury', icon: <AccountBalance /> },
       { name: 'Agendamentos', path: '/dashboard/recurring-transactions', icon: <EventRepeat /> },
+    ],
+  },
+  {
+    sectionName: 'Manutenção',
+    items: [
+      { name: 'Operadores', path: '/dashboard/maintenance/operators', icon: <Settings /> },
     ],
   }
 ];

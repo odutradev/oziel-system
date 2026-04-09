@@ -5,15 +5,16 @@ import EmailTemplateEdit from "@pages/admin/editTemplate";
 import AccountBlocked from "@pages/normal/accountBlocked";
 import InitialRoute from "@routes/components/initialRoute";
 import EmailsManagement from "@pages/admin/emails";
+import Operators from "@pages/normal/operators";
 import SendBulkEmail from "@pages/admin/sendBulk";
 import UsersManagement from "@pages/admin/users";
 import PasswordReset from "@pages/normal/passwordReset";
 import PwaInstall from "@pages/normal/pwaInstall";
-import UserEdit from "@pages/admin/editUser";
 import SystemLogs from "@pages/admin/logs";
+import UserEdit from "@pages/admin/editUser";
 import Dashboard from "@pages/normal/dashboard";
-import NotFound from "@pages/normal/notFound";
 import Treasury from "@pages/normal/treasury";
+import NotFound from "@pages/normal/notFound";
 import Profile from "@pages/normal/profile";
 import Logout from "@pages/normal/logout";
 import SignIn from "@pages/normal/signIn";
@@ -42,6 +43,7 @@ const routes = [
             ['/general', <Dashboard />],
             ['/pwa-install', <PwaInstall />],
             ['/treasury', <Treasury />],
+            ['/maintenance/operators', <Operators />],
             ['/recurring-transactions', <RecurringTransactions />],
             ['/profile', <Profile />],
             ['/logs', <Logs />],
