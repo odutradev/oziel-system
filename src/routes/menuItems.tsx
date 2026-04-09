@@ -1,4 +1,4 @@
-import { Description, Dashboard, Settings, People, Email, AccountBalance, EventRepeat, LocalShipping } from "@mui/icons-material";
+import { Description, Dashboard, Settings, People, Email, AccountBalance, EventRepeat, LocalShipping, Engineering } from "@mui/icons-material";
 
 import type { MenuSection } from "../components/layout/types";
 
@@ -19,6 +19,7 @@ export const menuItemsAdmin: MenuSection[] = [
   {
     sectionName: 'Manutenção',
     items: [
+      { name: 'Operações', path: '/dashboard/maintenance/operations', icon: <Engineering /> },
       { name: 'Operadores', path: '/dashboard/maintenance/operators', icon: <Settings /> },
       { name: 'Frotas', path: '/dashboard/maintenance/fleets', icon: <LocalShipping /> },
     ],
@@ -55,6 +56,7 @@ export const menuItemsViewer: MenuSection[] = [
   {
     sectionName: 'Manutenção',
     items: [
+      { name: 'Operações', path: '/dashboard/maintenance/operations', icon: <Engineering /> },
       { name: 'Operadores', path: '/dashboard/maintenance/operators', icon: <Settings /> },
       { name: 'Frotas', path: '/dashboard/maintenance/fleets', icon: <LocalShipping /> },
     ],

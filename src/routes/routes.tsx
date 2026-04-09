@@ -1,8 +1,9 @@
 import { Navigate } from "react-router-dom";
 
+import MachineOperations from "@pages/normal/machineOperations";
 import RecurringTransactions from "@pages/normal/recurringTransactions";
-import InitialRoute from "@routes/components/initialRoute";
 import EmailTemplateEdit from "@pages/admin/editTemplate";
+import InitialRoute from "@routes/components/initialRoute";
 import AccountBlocked from "@pages/normal/accountBlocked";
 import PasswordReset from "@pages/normal/passwordReset";
 import EmailsManagement from "@pages/admin/emails";
@@ -44,6 +45,7 @@ const routes = [
             ['/general', <Dashboard />],
             ['/pwa-install', <PwaInstall />],
             ['/treasury', <Treasury />],
+            ['/maintenance/operations', <MachineOperations />],
             ['/maintenance/operators', <Operators />],
             ['/maintenance/fleets', <Fleets />],
             ['/recurring-transactions', <RecurringTransactions />],
