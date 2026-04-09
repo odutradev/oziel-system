@@ -1,21 +1,22 @@
 import { Navigate } from "react-router-dom";
 
 import RecurringTransactions from "@pages/normal/recurringTransactions";
+import InitialRoute from "@routes/components/initialRoute";
 import EmailTemplateEdit from "@pages/admin/editTemplate";
 import AccountBlocked from "@pages/normal/accountBlocked";
-import InitialRoute from "@routes/components/initialRoute";
+import PasswordReset from "@pages/normal/passwordReset";
 import EmailsManagement from "@pages/admin/emails";
-import Operators from "@pages/normal/operators";
 import SendBulkEmail from "@pages/admin/sendBulk";
 import UsersManagement from "@pages/admin/users";
-import PasswordReset from "@pages/normal/passwordReset";
 import PwaInstall from "@pages/normal/pwaInstall";
-import SystemLogs from "@pages/admin/logs";
-import UserEdit from "@pages/admin/editUser";
+import Operators from "@pages/normal/operators";
 import Dashboard from "@pages/normal/dashboard";
+import SystemLogs from "@pages/admin/logs";
 import Treasury from "@pages/normal/treasury";
 import NotFound from "@pages/normal/notFound";
+import UserEdit from "@pages/admin/editUser";
 import Profile from "@pages/normal/profile";
+import Fleets from "@pages/normal/fleets";
 import Logout from "@pages/normal/logout";
 import SignIn from "@pages/normal/signIn";
 import SignUp from "@pages/normal/signUp";
@@ -44,6 +45,7 @@ const routes = [
             ['/pwa-install', <PwaInstall />],
             ['/treasury', <Treasury />],
             ['/maintenance/operators', <Operators />],
+            ['/maintenance/fleets', <Fleets />],
             ['/recurring-transactions', <RecurringTransactions />],
             ['/profile', <Profile />],
             ['/logs', <Logs />],
