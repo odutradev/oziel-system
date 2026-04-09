@@ -1,7 +1,9 @@
-import type { MachineOperationModelType, MachineOperationStatusType } from "@utils/types/models/machineOperation";
+import type { MachineOperationModelType as BaseMachineOperationModelType, MachineOperationStatusType } from "@utils/types/models/machineOperation";
 import type { PaginationMeta } from "@utils/types/action";
 
-export type { MachineOperationModelType, MachineOperationStatusType };
+export type MachineOperationModelType = BaseMachineOperationModelType & { serviceDescription?: string };
+
+export type { MachineOperationStatusType };
 
 export interface GetOperationsParams {
     limit?: number;
