@@ -1,12 +1,12 @@
-import { hasAdminPosition, manageActionError } from '@utils/functions/action';
-import api from '@utils/functions/api.ts';
+import { hasAdminPosition, manageActionError } from "@utils/functions/action";
+import api from "@utils/functions/api.ts";
 
-import type { GetLogsParams, LogsResponse, LogStatsResponse, LogActivityResponse } from './types';
-import type { TypeOrError } from '@utils/types/action';
+import type { GetLogsParams, LogActivityResponse, LogStatsResponse, LogsResponse } from "./types";
+import type { TypeOrError } from "@utils/types/action";
 
 export const getUserLogs = async (params?: GetLogsParams): TypeOrError<LogsResponse> => {
     try {
-        const response = await api.get("/logs/user/me", { params });
+        const response = await api.get("/system/logs/users/me/activity", { params });
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -15,7 +15,7 @@ export const getUserLogs = async (params?: GetLogsParams): TypeOrError<LogsRespo
 
 export const getEntityLogs = async (entityID: string, params?: GetLogsParams): TypeOrError<LogsResponse> => {
     try {
-        const response = await api.get(`/logs/entity/${entityID}`, { params });
+        const response = await api.get(`/system/logs/entities/${entityID}/history`, { params });
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -25,7 +25,7 @@ export const getEntityLogs = async (entityID: string, params?: GetLogsParams): T
 export const getLogsByAction = async (action: string, params?: GetLogsParams): TypeOrError<LogsResponse> => {
     try {
         hasAdminPosition();
-        const response = await api.get(`/logs/action/${action}`, { params });
+        const response = await api.get(`/system/logs/actions/${action}/records`, { params });
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -35,7 +35,7 @@ export const getLogsByAction = async (action: string, params?: GetLogsParams): T
 export const getAllLogs = async (params?: GetLogsParams): TypeOrError<LogsResponse> => {
     try {
         hasAdminPosition();
-        const response = await api.get("/logs/admin/all", { params });
+        const response = await api.get("/system/logs/system/all-records", { params });
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -45,7 +45,7 @@ export const getAllLogs = async (params?: GetLogsParams): TypeOrError<LogsRespon
 export const getLogStats = async (params?: GetLogsParams): TypeOrError<LogStatsResponse> => {
     try {
         hasAdminPosition();
-        const response = await api.get("/logs/admin/stats", { params });
+        const response = await api.get("/system/logs/system/statistics", { params });
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -55,7 +55,7 @@ export const getLogStats = async (params?: GetLogsParams): TypeOrError<LogStatsR
 export const getLogActivity = async (hours: number = 24): TypeOrError<LogActivityResponse> => {
     try {
         hasAdminPosition();
-        const response = await api.get("/logs/admin/activity", { params: { hours } });
+        const response = await api.get("/system/logs/system/activity-overview", { params: { hours } });
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -65,7 +65,7 @@ export const getLogActivity = async (hours: number = 24): TypeOrError<LogActivit
 export const getErrorLogs = async (params?: GetLogsParams): TypeOrError<LogsResponse> => {
     try {
         hasAdminPosition();
-        const response = await api.get("/logs/admin/errors", { params });
+        const response = await api.get("/system/logs/system/error-reports", { params });
         return response.data;
     } catch (error) {
         return manageActionError(error);

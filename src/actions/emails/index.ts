@@ -1,14 +1,14 @@
 import { hasAdminPosition, manageActionError } from "@utils/functions/action";
 import api from "@utils/functions/api.ts";
 
-import type { CreateEmailTemplateData, UpdateEmailTemplateData, BulkEmailData, SendAllUsersEmailData } from "./types";
+import type { BulkEmailData, CreateEmailTemplateData, SendAllUsersEmailData, UpdateEmailTemplateData } from "./types";
 import type { EmailTemplateModelType } from "@utils/types/models/emailTemplate";
-import type { TypeOrError, PaginationOrError } from "@utils/types/action";
+import type { PaginationOrError, TypeOrError } from "@utils/types/action";
 
 export const getEmailTemplates = async (): PaginationOrError<EmailTemplateModelType> => {
     try {
         hasAdminPosition();
-        const response = await api.get("/emails/templates");
+        const response = await api.get("/communications/emails/templates");
         return {
             data: response.data.templates,
             meta: response.data.meta
@@ -21,7 +21,7 @@ export const getEmailTemplates = async (): PaginationOrError<EmailTemplateModelT
 export const getEmailTemplateByTrigger = async (trigger: string): TypeOrError<EmailTemplateModelType> => {
     try {
         hasAdminPosition();
-        const response = await api.get(`/emails/templates/${trigger}`);
+        const response = await api.get(`/communications/emails/templates/${trigger}`);
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -31,7 +31,7 @@ export const getEmailTemplateByTrigger = async (trigger: string): TypeOrError<Em
 export const createEmailTemplate = async (data: CreateEmailTemplateData): TypeOrError<EmailTemplateModelType> => {
     try {
         hasAdminPosition();
-        const response = await api.post("/emails/templates/create", data);
+        const response = await api.post("/communications/emails/templates", data);
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -41,7 +41,7 @@ export const createEmailTemplate = async (data: CreateEmailTemplateData): TypeOr
 export const updateEmailTemplate = async (templateID: string, data: UpdateEmailTemplateData): TypeOrError<EmailTemplateModelType> => {
     try {
         hasAdminPosition();
-        const response = await api.patch(`/emails/templates/${templateID}`, data);
+        const response = await api.patch(`/communications/emails/templates/${templateID}`, data);
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -51,7 +51,7 @@ export const updateEmailTemplate = async (templateID: string, data: UpdateEmailT
 export const deleteEmailTemplate = async (templateID: string): TypeOrError<{ success: boolean }> => {
     try {
         hasAdminPosition();
-        const response = await api.delete(`/emails/templates/${templateID}`);
+        const response = await api.delete(`/communications/emails/templates/${templateID}`);
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -61,7 +61,7 @@ export const deleteEmailTemplate = async (templateID: string): TypeOrError<{ suc
 export const sendBulkEmail = async (data: BulkEmailData): TypeOrError<{ success: boolean; sent: number }> => {
     try {
         hasAdminPosition();
-        const response = await api.post("/emails/send/bulk", data);
+        const response = await api.post("/communications/emails/deliveries/bulk", data);
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -71,7 +71,7 @@ export const sendBulkEmail = async (data: BulkEmailData): TypeOrError<{ success:
 export const sendEmailToAllUsers = async (data: SendAllUsersEmailData): TypeOrError<{ success: boolean; sent: number }> => {
     try {
         hasAdminPosition();
-        const response = await api.post("/emails/send/all-users", data);
+        const response = await api.post("/communications/emails/deliveries/broadcast", data);
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -81,7 +81,7 @@ export const sendEmailToAllUsers = async (data: SendAllUsersEmailData): TypeOrEr
 export const seedInitialTemplates = async (): TypeOrError<{ success: boolean; created: number }> => {
     try {
         hasAdminPosition();
-        const response = await api.post("/emails/seed/initial-templates");
+        const response = await api.post("/communications/emails/templates/seed-initial");
         return response.data;
     } catch (error) {
         return manageActionError(error);

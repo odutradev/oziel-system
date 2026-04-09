@@ -1,13 +1,13 @@
 import { hasAdminPosition, manageActionError } from "@utils/functions/action";
 import api from "@utils/functions/api.ts";
 
-import type { GetRecurringParams, CreateRecurringTransactionData, UpdateRecurringTransactionData } from "./types";
+import type { CreateRecurringTransactionData, GetRecurringParams, UpdateRecurringTransactionData } from "./types";
 import type { RecurringTransactionModelType } from "@utils/types/models/recurringTransaction";
 import type { PaginationOrError, TypeOrError } from "@utils/types/action";
 
 export const getRecurringTransactions = async (params?: GetRecurringParams): PaginationOrError<RecurringTransactionModelType> => {
     try {
-        const response = await api.get("/recurring-transactions", { params });
+        const response = await api.get("/treasury/recurring-transactions", { params });
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -17,7 +17,7 @@ export const getRecurringTransactions = async (params?: GetRecurringParams): Pag
 export const createRecurringTransaction = async (data: CreateRecurringTransactionData): TypeOrError<RecurringTransactionModelType> => {
     try {
         hasAdminPosition();
-        const response = await api.post("/recurring-transactions", data);
+        const response = await api.post("/treasury/recurring-transactions", data);
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -27,7 +27,7 @@ export const createRecurringTransaction = async (data: CreateRecurringTransactio
 export const updateRecurringTransaction = async (id: string, data: UpdateRecurringTransactionData): TypeOrError<RecurringTransactionModelType> => {
     try {
         hasAdminPosition();
-        const response = await api.patch(`/recurring-transactions/${id}`, data);
+        const response = await api.patch(`/treasury/recurring-transactions/${id}`, data);
         return response.data;
     } catch (error) {
         return manageActionError(error);
@@ -37,7 +37,7 @@ export const updateRecurringTransaction = async (id: string, data: UpdateRecurri
 export const deleteRecurringTransaction = async (id: string): TypeOrError<{ success: boolean }> => {
     try {
         hasAdminPosition();
-        const response = await api.delete(`/recurring-transactions/${id}`);
+        const response = await api.delete(`/treasury/recurring-transactions/${id}`);
         return response.data;
     } catch (error) {
         return manageActionError(error);
