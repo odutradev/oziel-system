@@ -1,4 +1,4 @@
-import type { MonthlyDashboardMetrics, MachineOperationModelType, CreateOperationData } from "@actions/machineOperations/types";
+import type { MonthlyDashboardMetrics, MachineOperationModelType, CreateOperationData, MachineOperationStatusType } from "@actions/machineOperations/types";
 import type { OperatorModelType } from "@actions/operators/types";
 import type { FleetModelType } from "@actions/fleets/types";
 
@@ -22,6 +22,6 @@ export interface MachineOperationsHookProps {
     handleDelete: (id: string) => Promise<void>;
     handleChangeMonth: (direction: "prev" | "next") => void;
     handleOpenModal: (operation?: MachineOperationModelType) => void;
-    handleStatusChange: (id: string, status: any) => Promise<void>;
+    handleStatusChange: (id: string, status: MachineOperationStatusType) => Promise<void>;
     handleFormChange: (field: keyof OperationFormData, value: unknown) => void;
 }

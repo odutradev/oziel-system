@@ -1,8 +1,8 @@
 import { Autocomplete, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, Box } from "@mui/material";
 
 import InputWithCounter from "@components/inputWithCounter";
-import { FormContainer, FormRow } from "./styles";
 import { formatCurrency } from "@utils/formatters";
+import { FormContainer, FormRow } from "./styles";
 
 import type { OperationModalProps } from "./types";
 
@@ -22,20 +22,20 @@ const OperationModal = ({ open, formData, operators, fleets, onClose, onSave, on
                     </FormRow>
                     <Box mt={1} mb={1}><strong>Horímetro do Serviço</strong></Box>
                     <FormRow>
-                        <TextField type="number" label="Início" value={formData.hourMeterServiceStart} onChange={(e) => onChange("hourMeterServiceStart", Number(e.target.value))} fullWidth />
-                        <TextField type="number" label="Término" value={formData.hourMeterServiceEnd} onChange={(e) => onChange("hourMeterServiceEnd", Number(e.target.value))} fullWidth />
+                        <TextField label="Início" value={(formData.hourMeterServiceStart ?? 0).toFixed(1)} onChange={(e) => onChange("hourMeterServiceStart", Number(e.target.value.replace(/\D/g, "")) / 10)} fullWidth />
+                        <TextField label="Término" value={(formData.hourMeterServiceEnd ?? 0).toFixed(1)} onChange={(e) => onChange("hourMeterServiceEnd", Number(e.target.value.replace(/\D/g, "")) / 10)} fullWidth />
                     </FormRow>
                     <Box mt={1} mb={1}><strong>Horímetro de Deslocamento (Opcional)</strong></Box>
                     <FormRow>
-                        <TextField type="number" label="Saída" value={formData.hourMeterDeparture} onChange={(e) => onChange("hourMeterDeparture", Number(e.target.value))} fullWidth />
-                        <TextField type="number" label="Chegada" value={formData.hourMeterArrival} onChange={(e) => onChange("hourMeterArrival", Number(e.target.value))} fullWidth />
+                        <TextField label="Saída" value={(formData.hourMeterDeparture ?? 0).toFixed(1)} onChange={(e) => onChange("hourMeterDeparture", Number(e.target.value.replace(/\D/g, "")) / 10)} fullWidth />
+                        <TextField label="Chegada" value={(formData.hourMeterArrival ?? 0).toFixed(1)} onChange={(e) => onChange("hourMeterArrival", Number(e.target.value.replace(/\D/g, "")) / 10)} fullWidth />
                     </FormRow>
-                    <InputWithCounter label="Descrição / Observações" value={formData.description || ""} onChange={(e) => onChange("description", e.target.value)} maxLength={200} multiline rows={3} />
+                    <InputWithCounter label="Descrição / Observações" value={formData.serviceDescription || ""} onChange={(e) => onChange("serviceDescription", e.target.value)} maxLength={200} multiline rows={3} />
                 </FormContainer>
             </DialogContent>
             <DialogActions sx={{ padding: 2 }}>
                 <Button onClick={onClose} color="inherit">Cancelar</Button>
-                <Button onClick={onSave} variant="contained" color="primary" disabled={!formData.operator || !formData.fleet}>Salvar</Button>
+                <Button onClick={onSave} variant="contained" color="primary" disabled={!formData.operator || !formData.fleet || !formData.serviceDescription}>Salvar</Button>
             </DialogActions>
         </Dialog>
     );

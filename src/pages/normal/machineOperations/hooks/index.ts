@@ -17,7 +17,7 @@ const INITIAL_FORM_DATA: OperationFormData = {
     hourMeterServiceEnd: 0,
     hourMeterDeparture: 0,
     hourMeterArrival: 0,
-    description: "",
+    serviceDescription: "",
     hourlyRate: 0,
     operator: null,
     fleet: null
@@ -60,8 +60,8 @@ const useMachineOperationsHook = (): MachineOperationsHookProps => {
 
     const handleOpenModal = useCallback((operation?: MachineOperationModelType) => {
         if (operation) {
-            const opId = typeof operation.operator === "object" ? (operation.operator as any)._id : operation.operator;
-            const flId = typeof operation.fleet === "object" ? (operation.fleet as any)._id : operation.fleet;
+            const opId = typeof operation.operator === "object" && operation.operator ? (operation.operator as OperatorModelType)._id : operation.operator as string;
+            const flId = typeof operation.fleet === "object" && operation.fleet ? (operation.fleet as FleetModelType)._id : operation.fleet as string;
             setFormData({
                 _id: operation._id,
                 operationDate: formatInputDate(operation.operationDate ? new Date(operation.operationDate) : new Date()),
@@ -69,7 +69,7 @@ const useMachineOperationsHook = (): MachineOperationsHookProps => {
                 hourMeterServiceEnd: operation.hourMeterServiceEnd || 0,
                 hourMeterDeparture: operation.hourMeterDeparture || 0,
                 hourMeterArrival: operation.hourMeterArrival || 0,
-                description: operation.description || "",
+                serviceDescription: operation.serviceDescription || "",
                 hourlyRate: operation.hourlyRate || 0,
                 operator: operators.find(o => o._id === opId) || null,
                 fleet: fleets.find(f => f._id === flId) || null,
@@ -98,14 +98,14 @@ const useMachineOperationsHook = (): MachineOperationsHookProps => {
     }, []);
 
     const handleSave = useCallback(async () => {
-        if (!formData.operator || !formData.fleet || !formData.operationDate) return;
+        if (!formData.operator || !formData.fleet || !formData.operationDate || !formData.serviceDescription) return;
         const payload: CreateOperationData = {
             hourMeterServiceStart: formData.hourMeterServiceStart,
             hourMeterServiceEnd: formData.hourMeterServiceEnd,
             hourMeterDeparture: formData.hourMeterDeparture,
             hourMeterArrival: formData.hourMeterArrival,
+            serviceDescription: formData.serviceDescription,
             operationDate: formData.operationDate,
-            description: formData.description,
             hourlyRate: formData.hourlyRate,
             operator: formData.operator._id,
             fleet: formData.fleet._id,

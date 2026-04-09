@@ -18,8 +18,8 @@ export interface CreateOperationData {
     hourMeterServiceEnd?: number;
     hourMeterDeparture?: number;
     hourMeterArrival?: number;
+    serviceDescription: string;
     operationDate: string;
-    description?: string;
     hourlyRate: number;
     operator: string;
     fleet: string;
