@@ -2,6 +2,11 @@ import type { EmailTemplateModelType } from "@utils/types/models/emailTemplate";
 
 export type { EmailTemplateModelType };
 
+export interface GetEmailTemplatesParams {
+    limit?: number;
+    page?: number;
+}
+
 export interface CreateEmailTemplateData {
     trigger: string;
     subject: string;

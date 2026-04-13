@@ -1,104 +1,104 @@
 export interface GetLogsParams {
-    page?: number;
     limit?: number;
+    page?: number;
     action?: string;
-    startDate?: string;
     endDate?: string;
+    startDate?: string;
 }
 
 export interface LogEntry {
     _id?: string;
+    ip?: string;
+    date?: Date;
     action?: string;
     entity?: string;
-    entityID?: string;
     userID?: string;
+    entityID?: string;
+    timestamp?: Date;
+    userAgent?: string;
     description?: string;
-    payload?: any;
+    payload?: Record<string, unknown>;
+    [key: string]: unknown;
     metadata?: {
         ip?: string;
-        userAgent?: string;
         location?: string;
+        userAgent?: string;
     };
-    timestamp?: Date;
-    date?: Date;
-    ip?: string;
-    userAgent?: string;
-    [key: string]: any;
 }
 
 export interface LogsResponse {
-    logs: LogEntry[];
+    data: LogEntry[];
     meta: {
-        total: number;
         page: number;
-        pages: number;
         limit: number;
+        pages: number;
+        total: number;
     };
 }
 
 export interface LogOverview {
     totalLogs: number;
-    systemActions: number;
+    userUpdates: number;
     userSignups: number;
     userSignins: number;
-    userUpdates: number;
     userDeletes: number;
+    systemActions: number;
 }
 
 export interface LogActionStat {
-    action: string;
     count: number;
+    action: string;
     percentage: string;
 }
 
 export interface LogEntityStat {
-    entity: string;
     count: number;
+    entity: string;
     percentage: string;
 }
 
 export interface LogUserStat {
+    count: number;
     userId: string;
     userName?: string;
-    userEmail?: string;
     userRole?: string;
-    count: number;
+    userEmail?: string;
 }
 
 export interface LogTimelineEntry {
     date: string;
     count: number;
-    systemActions: number;
     userActions: number;
+    systemActions: number;
 }
 
 export interface LogTopUser extends LogUserStat {
-    totalActions: number;
     lastAction: string;
     firstAction: string;
+    totalActions: number;
 }
 
 export interface LogStatsResponse {
-    period: any;
+    period: unknown;
     overview: LogOverview;
+    byUser: LogUserStat[];
+    topUsers: LogTopUser[];
     byAction: LogActionStat[];
     byEntity: LogEntityStat[];
-    byUser: LogUserStat[];
     timeline: LogTimelineEntry[];
-    topUsers: LogTopUser[];
 }
 
 export interface LogActivityResponse {
     period: {
         hours: number;
-        startDate: string;
         endDate: string;
+        startDate: string;
     };
     summary: {
         totalLogs: number;
         uniqueUsers: number;
         uniqueEntities: number;
     };
-    byAction: LogActionStat[];
     recentActivity: LogEntry[];
+    byAction: LogActionStat[];
 }

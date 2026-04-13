@@ -1,18 +1,15 @@
 import { hasAdminPosition, manageActionError } from "@utils/functions/action";
 import api from "@utils/functions/api.ts";
 
-import type { BulkEmailData, CreateEmailTemplateData, SendAllUsersEmailData, UpdateEmailTemplateData } from "./types";
+import type { BulkEmailData, CreateEmailTemplateData, GetEmailTemplatesParams, SendAllUsersEmailData, UpdateEmailTemplateData } from "./types";
 import type { EmailTemplateModelType } from "@utils/types/models/emailTemplate";
 import type { PaginationOrError, TypeOrError } from "@utils/types/action";
 
-export const getEmailTemplates = async (): PaginationOrError<EmailTemplateModelType> => {
+export const getEmailTemplates = async (params?: GetEmailTemplatesParams): PaginationOrError<EmailTemplateModelType> => {
     try {
         hasAdminPosition();
-        const response = await api.get("/communications/emails/templates");
-        return {
-            data: response.data.templates,
-            meta: response.data.meta
-        };
+        const response = await api.get("/communications/emails/templates", { params });
+        return response.data;
     } catch (error) {
         return manageActionError(error);
     }
