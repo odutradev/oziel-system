@@ -1,4 +1,4 @@
-import { AssignmentTurnedIn, Description, Dashboard, Settings, People, Email, AccountBalance, EventRepeat, LocalShipping, Engineering } from "@mui/icons-material";
+import { AssignmentTurnedIn, Description, AccountBalance, EventRepeat, LocalShipping, Engineering, Dashboard, Settings, People, Email, Badge } from "@mui/icons-material";
 
 import type { MenuSection } from "../components/layout/types";
 
@@ -7,6 +7,12 @@ export const menuItemsAdmin: MenuSection[] = [
     sectionName: 'Visão Geral',
     items: [
       { name: 'Dashboard', path: '/dashboard/general', icon: <Dashboard /> },
+    ],
+  },
+  {
+    sectionName: 'Recursos Humanos',
+    items: [
+      { name: 'Monitorados', path: '/dashboard/hr/members', icon: <Badge /> },
     ],
   },
   {
@@ -45,6 +51,12 @@ export const menuItemsViewer: MenuSection[] = [
     sectionName: 'Visão Geral',
     items: [
       { name: 'Dashboard', path: '/dashboard/general', icon: <Dashboard /> },
+    ],
+  },
+  {
+    sectionName: 'Recursos Humanos',
+    items: [
+      { name: 'Monitorados', path: '/dashboard/hr/members', icon: <Badge /> },
     ],
   },
   {

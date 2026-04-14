@@ -11,6 +11,7 @@ import EmailsManagement from "@pages/admin/emails";
 import SendBulkEmail from "@pages/admin/sendBulk";
 import UsersManagement from "@pages/admin/users";
 import PwaInstall from "@pages/normal/pwaInstall";
+import HrMembers from "@pages/normal/hrMembers";
 import Operators from "@pages/normal/operators";
 import Dashboard from "@pages/normal/dashboard";
 import SystemLogs from "@pages/admin/logs";
@@ -44,6 +45,7 @@ const routes = [
         privateRoute: true,
         routes: [
             ['/general', <Dashboard />],
+            ['/hr/members', <HrMembers />],
             ['/pwa-install', <PwaInstall />],
             ['/treasury', <Treasury />],
             ['/maintenance/operations', <MachineOperations />],
