@@ -1,4 +1,4 @@
-import { AssignmentTurnedIn, ConfirmationNumber, AccountBalance, Description, EventRepeat, LocalShipping, Engineering, Dashboard, Campaign, Settings, People, Email, Badge } from "@mui/icons-material";
+import { AssignmentTurnedIn, ConfirmationNumber, AccountBalance, Description, EventRepeat, LocalShipping, Engineering, Dashboard, Campaign, Settings, People, Email, Badge, Handshake } from "@mui/icons-material";
 
 import type { MenuSection } from "../components/layout/types";
 
@@ -19,6 +19,7 @@ export const menuItemsAdmin: MenuSection[] = [
     sectionName: 'Gestão Financeira',
     items: [
       { name: 'Tesouraria', path: '/dashboard/treasury', icon: <AccountBalance /> },
+      { name: 'Contratos', path: '/dashboard/contracts', icon: <Handshake /> },
       { name: 'Agendamentos', path: '/dashboard/recurring-transactions', icon: <EventRepeat /> },
     ],
   },
@@ -65,6 +66,7 @@ export const menuItemsViewer: MenuSection[] = [
     sectionName: 'Gestão Financeira',
     items: [
       { name: 'Tesouraria', path: '/dashboard/treasury', icon: <AccountBalance /> },
+      { name: 'Contratos', path: '/dashboard/contracts', icon: <Handshake /> },
       { name: 'Agendamentos', path: '/dashboard/recurring-transactions', icon: <EventRepeat /> },
     ],
   },

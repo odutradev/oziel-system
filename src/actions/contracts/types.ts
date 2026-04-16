@@ -1,29 +1,24 @@
+import type { ContractModelType, ContractType, ContractStatusType } from "@utils/types/models/contract";
 import type { PaginationMeta } from "@utils/types/action";
 
-export type ContractType = "OTHERS" | "PNAE" | "PAA";
-export type ContractStatus = "INACTIVE" | "IRREGULAR" | "REGULAR" | "ACTIVE";
-
-export interface ContractModelType {
-    deliveryForecast: string;
-    totalSalePrice: number;
-    status: ContractStatus;
-    contractDate: string;
-    totalValue: number;
-    type: ContractType;
-    code: string;
-    _id: string;
-}
-
 export interface CreateContractData {
-    deliveryForecast: string;
-    totalSalePrice: number;
-    contractDate: string;
-    totalValue: number;
-    type: ContractType;
     code: string;
+    type: ContractType;
+    totalValue: number;
+    totalSalePrice: number;
+    contractDate: string | Date;
+    deliveryForecast: string | Date;
 }
 
-export type UpdateContractData = Partial<CreateContractData> & { status?: ContractStatus };
+export interface UpdateContractData {
+    code?: string;
+    type?: ContractType;
+    totalValue?: number;
+    status?: ContractStatusType;
+    totalSalePrice?: number;
+    contractDate?: string | Date;
+    deliveryForecast?: string | Date;
+}
 
 export interface GetContractsParams {
     limit?: number;
