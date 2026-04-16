@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
 
 import RecurringTransactions from "@pages/normal/recurringTransactions";
+import MarketingRequests from "@pages/admin/marketingRequests";
 import MachineOperations from "@pages/normal/machineOperations";
 import EmailTemplateEdit from "@pages/admin/editTemplate";
 import AccountBlocked from "@pages/normal/accountBlocked";
@@ -63,6 +64,7 @@ const routes = [
         path: "/dashboard/admin",
         privateRoute: true,
         routes: [
+            ['/marketing', <MarketingRequests />],
             ['/users', <UsersManagement />],
             ['/users/edit/:userID', <UserEdit />],
             ['/emails', <EmailsManagement />],

@@ -1,4 +1,4 @@
-import { AssignmentTurnedIn, ConfirmationNumber, AccountBalance, Description, EventRepeat, LocalShipping, Engineering, Dashboard, Settings, People, Email, Badge } from "@mui/icons-material";
+import { AssignmentTurnedIn, ConfirmationNumber, AccountBalance, Description, EventRepeat, LocalShipping, Engineering, Dashboard, Campaign, Settings, People, Email, Badge } from "@mui/icons-material";
 
 import type { MenuSection } from "../components/layout/types";
 
@@ -34,6 +34,7 @@ export const menuItemsAdmin: MenuSection[] = [
   {
     sectionName: 'Gestão',
     items: [
+      { name: 'Marketing', path: '/dashboard/admin/marketing', icon: <Campaign /> },
       { name: 'Usuários', path: '/dashboard/admin/users', icon: <People /> }
     ],
   },
