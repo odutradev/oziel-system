@@ -3,26 +3,27 @@ import { Navigate } from "react-router-dom";
 import RecurringTransactions from "@pages/normal/recurringTransactions";
 import MachineOperations from "@pages/normal/machineOperations";
 import EmailTemplateEdit from "@pages/admin/editTemplate";
-import InitialRoute from "@routes/components/initialRoute";
 import AccountBlocked from "@pages/normal/accountBlocked";
+import InitialRoute from "@routes/components/initialRoute";
 import MonthlyClosing from "@pages/normal/monthlyClosing";
+import TicketsManagement from "@pages/normal/itTickets";
 import PasswordReset from "@pages/normal/passwordReset";
 import EmailsManagement from "@pages/admin/emails";
 import SendBulkEmail from "@pages/admin/sendBulk";
 import UsersManagement from "@pages/admin/users";
 import PwaInstall from "@pages/normal/pwaInstall";
-import HrMembers from "@pages/normal/hrMembers";
-import Operators from "@pages/normal/operators";
 import Dashboard from "@pages/normal/dashboard";
-import SystemLogs from "@pages/admin/logs";
+import Operators from "@pages/normal/operators";
+import HrMembers from "@pages/normal/hrMembers";
 import Treasury from "@pages/normal/treasury";
 import NotFound from "@pages/normal/notFound";
 import UserEdit from "@pages/admin/editUser";
 import Profile from "@pages/normal/profile";
-import Fleets from "@pages/normal/fleets";
+import SystemLogs from "@pages/admin/logs";
 import Logout from "@pages/normal/logout";
 import SignIn from "@pages/normal/signIn";
 import SignUp from "@pages/normal/signUp";
+import Fleets from "@pages/normal/fleets";
 import Logs from "@pages/normal/viewLogs";
 
 const routes = [
@@ -48,6 +49,7 @@ const routes = [
             ['/hr/members', <HrMembers />],
             ['/pwa-install', <PwaInstall />],
             ['/treasury', <Treasury />],
+            ['/tickets', <TicketsManagement />],
             ['/maintenance/operations', <MachineOperations />],
             ['/maintenance/monthly-closing', <MonthlyClosing />],
             ['/maintenance/operators', <Operators />],
