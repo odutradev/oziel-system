@@ -16,6 +16,13 @@ export interface HrMemberModelType {
     hrControl?: HrControl;
 }
 
+export interface HrDashboardMetrics {
+    totalMembers: number;
+    totalFamilyMembers: number;
+    newThisMonth: number;
+    statusDistribution: Record<string, number>;
+}
+
 export interface GetHrMembersParams {
     page?: number;
     limit?: number;

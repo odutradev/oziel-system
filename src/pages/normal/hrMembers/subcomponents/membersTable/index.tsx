@@ -1,5 +1,5 @@
-import { Edit, Delete } from "@mui/icons-material";
-import { Typography } from "@mui/material";
+import { Edit, Delete, Add } from "@mui/icons-material";
+import { Typography, Button } from "@mui/material";
 
 import { TableContainerWrapper } from "./styles";
 import FullTable from "@components/fullTable";
@@ -8,7 +8,7 @@ import type { TableColumn, RowAction } from "@components/fullTable/types";
 import type { HrMemberModelType } from "@actions/hrMembers/types";
 import type { MembersTableProps } from "./types";
 
-const MembersTable = ({ members, meta, onPaginationChange, onEdit, onDelete }: MembersTableProps) => {
+const MembersTable = ({ members, meta, onPaginationChange, onEdit, onDelete, onCreate }: MembersTableProps) => {
     const columns: TableColumn<HrMemberModelType>[] = [
         { key: "name", label: "Nome", render: (row) => <Typography variant="body2" fontWeight={500}>{row.name}</Typography> },
         { key: "cpfOrRg", label: "Documento", render: (row) => row.cpfOrRg || "-" },
@@ -20,6 +20,12 @@ const MembersTable = ({ members, meta, onPaginationChange, onEdit, onDelete }: M
         { label: "Editar", icon: <Edit fontSize="small" />, onClick: onEdit },
         { label: "Excluir", icon: <Delete fontSize="small" />, onClick: (row) => row._id && onDelete(row._id) }
     ];
+
+    const headerAction = (
+        <Button variant="contained" color="primary" startIcon={<Add />} onClick={onCreate} size="small">
+            Novo Membro
+        </Button>
+    );
 
     return (
         <TableContainerWrapper>
@@ -34,6 +40,7 @@ const MembersTable = ({ members, meta, onPaginationChange, onEdit, onDelete }: M
                 onRowClick={onEdit}
                 title="Membros Monitorados (RH)"
                 chipName="membros"
+                headerContent={headerAction}
             />
         </TableContainerWrapper>
     );

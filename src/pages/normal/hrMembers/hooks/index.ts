@@ -1,25 +1,36 @@
-import { useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getHrMembers, deleteHrMember } from "@actions/hrMembers";
+import { getHrMembers, deleteHrMember, getHrDashboardMetrics } from "@actions/hrMembers";
 import usePagination from "@hooks/usePagination";
 import useAction from "@hooks/useAction";
 
-import type { HrMemberModelType } from "@actions/hrMembers/types";
+import type { HrMemberModelType, HrDashboardMetrics } from "@actions/hrMembers/types";
 import type { HrMembersHookProps } from "../types";
 
 const useHrMembersHook = (): HrMembersHookProps => {
     const navigate = useNavigate();
 
+    const [metrics, setMetrics] = useState<HrDashboardMetrics | null>(null);
+    const [loadingMetrics, setLoadingMetrics] = useState(true);
+
     const fetchMembersList = useCallback(async (page: number, limit: number) => {
         return await getHrMembers({ page, limit });
+    }, []);
+
+    const fetchMetrics = useCallback(async () => {
+        setLoadingMetrics(true);
+        const result = await getHrDashboardMetrics();
+        if (!("error" in result)) setMetrics(result);
+        setLoadingMetrics(false);
     }, []);
 
     const { data: members, meta, loading, refresh, setPage, setLimit } = usePagination<HrMemberModelType>(fetchMembersList);
 
     useEffect(() => {
         refresh();
-    }, [refresh]);
+        fetchMetrics();
+    }, [refresh, fetchMetrics]);
 
     const handlePaginationChange = useCallback((pagination: { currentPage: number; rows: number }) => {
         setPage(pagination.currentPage);
@@ -46,12 +57,14 @@ const useHrMembersHook = (): HrMembersHookProps => {
     return useMemo(() => ({
         meta,
         loading,
+        metrics,
         members,
+        loadingMetrics,
         handleEdit,
         handleCreate,
         handleDelete,
         handlePaginationChange
-    }), [meta, loading, members, handleEdit, handleCreate, handleDelete, handlePaginationChange]);
+    }), [meta, loading, metrics, members, loadingMetrics, handleEdit, handleCreate, handleDelete, handlePaginationChange]);
 };
 
 export default useHrMembersHook;

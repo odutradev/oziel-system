@@ -1,7 +1,7 @@
 import { hasAdminPosition, manageActionError } from "@utils/functions/action";
 import api from "@utils/functions/api.ts";
 
-import type { CreateHrMemberData, GetHrMembersParams, GetHrMembersResponse, HrMemberModelType, UpdateHrMemberData } from "./types";
+import type { CreateHrMemberData, GetHrMembersParams, GetHrMembersResponse, HrMemberModelType, UpdateHrMemberData, HrDashboardMetrics } from "./types";
 import type { TypeOrError } from "@utils/types/action";
 
 export const createHrMember = async (data: CreateHrMemberData): TypeOrError<HrMemberModelType> => {
@@ -48,6 +48,16 @@ export const deleteHrMember = async (id: string): TypeOrError<{ success: boolean
     try {
         hasAdminPosition();
         const response = await api.delete(`/hr/members/${id}`);
+        return response.data;
+    } catch (error) {
+        return manageActionError(error);
+    }
+};
+
+export const getHrDashboardMetrics = async (): TypeOrError<HrDashboardMetrics> => {
+    try {
+        hasAdminPosition();
+        const response = await api.get("/hr/members/dashboard");
         return response.data;
     } catch (error) {
         return manageActionError(error);

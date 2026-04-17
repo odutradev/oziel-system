@@ -7,4 +7,5 @@ export interface MembersTableProps {
     onEdit: (member: HrMemberModelType) => void;
     onDelete: (id: string) => void;
     onPaginationChange: (pagination: { currentPage: number; rows: number }) => void;
+    onCreate: () => void;
 }
