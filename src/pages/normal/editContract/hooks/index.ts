@@ -51,7 +51,7 @@ const useEditContract = (): EditContractHookProps => {
     const isDirty = useMemo(() => JSON.stringify(formData) !== JSON.stringify(initialFormData), [formData, initialFormData]);
 
     const isValid = useMemo(() => {
-        return !!formData.code && !!formData.type && !!formData.status && !!formData.contractDate && !!formData.deliveryForecast && formData.totalValue > 0;
+        return !!formData.code && !!formData.type && !!formData.status && !!formData.contractDate && formData.totalValue > 0;
     }, [formData]);
 
     const handleFieldChange = (field: keyof ContractFormData, value: string | number) => {
@@ -69,7 +69,7 @@ const useEditContract = (): EditContractHookProps => {
             totalValue: formData.totalValue,
             totalSalePrice: formData.totalSalePrice,
             contractDate: formData.contractDate,
-            deliveryForecast: formData.deliveryForecast,
+            ...(formData.deliveryForecast && { deliveryForecast: formData.deliveryForecast }),
             ...(formData.endDate && { endDate: formData.endDate })
         };
 

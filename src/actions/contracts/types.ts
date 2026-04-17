@@ -8,7 +8,7 @@ export interface CreateContractData {
     totalValue: number;
     totalSalePrice: number;
     contractDate: string | Date;
-    deliveryForecast: string | Date;
+    deliveryForecast?: string | Date;
     endDate?: string | Date;
 }
 

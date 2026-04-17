@@ -7,7 +7,7 @@ export const defaultContractFormData: ContractFormData = {
   type: '',
   status: 'ACTIVE',
   contractDate: formatInputDate(new Date()),
-  deliveryForecast: formatInputDate(new Date()),
+  deliveryForecast: '',
   endDate: '',
   totalValue: 0,
   totalSalePrice: 0,

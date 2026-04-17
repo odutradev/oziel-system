@@ -22,7 +22,7 @@ const ContractTable = ({ contracts, meta, onEdit, onDelete, onPaginationChange, 
         { key: "code", label: "Código", render: (row) => row.code },
         { key: "type", label: "Tipo", render: (row) => CONTRACT_TYPE_TRANSLATIONS[row.type] },
         { key: "contractDate", label: "Data", render: (row) => formatDate(row.contractDate as string) },
-        { key: "deliveryForecast", label: "Previsão", render: (row) => formatDate(row.deliveryForecast as string) },
+        { key: "deliveryForecast", label: "Previsão", render: (row) => row.deliveryForecast ? formatDate(row.deliveryForecast as string) : "-" },
         { key: "totalValue", label: "Valor Total", render: (row) => formatCurrency(row.totalValue) },
         { key: "status", label: "Status", render: (row) => <StatusChip label={CONTRACT_STATUS_TRANSLATIONS[row.status]} variantcolor={getStatusColor(row.status)} size="small" /> }
     ];

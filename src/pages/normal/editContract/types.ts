@@ -5,7 +5,7 @@ export interface ContractFormData {
     type: ContractType | "";
     status: ContractStatusType;
     contractDate: string;
-    deliveryForecast: string;
+    deliveryForecast?: string;
     endDate: string;
     totalValue: number;
     totalSalePrice: number;

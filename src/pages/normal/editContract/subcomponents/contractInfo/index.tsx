@@ -49,7 +49,6 @@ const ContractInfo = ({ formData, onChange }: ContractInfoProps) => {
             onChange={(e) => onChange('deliveryForecast', e.target.value)}
             InputLabelProps={{ shrink: true }}
             fullWidth
-            required
           />
           <TextField
             type="date"

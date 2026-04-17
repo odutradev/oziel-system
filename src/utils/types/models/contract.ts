@@ -36,7 +36,7 @@ export interface ContractModelType {
     type: ContractType;
     status: ContractStatusType;
     contractDate: string | Date;
-    deliveryForecast: string | Date;
+    deliveryForecast?: string | Date;
     endDate?: string | Date;
     totalValue: number;
     totalSalePrice: number;
