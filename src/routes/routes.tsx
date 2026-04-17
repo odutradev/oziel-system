@@ -10,6 +10,7 @@ import InitialRoute from "@routes/components/initialRoute";
 import MonthlyClosing from "@pages/normal/monthlyClosing";
 import TicketsManagement from "@pages/normal/itTickets";
 import PasswordReset from "@pages/normal/passwordReset";
+import EditHrMember from "@pages/normal/editHrMember";
 import EmailsManagement from "@pages/admin/emails";
 import SendBulkEmail from "@pages/admin/sendBulk";
 import UsersManagement from "@pages/admin/users";
@@ -49,6 +50,8 @@ const routes = [
         routes: [
             ['/general', <Dashboard />],
             ['/hr/members', <HrMembers />],
+            ['/hr/members/new', <EditHrMember />],
+            ['/hr/members/edit/:memberID', <EditHrMember />],
             ['/pwa-install', <PwaInstall />],
             ['/treasury', <Treasury />],
             ['/contracts', <ContractsManagement />],
