@@ -1,6 +1,6 @@
-import ContractTable from "./subcomponents/contractTable";
-import { PageContainer } from "./styles";
+import ContractGrid from "./subcomponents/contractGrid";
 import useContractsHook from "./hooks";
+import { PageContainer } from "./styles";
 import Layout from "@components/layout";
 import metadata from "./metadata";
 
@@ -10,7 +10,7 @@ const ContractsManagement = () => {
     return (
         <Layout {...metadata} loading={loading}>
             <PageContainer>
-                <ContractTable meta={meta} contracts={contracts} onEdit={handleEdit} onDelete={handleDelete} onPaginationChange={handlePaginationChange} onCreate={handleCreate} />
+                <ContractGrid meta={meta} contracts={contracts} onEdit={handleEdit} onDelete={handleDelete} onPaginationChange={handlePaginationChange} onCreate={handleCreate} />
             </PageContainer>
         </Layout>
     );

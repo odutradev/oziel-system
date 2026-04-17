@@ -1,7 +1,7 @@
 import type { ContractModelType } from "@utils/types/models/contract";
 import type { PaginationMeta } from "@utils/types/action";
 
-export interface ContractTableProps {
+export interface ContractGridProps {
     meta: PaginationMeta;
     contracts: ContractModelType[];
     onEdit: (contract: ContractModelType) => void;
