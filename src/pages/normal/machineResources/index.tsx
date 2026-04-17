@@ -1,6 +1,6 @@
 import ResourceTable from "./subcomponents/resourceTable";
-import { PageContainer } from "./styles";
 import useMachineResourcesHook from "./hooks";
+import { PageContainer } from "./styles";
 import Layout from "@components/layout";
 import metadata from "./metadata";
 
@@ -18,11 +18,12 @@ const MachineResources = () => {
     } = useMachineResourcesHook();
 
     return (
-        <Layout {...metadata} loading={loading}>
+        <Layout {...metadata}>
             <PageContainer>
                 <ResourceTable
                     meta={meta}
                     items={items}
+                    loading={loading}
                     activeTab={activeTab}
                     onEdit={handleEdit}
                     onCreate={handleCreate}

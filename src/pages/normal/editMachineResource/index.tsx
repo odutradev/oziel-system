@@ -1,10 +1,11 @@
-import FormActions from '@components/formActions';
-import Layout from '@components/layout';
+import { CircularProgress, Box } from '@mui/material';
 
 import ResourceStatus from './subcomponents/resourceStatus';
 import ResourceInfo from './subcomponents/resourceInfo';
+import FormActions from '@components/formActions';
 import useEditMachineResource from './hooks';
 import { PageContainer } from './styles';
+import Layout from '@components/layout';
 import metadata from './metadata';
 
 const EditMachineResource = () => {
@@ -33,29 +34,35 @@ const EditMachineResource = () => {
     };
 
     return (
-        <Layout {...currentMetadata} loading={loading}>
-            <PageContainer>
-                <ResourceInfo
-                    formData={formData}
-                    isFleet={isFleet}
-                    onChange={handleFieldChange}
-                />
+        <Layout {...currentMetadata}>
+            {loading ? (
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', minHeight: 400 }}>
+                    <CircularProgress />
+                </Box>
+            ) : (
+                <PageContainer>
+                    <ResourceInfo
+                        formData={formData}
+                        isFleet={isFleet}
+                        onChange={handleFieldChange}
+                    />
 
-                <ResourceStatus
-                    formData={formData}
-                    onChange={handleFieldChange}
-                />
+                    <ResourceStatus
+                        formData={formData}
+                        onChange={handleFieldChange}
+                    />
 
-                <FormActions
-                    saveLabel="Salvar"
-                    deleteLabel={`Deletar ${resourceName}`}
-                    disabled={!canSave}
-                    loading={isSaving}
-                    onSave={handleSave}
-                    onCancel={handleCancel}
-                    onDelete={isNew ? undefined : handleDelete}
-                />
-            </PageContainer>
+                    <FormActions
+                        saveLabel="Salvar"
+                        deleteLabel={`Deletar ${resourceName}`}
+                        disabled={!canSave}
+                        loading={isSaving}
+                        onSave={handleSave}
+                        onCancel={handleCancel}
+                        onDelete={isNew ? undefined : handleDelete}
+                    />
+                </PageContainer>
+            )}
         </Layout>
     );
 };

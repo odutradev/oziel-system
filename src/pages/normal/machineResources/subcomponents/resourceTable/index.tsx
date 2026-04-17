@@ -6,14 +6,15 @@ import FullTable from "@components/fullTable";
 import { StatusChip } from "./styles";
 
 import type { TableColumn, RowAction } from "@components/fullTable/types";
-import type { ResourceTableProps, ResourceItemType } from "./types";
+import type { ResourceItemType } from "../../types";
+import type { ResourceTableProps } from "./types";
 
 const TAB_OPTIONS = [
     { value: "fleets", label: "Frotas" },
     { value: "operators", label: "Operadores" }
 ];
 
-const ResourceTable = ({ items, meta, activeTab, onTabChange, onPaginationChange, onEdit, onCreate, onDelete }: ResourceTableProps) => {
+const ResourceTable = ({ items, meta, activeTab, loading, onTabChange, onPaginationChange, onEdit, onCreate, onDelete }: ResourceTableProps) => {
     const isFleet = activeTab === "fleets";
 
     const columns: TableColumn<ResourceItemType>[] = [
@@ -62,6 +63,7 @@ const ResourceTable = ({ items, meta, activeTab, onTabChange, onPaginationChange
             totalCount={meta.total}
             page={meta.page}
             limit={meta.limit}
+            loading={loading}
             onPaginationChange={onPaginationChange}
             rowActions={rowActions}
             onRowClick={onEdit}

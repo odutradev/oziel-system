@@ -3,6 +3,7 @@ import type { PaginationMeta } from "@utils/types/action";
 
 export interface ResourceTableProps {
     meta: PaginationMeta;
+    loading: boolean;
     items: ResourceItemType[];
     activeTab: ResourceTabType;
     onEdit: (item: ResourceItemType) => void;

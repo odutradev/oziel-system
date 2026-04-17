@@ -1,4 +1,4 @@
-import { AssignmentTurnedIn, ConfirmationNumber, AccountBalance, LocalShipping, Description, EventRepeat, Engineering, Dashboard, Handshake, Campaign, Settings, People, Badge, Email, InsertChart } from "@mui/icons-material";
+import { AssignmentTurnedIn, ConfirmationNumber, AccountBalance, LocalShipping, Description, EventRepeat, Engineering, Dashboard, Handshake, Campaign, People, Badge, Email, InsertChart } from "@mui/icons-material";
 
 import type { MenuSection } from "../components/layout/types";
 

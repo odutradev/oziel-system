@@ -31,4 +31,5 @@ export interface FullTableProps<T> {
     rowActions?: RowAction<T>[];
     onRowClick?: (row: T) => void;
     headerContent?: ReactNode;
+    loading?: boolean;
 }

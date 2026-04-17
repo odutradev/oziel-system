@@ -1,4 +1,4 @@
-import { Box, Chip, IconButton, InputAdornment, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow, Typography, ListItemIcon } from "@mui/material";
+import { Box, Chip, IconButton, InputAdornment, Menu, MenuItem, Table, TableBody, TableCell, TableHead, TableRow, Typography, ListItemIcon, CircularProgress } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import SearchIcon from "@mui/icons-material/Search";
 import InboxIcon from "@mui/icons-material/Inbox";
@@ -9,7 +9,7 @@ import Pagination from "@components/pagination";
 
 import type { FullTableProps } from "./types";
 
-const FullTable = <T,>({ data = [], columns, title, totalCount, page, limit, onPaginationChange, onSearch, showActions = true, showPagination = true, chipName = "itens", rowActions = [], onRowClick, headerContent }: FullTableProps<T>) => {
+const FullTable = <T,>({ data = [], columns, title, totalCount, page, limit, onPaginationChange, onSearch, showActions = true, showPagination = true, chipName = "itens", rowActions = [], onRowClick, headerContent, loading = false }: FullTableProps<T>) => {
     const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
     const [selectedRow, setSelectedRow] = useState<T | null>(null);
     const [search, setSearch] = useState("");
@@ -58,7 +58,11 @@ const FullTable = <T,>({ data = [], columns, title, totalCount, page, limit, onP
             </Header>
 
             <StyledTableContainer>
-                {safeData.length === 0 ? (
+                {loading ? (
+                    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" py={6}>
+                        <CircularProgress size={40} />
+                    </Box>
+                ) : safeData.length === 0 ? (
                     <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" py={6}>
                         <InboxIcon fontSize="large" color="disabled" />
                         <Typography color="text.secondary" mt={1}>Nenhum dado disponível</Typography>
@@ -102,7 +106,7 @@ const FullTable = <T,>({ data = [], columns, title, totalCount, page, limit, onP
                 )}
             </StyledTableContainer>
 
-            {showPagination && safeData.length > 0 && (
+            {showPagination && safeData.length > 0 && !loading && (
                 <Footer>
                     <Pagination totalItems={totalCount} currentPage={page} rowsPerPage={limit} onPaginationChange={onPaginationChange} />
                 </Footer>
