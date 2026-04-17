@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
 import { TextField } from '@mui/material';
+import { useMemo } from 'react';
 
 import InputWithValidation from '@components/inputWithValidation';
 import { validateDocument } from '@utils/validations/documents';
@@ -10,6 +10,7 @@ import type { PersonalInfoProps } from './types';
 
 const PersonalInfo = ({ formData, onChange }: PersonalInfoProps) => {
   const documentStatus = useMemo(() => validateDocument(formData.cpfOrRg || ''), [formData.cpfOrRg]);
+  const emailStatus = useMemo(() => (!formData.email ? 'idle' : /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) ? 'valid' : 'invalid'), [formData.email]);
   const isNameEmpty = !(formData.name || '').trim();
 
   return (
@@ -37,11 +38,14 @@ const PersonalInfo = ({ formData, onChange }: PersonalInfoProps) => {
           />
         </Row>
         <Row>
-          <TextField
+          <InputWithValidation
             label="Email"
             type="email"
             value={formData.email || ''}
             onChange={(e) => onChange('email', e.target.value)}
+            validationStatus={emailStatus}
+            successMessage="Email com formato válido"
+            errorMessage="Formato de email inválido"
             fullWidth
           />
           <TextField

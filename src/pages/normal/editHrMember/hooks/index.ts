@@ -50,8 +50,9 @@ const useEditHrMember = (): EditHrMemberHookProps => {
     const isValid = useMemo(() => {
         const isNameValid = !!(formData.name || '').trim();
         const isCpfValid = formData.cpfOrRg ? validateDocument(formData.cpfOrRg) === 'valid' || formData.cpfOrRg.length > 5 : false;
-        return isNameValid && isCpfValid;
-    }, [formData.name, formData.cpfOrRg]);
+        const isEmailValid = !formData.email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+        return isNameValid && isCpfValid && isEmailValid;
+    }, [formData.name, formData.cpfOrRg, formData.email]);
 
     const handleFieldChange = (field: keyof HrMemberFormData, value: string | number) => {
         setFormData(prev => ({ ...prev, [field]: value }));
