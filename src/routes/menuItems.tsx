@@ -1,4 +1,4 @@
-import { AssignmentTurnedIn, ConfirmationNumber, AccountBalance, LocalShipping, Description, EventRepeat, Engineering, Dashboard, Handshake, Campaign, Settings, People, Badge, Email } from "@mui/icons-material";
+import { AssignmentTurnedIn, ConfirmationNumber, AccountBalance, LocalShipping, Description, EventRepeat, Engineering, Dashboard, Handshake, Campaign, Settings, People, Badge, Email, InsertChart } from "@mui/icons-material";
 
 import type { MenuSection } from "../components/layout/types";
 
@@ -25,6 +25,7 @@ export const menuItemsAdmin: MenuSection[] = [
   {
     sectionName: 'Compras e Contratos',
     items: [
+      { name: 'Dashboard Contratos', path: '/dashboard/contracts/dashboard', icon: <InsertChart /> },
       { name: 'Contratos', path: '/dashboard/contracts', icon: <Handshake /> },
     ],
   },
@@ -77,6 +78,7 @@ export const menuItemsViewer: MenuSection[] = [
   {
     sectionName: 'Compras e Contratos',
     items: [
+      { name: 'Dashboard Contratos', path: '/dashboard/contracts/dashboard', icon: <InsertChart /> },
       { name: 'Contratos', path: '/dashboard/contracts', icon: <Handshake /> },
     ],
   },

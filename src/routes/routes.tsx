@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
 
 import RecurringTransactions from "@pages/normal/recurringTransactions";
+import ContractsDashboard from "@pages/normal/contractsDashboard";
 import ContractsManagement from "@pages/normal/contracts";
 import MarketingRequests from "@pages/admin/marketingRequests";
 import MachineOperations from "@pages/normal/machineOperations";
@@ -55,6 +56,7 @@ const routes = [
             ['/hr/members/edit/:memberID', <EditHrMember />],
             ['/pwa-install', <PwaInstall />],
             ['/treasury', <Treasury />],
+            ['/contracts/dashboard', <ContractsDashboard />],
             ['/contracts', <ContractsManagement />],
             ['/contracts/new', <EditContract />],
             ['/contracts/edit/:contractID', <EditContract />],
