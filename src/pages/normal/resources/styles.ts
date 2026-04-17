@@ -6,11 +6,3 @@ export const PageContainer = styled("main")(({ theme }) => ({
     display: "flex",
     width: "100%"
 }));
-
-export const HeaderControls = styled("section")(({ theme }) => ({
-    justifyContent: "flex-end",
-    marginBottom: theme.spacing(2),
-    alignItems: "center",
-    display: "flex",
-    width: "100%"
-}));

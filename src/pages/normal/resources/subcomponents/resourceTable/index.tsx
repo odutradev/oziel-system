@@ -1,5 +1,5 @@
-import { Edit, Delete } from "@mui/icons-material";
-import { Box } from "@mui/material";
+import { Edit, Delete, Add } from "@mui/icons-material";
+import { Box, Button } from "@mui/material";
 
 import ToggleGroup from "@components/toggleGroup";
 import FullTable from "@components/fullTable";
@@ -13,7 +13,7 @@ const TAB_OPTIONS = [
     { value: "operators", label: "Operadores" }
 ];
 
-const ResourceTable = ({ items, meta, activeTab, onTabChange, onPaginationChange, onEdit, onDelete }: ResourceTableProps) => {
+const ResourceTable = ({ items, meta, activeTab, onTabChange, onPaginationChange, onEdit, onCreate, onDelete }: ResourceTableProps) => {
     const isFleet = activeTab === "fleets";
 
     const columns: TableColumn<ResourceItemType>[] = [
@@ -40,13 +40,18 @@ const ResourceTable = ({ items, meta, activeTab, onTabChange, onPaginationChange
     ];
 
     const headerContent = (
-        <Box sx={{ minWidth: 280 }}>
-            <ToggleGroup
-                options={TAB_OPTIONS}
-                value={activeTab}
-                onChange={onTabChange}
-                size="small"
-            />
+        <Box sx={{ display: "flex", gap: 2, alignItems: "center", flexWrap: "wrap", justifyContent: "flex-end" }}>
+            <Box sx={{ minWidth: 280 }}>
+                <ToggleGroup
+                    options={TAB_OPTIONS}
+                    value={activeTab}
+                    onChange={onTabChange}
+                    size="small"
+                />
+            </Box>
+            <Button variant="contained" color="primary" startIcon={<Add />} onClick={onCreate} sx={{ whiteSpace: "nowrap" }}>
+                {isFleet ? "Nova Frota" : "Novo Operador"}
+            </Button>
         </Box>
     );
 

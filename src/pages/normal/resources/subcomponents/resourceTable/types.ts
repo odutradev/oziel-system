@@ -6,6 +6,7 @@ export interface ResourceTableProps {
     items: ResourceItemType[];
     activeTab: ResourceTabType;
     onEdit: (item: ResourceItemType) => void;
+    onCreate: () => void;
     onDelete: (id: string) => void;
     onPaginationChange: (pagination: { currentPage: number; rows: number }) => void;
     onTabChange: (event: React.MouseEvent<HTMLElement>, value: string | null) => void;
