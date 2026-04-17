@@ -17,13 +17,27 @@ export type ContractStatusType = typeof CONTRACT_STATUS[keyof typeof CONTRACT_ST
 export const CONTRACT_TYPES_ARRAY = Object.values(CONTRACT_TYPES);
 export const CONTRACT_STATUS_ARRAY = Object.values(CONTRACT_STATUS);
 
+export const CONTRACT_TYPE_TRANSLATIONS: Record<ContractType, string> = {
+    OTHERS: "Outros",
+    PNAE: "PNAE",
+    PAA: "PAA"
+};
+
+export const CONTRACT_STATUS_TRANSLATIONS: Record<ContractStatusType, string> = {
+    IRREGULAR: "Irregular",
+    INACTIVE: "Inativo",
+    REGULAR: "Regular",
+    ACTIVE: "Ativo"
+};
+
 export interface ContractModelType {
     _id?: string;
     code: string;
     type: ContractType;
-    status?: ContractStatusType;
+    status: ContractStatusType;
     contractDate: string | Date;
     deliveryForecast: string | Date;
+    endDate?: string | Date;
     totalValue: number;
     totalSalePrice: number;
     createdAt?: string | Date;

@@ -1,24 +1,12 @@
-import type { ContractModelType, ContractType, ContractStatusType } from "@utils/types/models/contract";
-
-export interface ContractFormData {
-    _id?: string;
-    code: string;
-    type: ContractType | "";
-    status?: ContractStatusType | "";
-    contractDate: string;
-    deliveryForecast: string;
-    totalValue: number;
-    totalSalePrice: number;
-}
+import type { ContractModelType } from "@utils/types/models/contract";
+import type { PaginationMeta } from "@utils/types/action";
 
 export interface ContractsHookProps {
-    contracts: ContractModelType[];
-    formData: ContractFormData;
-    modalOpen: boolean;
+    meta: PaginationMeta;
     loading: boolean;
-    handleSave: () => Promise<void>;
-    handleCloseModal: () => void;
+    contracts: ContractModelType[];
+    handleCreate: () => void;
+    handleEdit: (contract: ContractModelType) => void;
     handleDelete: (id: string) => Promise<void>;
-    handleOpenModal: (contract?: ContractModelType) => void;
-    handleFormChange: (field: keyof ContractFormData, value: unknown) => void;
+    handlePaginationChange: (pagination: { currentPage: number; rows: number }) => void;
 }

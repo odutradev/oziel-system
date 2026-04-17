@@ -4,20 +4,23 @@ import type { PaginationMeta } from "@utils/types/action";
 export interface CreateContractData {
     code: string;
     type: ContractType;
+    status: ContractStatusType;
     totalValue: number;
     totalSalePrice: number;
     contractDate: string | Date;
     deliveryForecast: string | Date;
+    endDate?: string | Date;
 }
 
 export interface UpdateContractData {
     code?: string;
     type?: ContractType;
-    totalValue?: number;
     status?: ContractStatusType;
+    totalValue?: number;
     totalSalePrice?: number;
     contractDate?: string | Date;
     deliveryForecast?: string | Date;
+    endDate?: string | Date;
 }
 
 export interface GetContractsParams {

@@ -11,6 +11,7 @@ import MonthlyClosing from "@pages/normal/monthlyClosing";
 import TicketsManagement from "@pages/normal/itTickets";
 import PasswordReset from "@pages/normal/passwordReset";
 import EditHrMember from "@pages/normal/editHrMember";
+import EditContract from "@pages/normal/editContract";
 import EmailsManagement from "@pages/admin/emails";
 import SendBulkEmail from "@pages/admin/sendBulk";
 import UsersManagement from "@pages/admin/users";
@@ -55,6 +56,8 @@ const routes = [
             ['/pwa-install', <PwaInstall />],
             ['/treasury', <Treasury />],
             ['/contracts', <ContractsManagement />],
+            ['/contracts/new', <EditContract />],
+            ['/contracts/edit/:contractID', <EditContract />],
             ['/tickets', <TicketsManagement />],
             ['/maintenance/operations', <MachineOperations />],
             ['/maintenance/monthly-closing', <MonthlyClosing />],

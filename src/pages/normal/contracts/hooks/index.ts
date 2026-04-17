@@ -1,103 +1,57 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useCallback, useMemo, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { getContracts, createContract, updateContract, deleteContract } from "@actions/contracts";
-import { formatInputDate } from "@utils/formatters";
+import { getContracts, deleteContract } from "@actions/contracts";
+import usePagination from "@hooks/usePagination";
 import useAction from "@hooks/useAction";
 
-import type { CreateContractData, UpdateContractData } from "@actions/contracts/types";
 import type { ContractModelType } from "@utils/types/models/contract";
-import type { ContractsHookProps, ContractFormData } from "../types";
-
-const INITIAL_FORM_DATA: ContractFormData = {
-    deliveryForecast: formatInputDate(new Date()),
-    contractDate: formatInputDate(new Date()),
-    totalSalePrice: 0,
-    totalValue: 0,
-    code: "",
-    type: ""
-};
+import type { ContractsHookProps } from "../types";
 
 const useContractsHook = (): ContractsHookProps => {
-    const [formData, setFormData] = useState<ContractFormData>(INITIAL_FORM_DATA);
-    const [contracts, setContracts] = useState<ContractModelType[]>([]);
-    const [modalOpen, setModalOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
-    const fetchContracts = useCallback(async () => {
-        setLoading(true);
-        const response = await getContracts({ limit: 1000 });
-        if (response && !("error" in response)) setContracts(response.data);
-        setLoading(false);
+    const fetchContractsList = useCallback(async (page: number, limit: number) => {
+        return await getContracts({ page, limit });
     }, []);
+
+    const { data: contracts, meta, loading, refresh, setPage, setLimit } = usePagination<ContractModelType>(fetchContractsList);
 
     useEffect(() => {
-        fetchContracts();
-    }, [fetchContracts]);
+        refresh();
+    }, [refresh]);
 
-    const handleOpenModal = useCallback((contract?: ContractModelType) => {
-        if (contract) {
-            setFormData({
-                _id: contract._id,
-                code: contract.code,
-                type: contract.type,
-                status: contract.status || "",
-                totalValue: contract.totalValue || 0,
-                totalSalePrice: contract.totalSalePrice || 0,
-                contractDate: formatInputDate(contract.contractDate ? new Date(contract.contractDate) : new Date()),
-                deliveryForecast: formatInputDate(contract.deliveryForecast ? new Date(contract.deliveryForecast) : new Date()),
-            });
-        } else {
-            setFormData(INITIAL_FORM_DATA);
-        }
-        setModalOpen(true);
-    }, []);
+    const handlePaginationChange = useCallback((pagination: { currentPage: number; rows: number }) => {
+        setPage(pagination.currentPage);
+        setLimit(pagination.rows);
+    }, [setPage, setLimit]);
 
-    const handleCloseModal = useCallback(() => {
-        setModalOpen(false);
-        setFormData(INITIAL_FORM_DATA);
-    }, []);
+    const handleCreate = useCallback(() => {
+        navigate("/dashboard/contracts/new");
+    }, [navigate]);
 
-    const handleFormChange = useCallback((field: keyof ContractFormData, value: unknown) => {
-        setFormData((prev) => ({ ...prev, [field]: value }));
-    }, []);
-
-    const handleSave = useCallback(async () => {
-        if (!formData.code || !formData.type || !formData.contractDate || !formData.deliveryForecast) return;
-
-        const isUpdate = !!formData._id;
-        const payload = isUpdate
-            ? { code: formData.code, type: formData.type, status: formData.status, totalValue: formData.totalValue, totalSalePrice: formData.totalSalePrice, contractDate: formData.contractDate, deliveryForecast: formData.deliveryForecast } as UpdateContractData
-            : { code: formData.code, type: formData.type, totalValue: formData.totalValue, totalSalePrice: formData.totalSalePrice, contractDate: formData.contractDate, deliveryForecast: formData.deliveryForecast } as CreateContractData;
-
-        await useAction({
-            action: async () => isUpdate ? await updateContract(formData._id as string, payload as UpdateContractData) : await createContract(payload as CreateContractData),
-            toastMessages: { success: "Contrato salvo com sucesso", error: "Erro ao salvar contrato", pending: "Salvando..." },
-            callback: () => {
-                fetchContracts();
-                handleCloseModal();
-            }
-        });
-    }, [formData, fetchContracts, handleCloseModal]);
+    const handleEdit = useCallback((contract: ContractModelType) => {
+        navigate(`/dashboard/contracts/edit/${contract._id}`);
+    }, [navigate]);
 
     const handleDelete = useCallback(async (id: string) => {
+        if (!confirm("Tem certeza que deseja remover este contrato?")) return;
         await useAction({
             action: async () => await deleteContract(id),
-            toastMessages: { success: "Contrato removido com sucesso", error: "Erro ao remover", pending: "Removendo..." },
-            callback: fetchContracts
+            toastMessages: { success: "Contrato removido com sucesso", error: "Erro ao remover contrato", pending: "Removendo..." },
+            callback: refresh
         });
-    }, [fetchContracts]);
+    }, [refresh]);
 
     return useMemo(() => ({
-        handleFormChange,
-        handleCloseModal,
-        handleOpenModal,
-        handleDelete,
-        handleSave,
+        meta,
+        loading,
         contracts,
-        modalOpen,
-        formData,
-        loading
-    }), [handleFormChange, handleCloseModal, handleOpenModal, handleDelete, handleSave, contracts, modalOpen, formData, loading]);
+        handleEdit,
+        handleCreate,
+        handleDelete,
+        handlePaginationChange
+    }), [meta, loading, contracts, handleEdit, handleCreate, handleDelete, handlePaginationChange]);
 };
 
 export default useContractsHook;
