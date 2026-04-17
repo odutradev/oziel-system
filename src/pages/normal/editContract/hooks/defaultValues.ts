@@ -11,4 +11,5 @@ export const defaultContractFormData: ContractFormData = {
   endDate: '',
   totalValue: 0,
   totalSalePrice: 0,
+  detailsMarkdown: '',
 };

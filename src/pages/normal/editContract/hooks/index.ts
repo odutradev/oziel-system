@@ -1,13 +1,13 @@
-import { getContractById, updateContract, createContract, deleteContract } from '@actions/contracts';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect, useMemo } from 'react';
 
-import { formatInputDate } from '@utils/formatters';
+import { getContractById, updateContract, createContract, deleteContract } from '@actions/contracts';
 import { defaultContractFormData } from './defaultValues';
+import { formatInputDate } from '@utils/formatters';
 import useAction from '@hooks/useAction';
 
-import type { ContractFormData, EditContractHookProps } from '../types';
 import type { CreateContractData, UpdateContractData } from '@actions/contracts/types';
+import type { ContractFormData, EditContractHookProps } from '../types';
 
 const useEditContract = (): EditContractHookProps => {
     const { contractID } = useParams<{ contractID: string }>();
@@ -40,7 +40,8 @@ const useEditContract = (): EditContractHookProps => {
             deliveryForecast: result.deliveryForecast ? formatInputDate(new Date(result.deliveryForecast)) : '',
             endDate: result.endDate ? formatInputDate(new Date(result.endDate)) : '',
             totalValue: result.totalValue || 0,
-            totalSalePrice: result.totalSalePrice || 0
+            totalSalePrice: result.totalSalePrice || 0,
+            detailsMarkdown: result.detailsMarkdown || ''
         };
 
         setFormData(mappedData);
@@ -69,6 +70,7 @@ const useEditContract = (): EditContractHookProps => {
             totalValue: formData.totalValue,
             totalSalePrice: formData.totalSalePrice,
             contractDate: formData.contractDate,
+            detailsMarkdown: formData.detailsMarkdown,
             ...(formData.deliveryForecast && { deliveryForecast: formData.deliveryForecast }),
             ...(formData.endDate && { endDate: formData.endDate })
         };

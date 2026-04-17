@@ -1,6 +1,7 @@
 import FormActions from '@components/formActions';
 import Layout from '@components/layout';
 
+import ContractDetails from './subcomponents/contractDetails';
 import ContractStatus from './subcomponents/contractStatus';
 import ContractInfo from './subcomponents/contractInfo';
 import { PageContainer } from './styles';
@@ -33,6 +34,11 @@ const EditContract = () => {
         <Layout {...currentMetadata} loading={loading}>
             <PageContainer>
                 <ContractInfo
+                    formData={formData}
+                    onChange={handleFieldChange}
+                />
+
+                <ContractDetails
                     formData={formData}
                     onChange={handleFieldChange}
                 />

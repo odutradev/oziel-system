@@ -9,6 +9,7 @@ export interface ContractFormData {
     endDate: string;
     totalValue: number;
     totalSalePrice: number;
+    detailsMarkdown: string;
 }
 
 export interface EditContractHookProps {
