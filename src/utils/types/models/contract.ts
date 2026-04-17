@@ -40,6 +40,7 @@ export interface ContractModelType {
     endDate?: string | Date;
     totalValue: number;
     totalSalePrice: number;
+    detailsMarkdown?: string;
     createdAt?: string | Date;
     updatedAt?: string | Date;
 }

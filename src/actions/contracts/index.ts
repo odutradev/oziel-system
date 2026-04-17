@@ -1,13 +1,22 @@
 import { manageActionError } from "@utils/functions/action";
 import api from "@utils/functions/api";
 
-import type { GetContractsParams, GetContractsResponse, CreateContractData, UpdateContractData } from "./types";
+import type { GetContractsParams, GetContractsResponse, CreateContractData, UpdateContractData, GetContractsDashboardParams, DashboardMetricsResponse } from "./types";
 import type { ContractModelType } from "@utils/types/models/contract";
 import type { TypeOrError } from "@utils/types/action";
 
 export const getContracts = async (params?: GetContractsParams): TypeOrError<GetContractsResponse> => {
     try {
         const response = await api.get("/contracts", { params });
+        return response.data;
+    } catch (error) {
+        return manageActionError(error);
+    }
+};
+
+export const getContractsDashboard = async (params?: GetContractsDashboardParams): TypeOrError<DashboardMetricsResponse> => {
+    try {
+        const response = await api.get("/contracts/dashboard", { params });
         return response.data;
     } catch (error) {
         return manageActionError(error);
