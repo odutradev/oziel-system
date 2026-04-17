@@ -29,8 +29,7 @@ const ContractGrid = ({ contracts, meta, onEdit, onDelete, onPaginationChange, o
         setAnchorEl(event.currentTarget);
     };
 
-    const handleCloseMenu = (event?: MouseEvent<HTMLElement>) => {
-        if (event) event.stopPropagation();
+    const handleCloseMenu = () => {
         setSelectedContract(null);
         setAnchorEl(null);
     };
