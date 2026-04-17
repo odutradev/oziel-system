@@ -27,10 +27,13 @@ export const HeaderInfo = styled(Box)(({ theme }) => ({
 }));
 
 export const Grid = styled(Box)(({ theme }) => ({
-    gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+    gridTemplateColumns: "repeat(2, 1fr)",
     gap: theme.spacing(3),
     display: "grid",
-    width: "100%"
+    width: "100%",
+    [theme.breakpoints.down("md")]: {
+        gridTemplateColumns: "1fr"
+    }
 }));
 
 export const Card = styled(Paper)(({ theme }) => ({
@@ -68,6 +71,16 @@ export const CardContent = styled(Box)(({ theme }) => ({
     gap: theme.spacing(2),
     display: "flex",
     flexGrow: 1
+}));
+
+export const InfoGrid = styled(Box)(({ theme }) => ({
+    gridTemplateColumns: "repeat(2, 1fr)",
+    gap: theme.spacing(2),
+    display: "grid",
+    width: "100%",
+    [theme.breakpoints.down("sm")]: {
+        gridTemplateColumns: "1fr"
+    }
 }));
 
 export const InfoRow = styled(Box)(({ theme }) => ({

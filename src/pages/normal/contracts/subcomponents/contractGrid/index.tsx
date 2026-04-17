@@ -1,8 +1,8 @@
 import { Typography, Button, IconButton, Box, Menu, MenuItem, ListItemIcon, ListItemText, Chip } from "@mui/material";
-import { Add, Edit, Delete, MoreVert, Event, EventAvailable, Payments } from "@mui/icons-material";
+import { Add, Edit, Delete, MoreVert, Event, LocalShipping, EventAvailable, Payments } from "@mui/icons-material";
 import { useState, MouseEvent } from "react";
 
-import { Container, Header, HeaderInfo, Grid, Card, CardHeader, ChipsWrapper, CardContent, InfoRow, InfoTextWrapper, StatusChip, Footer } from "./styles";
+import { Container, Header, HeaderInfo, Grid, Card, CardHeader, ChipsWrapper, CardContent, InfoGrid, InfoRow, InfoTextWrapper, StatusChip, Footer } from "./styles";
 import { CONTRACT_TYPE_TRANSLATIONS, CONTRACT_STATUS_TRANSLATIONS } from "@utils/types/models/contract";
 import { formatCurrency, formatDate } from "@utils/formatters";
 import Pagination from "@components/pagination";
@@ -80,31 +80,40 @@ const ContractGrid = ({ contracts, meta, onEdit, onDelete, onPaginationChange, o
                                 </IconButton>
                             </CardHeader>
                             <CardContent>
-                                <InfoRow>
-                                    <Event />
-                                    <InfoTextWrapper>
-                                        <Typography variant="caption" color="text.secondary" lineHeight={1.2}>Data do Contrato</Typography>
-                                        <Typography variant="body2" fontWeight={500}>{formatDate(contract.contractDate as string)}</Typography>
-                                    </InfoTextWrapper>
-                                </InfoRow>
-                                {contract.deliveryForecast && (
+                                <InfoGrid>
                                     <InfoRow>
-                                        <EventAvailable />
+                                        <Event />
                                         <InfoTextWrapper>
-                                            <Typography variant="caption" color="text.secondary" lineHeight={1.2}>Previsão de Entrega</Typography>
-                                            <Typography variant="body2" fontWeight={500}>{formatDate(contract.deliveryForecast as string)}</Typography>
+                                            <Typography variant="caption" color="text.secondary" lineHeight={1.2}>Data do Contrato</Typography>
+                                            <Typography variant="body2" fontWeight={500}>{formatDate(contract.contractDate as string)}</Typography>
                                         </InfoTextWrapper>
                                     </InfoRow>
-                                )}
-                                <InfoRow sx={{ mt: 1, justifyContent: "space-between" }}>
-                                    <Box display="flex" alignItems="center" gap={1}>
+                                    {contract.deliveryForecast && (
+                                        <InfoRow>
+                                            <LocalShipping />
+                                            <InfoTextWrapper>
+                                                <Typography variant="caption" color="text.secondary" lineHeight={1.2}>Previsão de Entrega</Typography>
+                                                <Typography variant="body2" fontWeight={500}>{formatDate(contract.deliveryForecast as string)}</Typography>
+                                            </InfoTextWrapper>
+                                        </InfoRow>
+                                    )}
+                                    {contract.endDate && (
+                                        <InfoRow>
+                                            <EventAvailable />
+                                            <InfoTextWrapper>
+                                                <Typography variant="caption" color="text.secondary" lineHeight={1.2}>Data de Finalização</Typography>
+                                                <Typography variant="body2" fontWeight={500}>{formatDate(contract.endDate as string)}</Typography>
+                                            </InfoTextWrapper>
+                                        </InfoRow>
+                                    )}
+                                    <InfoRow>
                                         <Payments color="primary" />
-                                        <Typography variant="body2" color="text.secondary" fontWeight={500}>Valor Total</Typography>
-                                    </Box>
-                                    <Typography variant="subtitle1" fontWeight={700} color="primary.main">
-                                        {formatCurrency(contract.totalValue)}
-                                    </Typography>
-                                </InfoRow>
+                                        <InfoTextWrapper>
+                                            <Typography variant="caption" color="text.secondary" lineHeight={1.2}>Valor Total</Typography>
+                                            <Typography variant="body2" fontWeight={700} color="primary.main">{formatCurrency(contract.totalValue)}</Typography>
+                                        </InfoTextWrapper>
+                                    </InfoRow>
+                                </InfoGrid>
                             </CardContent>
                         </Card>
                     ))}
