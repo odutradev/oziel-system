@@ -1,25 +1,21 @@
 import ResourceTable from "./subcomponents/resourceTable";
-import ResourceModal from "./subcomponents/resourceModal";
 import { PageContainer } from "./styles";
-import useResourcesHook from "./hooks";
+import useMachineResourcesHook from "./hooks";
 import Layout from "@components/layout";
 import metadata from "./metadata";
 
-const Resources = () => {
+const MachineResources = () => {
     const {
         meta,
         items,
         loading,
         activeTab,
-        modalState,
-        handleSave,
+        handleEdit,
+        handleCreate,
         handleDelete,
-        handleOpenModal,
         handleTabChange,
-        handleCloseModal,
-        handleFormChange,
         handlePaginationChange
-    } = useResourcesHook();
+    } = useMachineResourcesHook();
 
     return (
         <Layout {...metadata} loading={loading}>
@@ -28,21 +24,15 @@ const Resources = () => {
                     meta={meta}
                     items={items}
                     activeTab={activeTab}
-                    onEdit={handleOpenModal}
-                    onCreate={() => handleOpenModal()}
+                    onEdit={handleEdit}
+                    onCreate={handleCreate}
                     onDelete={handleDelete}
                     onTabChange={handleTabChange}
                     onPaginationChange={handlePaginationChange}
-                />
-                <ResourceModal
-                    state={modalState}
-                    onClose={handleCloseModal}
-                    onSave={handleSave}
-                    onChange={handleFormChange}
                 />
             </PageContainer>
         </Layout>
     );
 };
 
-export default Resources;
+export default MachineResources;

@@ -49,7 +49,7 @@ const ResourceTable = ({ items, meta, activeTab, onTabChange, onPaginationChange
                     size="small"
                 />
             </Box>
-            <Button variant="contained" color="primary" startIcon={<Add />} onClick={onCreate} sx={{ whiteSpace: "nowrap" }}>
+            <Button variant="contained" color="primary" startIcon={<Add />} onClick={onCreate} sx={{ whiteSpace: "nowrap", height: 40 }}>
                 {isFleet ? "Nova Frota" : "Novo Operador"}
             </Button>
         </Box>
@@ -64,6 +64,7 @@ const ResourceTable = ({ items, meta, activeTab, onTabChange, onPaginationChange
             limit={meta.limit}
             onPaginationChange={onPaginationChange}
             rowActions={rowActions}
+            onRowClick={onEdit}
             title={isFleet ? "Frotas Cadastradas" : "Operadores Cadastrados"}
             chipName={isFleet ? "frotas" : "operadores"}
             headerContent={headerContent}

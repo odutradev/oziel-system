@@ -4,27 +4,16 @@ import type { PaginationMeta } from "@utils/types/action";
 
 export type ResourceTabType = "operators" | "fleets";
 
-export interface ResourceFormData {
-    _id?: string;
-    name: string;
-    description?: string;
-    document?: string;
-    active: boolean;
-}
-
 export type ResourceItemType = OperatorModelType | FleetModelType;
 
-export interface ResourcesHookProps {
+export interface MachineResourcesHookProps {
     meta: PaginationMeta;
     loading: boolean;
     activeTab: ResourceTabType;
-    modalState: { open: boolean; data: ResourceFormData; type: ResourceTabType };
     items: ResourceItemType[];
-    handleSave: () => Promise<void>;
-    handleCloseModal: () => void;
+    handleCreate: () => void;
+    handleEdit: (item: ResourceItemType) => void;
     handleDelete: (id: string) => Promise<void>;
-    handleOpenModal: (item?: ResourceItemType) => void;
-    handleFormChange: (field: keyof ResourceFormData, value: string | boolean) => void;
     handlePaginationChange: (pagination: { currentPage: number; rows: number }) => void;
     handleTabChange: (event: React.MouseEvent<HTMLElement>, value: string | null) => void;
 }

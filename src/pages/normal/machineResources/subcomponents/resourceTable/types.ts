@@ -11,5 +11,3 @@ export interface ResourceTableProps {
     onPaginationChange: (pagination: { currentPage: number; rows: number }) => void;
     onTabChange: (event: React.MouseEvent<HTMLElement>, value: string | null) => void;
 }
-
-export type { ResourceItemType };

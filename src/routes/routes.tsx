@@ -1,10 +1,12 @@
 import { Navigate } from "react-router-dom";
 
+import EditMachineResource from "@pages/normal/editMachineResource";
 import RecurringTransactions from "@pages/normal/recurringTransactions";
 import ContractsDashboard from "@pages/normal/contractsDashboard";
 import ContractsManagement from "@pages/normal/contracts";
 import MarketingRequests from "@pages/admin/marketingRequests";
 import MachineOperations from "@pages/normal/machineOperations";
+import MachineResources from "@pages/normal/machineResources";
 import EmailTemplateEdit from "@pages/admin/editTemplate";
 import AccountBlocked from "@pages/normal/accountBlocked";
 import InitialRoute from "@routes/components/initialRoute";
@@ -17,7 +19,6 @@ import EmailsManagement from "@pages/admin/emails";
 import SendBulkEmail from "@pages/admin/sendBulk";
 import UsersManagement from "@pages/admin/users";
 import PwaInstall from "@pages/normal/pwaInstall";
-import Resources from "@pages/normal/resources";
 import Dashboard from "@pages/normal/dashboard";
 import HrMembers from "@pages/normal/hrMembers";
 import Treasury from "@pages/normal/treasury";
@@ -62,7 +63,9 @@ const routes = [
             ['/tickets', <TicketsManagement />],
             ['/maintenance/operations', <MachineOperations />],
             ['/maintenance/monthly-closing', <MonthlyClosing />],
-            ['/maintenance/resources', <Resources />],
+            ['/maintenance/machine-resources', <MachineResources />],
+            ['/maintenance/machine-resources/new/:type', <EditMachineResource />],
+            ['/maintenance/machine-resources/edit/:type/:resourceID', <EditMachineResource />],
             ['/recurring-transactions', <RecurringTransactions />],
             ['/profile', <Profile />],
             ['/logs', <Logs />],
