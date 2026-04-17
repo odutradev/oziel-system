@@ -34,8 +34,7 @@ export const menuItemsAdmin: MenuSection[] = [
     items: [
       { name: 'Operações', path: '/dashboard/maintenance/operations', icon: <Engineering /> },
       { name: 'Fechamento', path: '/dashboard/maintenance/monthly-closing', icon: <AssignmentTurnedIn /> },
-      { name: 'Operadores', path: '/dashboard/maintenance/operators', icon: <Settings /> },
-      { name: 'Frotas', path: '/dashboard/maintenance/fleets', icon: <LocalShipping /> },
+      { name: 'Frotas e Operadores', path: '/dashboard/maintenance/resources', icon: <LocalShipping /> },
     ],
   },
   {
@@ -87,8 +86,7 @@ export const menuItemsViewer: MenuSection[] = [
     items: [
       { name: 'Operações', path: '/dashboard/maintenance/operations', icon: <Engineering /> },
       { name: 'Fechamento', path: '/dashboard/maintenance/monthly-closing', icon: <AssignmentTurnedIn /> },
-      { name: 'Operadores', path: '/dashboard/maintenance/operators', icon: <Settings /> },
-      { name: 'Frotas', path: '/dashboard/maintenance/fleets', icon: <LocalShipping /> },
+      { name: 'Frotas e Operadores', path: '/dashboard/maintenance/resources', icon: <LocalShipping /> },
     ],
   },
   {

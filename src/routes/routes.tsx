@@ -17,8 +17,8 @@ import EmailsManagement from "@pages/admin/emails";
 import SendBulkEmail from "@pages/admin/sendBulk";
 import UsersManagement from "@pages/admin/users";
 import PwaInstall from "@pages/normal/pwaInstall";
+import Resources from "@pages/normal/resources";
 import Dashboard from "@pages/normal/dashboard";
-import Operators from "@pages/normal/operators";
 import HrMembers from "@pages/normal/hrMembers";
 import Treasury from "@pages/normal/treasury";
 import NotFound from "@pages/normal/notFound";
@@ -28,7 +28,6 @@ import SystemLogs from "@pages/admin/logs";
 import Logout from "@pages/normal/logout";
 import SignIn from "@pages/normal/signIn";
 import SignUp from "@pages/normal/signUp";
-import Fleets from "@pages/normal/fleets";
 import Logs from "@pages/normal/viewLogs";
 
 const routes = [
@@ -63,8 +62,7 @@ const routes = [
             ['/tickets', <TicketsManagement />],
             ['/maintenance/operations', <MachineOperations />],
             ['/maintenance/monthly-closing', <MonthlyClosing />],
-            ['/maintenance/operators', <Operators />],
-            ['/maintenance/fleets', <Fleets />],
+            ['/maintenance/resources', <Resources />],
             ['/recurring-transactions', <RecurringTransactions />],
             ['/profile', <Profile />],
             ['/logs', <Logs />],

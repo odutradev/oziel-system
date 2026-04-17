@@ -3,9 +3,9 @@ import type { LayoutProps } from "@components/layout/types";
 const metadata: Partial<LayoutProps> = {
     breadcrumbs: [
         { name: "Dashboard", url: "/dashboard/general" },
-        { name: "Frotas", url: "/dashboard/maintenance/fleets" }
+        { name: "Frotas e Operadores", url: "/dashboard/maintenance/resources" }
     ],
-    pageTitle: "Gestão de Frotas"
+    pageTitle: "Recursos de Manutenção"
 };
 
 export default metadata;
