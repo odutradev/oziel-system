@@ -61,7 +61,7 @@ const ContractGrid = ({ contracts, meta, onEdit, onDelete, onPaginationChange, o
             </Header>
 
             {contracts.length === 0 ? (
-                <NoData message="Nenhum contrato encontrado" />
+                <NoData message="Nenhum contrato encontrado" height="calc(100vh - 280px)" />
             ) : (
                 <Grid>
                     {contracts.map((contract) => (
