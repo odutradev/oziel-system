@@ -41,6 +41,7 @@ export const Card = styled(Paper)(({ theme }) => ({
     flexDirection: "column",
     gap: theme.spacing(2),
     display: "flex",
+    cursor: "pointer",
     boxShadow: "none",
     "&:hover": {
         borderColor: theme.palette.primary.main,
@@ -55,28 +56,36 @@ export const CardHeader = styled(Box)({
     width: "100%"
 });
 
+export const ChipsWrapper = styled(Box)(({ theme }) => ({
+    marginTop: theme.spacing(1),
+    gap: theme.spacing(1),
+    flexWrap: "wrap",
+    display: "flex"
+}));
+
 export const CardContent = styled(Box)(({ theme }) => ({
     flexDirection: "column",
-    gap: theme.spacing(1),
+    gap: theme.spacing(2),
     display: "flex",
     flexGrow: 1
 }));
 
-export const InfoRow = styled(Box)({
-    justifyContent: "space-between",
+export const InfoRow = styled(Box)(({ theme }) => ({
     alignItems: "center",
     display: "flex",
-    width: "100%"
-});
-
-export const CardActions = styled(Box)(({ theme }) => ({
-    borderTop: `1px solid ${theme.palette.divider}`,
-    justifyContent: "flex-end",
-    paddingTop: theme.spacing(1),
-    gap: theme.spacing(1),
-    alignItems: "center",
-    display: "flex"
+    gap: theme.spacing(1.5),
+    width: "100%",
+    "& svg": {
+        color: theme.palette.text.secondary,
+        fontSize: "1.2rem"
+    }
 }));
+
+export const InfoTextWrapper = styled(Box)({
+    flexDirection: "column",
+    display: "flex",
+    flexGrow: 1
+});
 
 export const StatusChip = styled(Chip)<{ variantcolor: "success" | "warning" | "error" | "default" | "info" }>(({ theme, variantcolor }) => ({
     backgroundColor: variantcolor === "default" ? theme.palette.grey[300] : theme.palette[variantcolor].light,
