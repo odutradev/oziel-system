@@ -21,8 +21,8 @@ export const Header = styled(Box)(({ theme }) => ({
 }));
 
 export const HeaderInfo = styled(Box)(({ theme }) => ({
-    gap: theme.spacing(2),
-    alignItems: "center",
+    gap: theme.spacing(1),
+    alignItems: "baseline",
     display: "flex"
 }));
 

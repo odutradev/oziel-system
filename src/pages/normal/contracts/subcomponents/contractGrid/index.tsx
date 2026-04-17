@@ -51,7 +51,9 @@ const ContractGrid = ({ contracts, meta, onEdit, onDelete, onPaginationChange, o
             <Header>
                 <HeaderInfo>
                     <Typography variant="h6" fontWeight={600}>Contratos</Typography>
-                    <Typography variant="body2" color="text.secondary">Total: {meta.total}</Typography>
+                    <Typography variant="subtitle1" color="text.secondary">
+                        ({meta.total} {meta.total === 1 ? "contrato" : "contratos"})
+                    </Typography>
                 </HeaderInfo>
                 <Button variant="contained" color="primary" startIcon={<Add />} onClick={onCreate}>
                     Novo Contrato
