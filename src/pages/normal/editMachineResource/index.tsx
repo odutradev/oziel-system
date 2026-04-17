@@ -1,6 +1,7 @@
 import FormActions from '@components/formActions';
 import Layout from '@components/layout';
 
+import ResourceStatus from './subcomponents/resourceStatus';
 import ResourceInfo from './subcomponents/resourceInfo';
 import useEditMachineResource from './hooks';
 import { PageContainer } from './styles';
@@ -37,6 +38,11 @@ const EditMachineResource = () => {
                 <ResourceInfo
                     formData={formData}
                     isFleet={isFleet}
+                    onChange={handleFieldChange}
+                />
+
+                <ResourceStatus
+                    formData={formData}
                     onChange={handleFieldChange}
                 />
 
