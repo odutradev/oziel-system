@@ -1,5 +1,5 @@
-import { styled } from "@mui/material/styles";
 import { Box, Paper, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 export const Container = styled(Box)(({ theme }) => ({
     display: "grid",
@@ -13,7 +13,7 @@ export const MetricCard = styled(Paper)(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
     gap: theme.spacing(1.5),
-    borderRadius: theme.shape.borderRadius * 2,
+    borderRadius: (theme.shape.borderRadius as number) * 2,
     border: `1px solid ${theme.palette.divider}`,
     boxShadow: "none"
 }));
