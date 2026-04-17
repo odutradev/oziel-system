@@ -1,19 +1,19 @@
-import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useMemo } from 'react';
 import { Box } from '@mui/material';
 
 import { menuItemsAdmin, menuItemsViewer } from '../../routes/menuItems';
 import ProfileManager from './subcomponents/profileManager';
 import LayoutDrawer from './subcomponents/layoutDrawer';
 import MenuSection from './subcomponents/menuSection';
-import useMountOnce from '@hooks/useMountOnce';
 import Content from './subcomponents/content';
+import useMountOnce from '@hooks/useMountOnce';
 import Navbar from './subcomponents/navbar';
 import useSystemStore from '@stores/system';
-import useDevice from '@hooks/useDevice';
 import Loading from '@components/loading';
-import useUserStore from '@stores/user';
 import Errors from '@components/errors';
+import useUserStore from '@stores/user';
+import useDevice from '@hooks/useDevice';
 import { getUser } from '@actions/user';
 import { MenuContent } from './styles';
 
@@ -24,6 +24,7 @@ const Layout = ({ children, breadcrumbs, navbarComponent, disableGetUser, loadin
   const [hasPermission] = useState(true);
   const { user } = useUserStore(x => x);
   const { isMobile } = useDevice();
+  const location = useLocation();
   const navigate = useNavigate();
 
   const width = isMobile ? '100%' : (system.menuOpen ? 240 : 56);
@@ -44,6 +45,14 @@ const Layout = ({ children, breadcrumbs, navbarComponent, disableGetUser, loadin
     if (isMobile) handleClose();
   };
 
+  const menuItems = user?.role === 'normal' ? menuItemsViewer : menuItemsAdmin;
+
+  const activePath = useMemo(() => {
+    const allItems = menuItems.flatMap(section => section.items);
+    const matches = allItems.filter(item => location.pathname === item.path || location.pathname.startsWith(`${item.path}/`));
+    return matches.sort((a, b) => b.path.length - a.path.length)[0]?.path || '';
+  }, [location.pathname, menuItems]);
+
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
       <title>{pageTitle}</title>
@@ -55,10 +64,11 @@ const Layout = ({ children, breadcrumbs, navbarComponent, disableGetUser, loadin
         width={width}
       >
         <MenuContent>
-          {(user?.role === 'normal' ? menuItemsViewer : menuItemsAdmin).map(section => (
+          {menuItems.map(section => (
             <MenuSection
               key={section.sectionName}
               section={section}
+              activePath={activePath}
               lastBreadcrumbUrl={breadcrumbs?.[breadcrumbs?.length]?.url}
               onNavigate={handleNavigation}
             />

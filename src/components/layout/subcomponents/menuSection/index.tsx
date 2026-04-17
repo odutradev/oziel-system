@@ -1,14 +1,12 @@
 import { ListItemButton, ListItemIcon, ListItemText, Typography, ListItem, useTheme, Tooltip, List, Box } from '@mui/material';
-import { useLocation } from 'react-router-dom';
 
 import useSystemStore from '@stores/system';
 
 import type { LayoutMenuSectionProps } from './types';
 
-const MenuSection = ({ section, onNavigate }: LayoutMenuSectionProps) => {
+const MenuSection = ({ section, activePath, onNavigate }: LayoutMenuSectionProps) => {
   const { system } = useSystemStore(x => x);
   const theme = useTheme();
-  const location = useLocation();
 
   const iconAlign = system.menuOpen ? {} : { justifyContent: 'center', alignItems: 'center' };
 
@@ -21,7 +19,7 @@ const MenuSection = ({ section, onNavigate }: LayoutMenuSectionProps) => {
       )}
       <List disablePadding>
         {section.items.map(item => {
-          const isSelected = location.pathname === item.path || location.pathname.startsWith(`${item.path}/`);
+          const isSelected = activePath === item.path;
 
           const listItemButton = (
             <ListItemButton
