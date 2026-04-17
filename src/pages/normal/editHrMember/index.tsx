@@ -2,8 +2,8 @@ import FormActions from '@components/formActions';
 import Layout from '@components/layout';
 
 import PersonalInfo from './subcomponents/personalInfo';
-import useEditHrMember from './hooks';
 import { PageContainer } from './styles';
+import useEditHrMember from './hooks';
 import metadata from './metadata';
 
 const EditHrMember = () => {
@@ -41,10 +41,9 @@ const EditHrMember = () => {
                     deleteLabel="Deletar Membro"
                     disabled={!canSave}
                     loading={isSaving}
-                    hideDelete={isNew}
                     onSave={handleSave}
                     onCancel={handleCancel}
-                    onDelete={handleDelete}
+                    onDelete={isNew ? undefined : handleDelete}
                 />
             </PageContainer>
         </Layout>

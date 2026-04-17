@@ -31,6 +31,7 @@ const MembersTable = ({ members, meta, onPaginationChange, onEdit, onDelete }: M
                 limit={meta.limit}
                 onPaginationChange={onPaginationChange}
                 rowActions={rowActions}
+                onRowClick={onEdit}
                 title="Membros Monitorados (RH)"
                 chipName="membros"
             />

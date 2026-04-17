@@ -4,14 +4,14 @@ import metadata from "./metadata";
 import useLogs from "./hooks";
 
 const Logs = () => {
-  const { logs, meta, loading, page, limit, setPage, setLimit, onSearch } = useLogs();
+  const { logs, meta, loading, page, limit, setPage, setLimit, setSearchTerm } = useLogs();
 
   return (
     <Layout {...metadata} loading={loading}>
       <LogsTable
         onLimitChange={setLimit}
         onPageChange={setPage}
-        onSearch={onSearch}
+        onSearch={setSearchTerm}
         loading={loading}
         data={logs}
         meta={meta}
