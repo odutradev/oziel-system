@@ -9,13 +9,10 @@ export const Container = styled(Box)(({ theme }) => ({
 }));
 
 export const Header = styled(Box)(({ theme }) => ({
-    backgroundColor: theme.palette.background.paper,
-    border: `1px solid ${theme.palette.divider}`,
-    borderRadius: theme.shape.borderRadius,
     justifyContent: "space-between",
-    padding: theme.spacing(2),
     alignItems: "center",
     display: "flex",
+    width: "100%",
     [theme.breakpoints.down("sm")]: {
         flexDirection: "column",
         alignItems: "stretch",
@@ -32,7 +29,8 @@ export const HeaderInfo = styled(Box)(({ theme }) => ({
 export const Grid = styled(Box)(({ theme }) => ({
     gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
     gap: theme.spacing(3),
-    display: "grid"
+    display: "grid",
+    width: "100%"
 }));
 
 export const Card = styled(Paper)(({ theme }) => ({
@@ -88,10 +86,9 @@ export const StatusChip = styled(Chip)<{ variantcolor: "success" | "warning" | "
 }));
 
 export const Footer = styled(Box)(({ theme }) => ({
-    backgroundColor: theme.palette.background.paper,
-    border: `1px solid ${theme.palette.divider}`,
-    borderRadius: theme.shape.borderRadius,
     justifyContent: "center",
-    padding: theme.spacing(2),
-    display: "flex"
+    paddingTop: theme.spacing(1),
+    alignItems: "center",
+    display: "flex",
+    width: "100%"
 }));
