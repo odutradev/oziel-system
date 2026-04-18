@@ -1,4 +1,4 @@
-import { Menu, MenuItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Menu, MenuItem, ListItemIcon, ListItemText } from "@mui/material";
 import { Edit, Send, RateReview } from "@mui/icons-material";
 import { useState } from "react";
 
@@ -36,10 +36,9 @@ const CalendarView = ({ items, onEdit, onSendApproval, onReview }: CalendarViewP
         }));
 
     const handleEventClick = (event: CalendarEvent<MarketingItemModelType>, target: HTMLElement) => {
-        if (event.data) {
-            setSelectedItem(event.data);
-            setAnchorEl(target);
-        }
+        if (!event.data) return;
+        setSelectedItem(event.data);
+        setAnchorEl(target);
     };
 
     const handleCloseMenu = () => {
@@ -61,27 +60,29 @@ const CalendarView = ({ items, onEdit, onSendApproval, onReview }: CalendarViewP
 
     return (
         <ViewContainer>
-            <Typography variant="h6" fontWeight={600}>Calendário e Aprovações</Typography>
             <Calendar events={calendarEvents} onEventClick={handleEventClick} />
-
             <Menu anchorEl={anchorEl} open={open} onClose={handleCloseMenu} PaperProps={{ sx: { minWidth: 200 } }}>
                 {(selectedItem?.status === "PLANNED" || selectedItem?.status === "REVISION_REQUIRED") && (
                     <MenuItem onClick={() => handleAction("send")}>
-                        <ListItemIcon><Send color="primary" fontSize="small" /></ListItemIcon>
+                        <ListItemIcon>
+                            <Send color="primary" fontSize="small" />
+                        </ListItemIcon>
                         <ListItemText>Enviar Aprovação</ListItemText>
                     </MenuItem>
                 )}
-
                 {selectedItem?.status === "WAITING_APPROVAL" && (
                     <MenuItem onClick={() => handleAction("review")}>
-                        <ListItemIcon><RateReview color="warning" fontSize="small" /></ListItemIcon>
+                        <ListItemIcon>
+                            <RateReview color="warning" fontSize="small" />
+                        </ListItemIcon>
                         <ListItemText>Revisar</ListItemText>
                     </MenuItem>
                 )}
-
                 {selectedItem?.status !== "APPROVED" && selectedItem?.status !== "COMPLETED" && (
                     <MenuItem onClick={() => handleAction("edit")}>
-                        <ListItemIcon><Edit fontSize="small" /></ListItemIcon>
+                        <ListItemIcon>
+                            <Edit fontSize="small" />
+                        </ListItemIcon>
                         <ListItemText>Editar</ListItemText>
                     </MenuItem>
                 )}

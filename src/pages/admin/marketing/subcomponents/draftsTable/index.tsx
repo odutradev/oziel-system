@@ -1,8 +1,8 @@
 import { Edit, Delete, EventAvailable, Add } from "@mui/icons-material";
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 
-import { TableContainer, TableHeader } from "./styles";
 import FullTable from "@components/fullTable";
+import { TableContainer } from "./styles";
 
 import type { MarketingItemModelType } from "@actions/marketingRequests/types";
 import type { TableColumn, RowAction } from "@components/fullTable/types";
@@ -23,11 +23,8 @@ const DraftsTable = ({ drafts, onEdit, onSchedule, onDelete, onNew }: DraftsTabl
 
     return (
         <TableContainer>
-            <TableHeader>
-                <Typography variant="h6" fontWeight={600}>Ideias em Rascunho</Typography>
-                <Button variant="contained" color="primary" startIcon={<Add />} onClick={onNew}>Novo Rascunho</Button>
-            </TableHeader>
             <FullTable
+                headerContent={<Button variant="contained" color="primary" startIcon={<Add />} onClick={onNew}>Novo Rascunho</Button>}
                 onPaginationChange={() => void 0}
                 limit={drafts.length || 10}
                 totalCount={drafts.length}
