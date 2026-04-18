@@ -4,6 +4,21 @@ import api from "@utils/functions/api";
 import type { CreateDraftData, GetDraftsParams, GetDraftsResponse, MarketingItemModelType, UpdateDraftData } from "./types";
 import type { TypeOrError } from "@utils/types/action";
 
+export const getMarketingItemById = async (id: string): TypeOrError<MarketingItemModelType> => {
+    try {
+        hasAdminPosition();
+        try {
+            const response = await api.get(`/marketing/drafts/${id}`);
+            return response.data;
+        } catch {
+            const response = await api.get(`/marketing/calendar/${id}`);
+            return response.data;
+        }
+    } catch (error) {
+        return manageActionError(error);
+    }
+};
+
 export const getDrafts = async (params?: GetDraftsParams): TypeOrError<GetDraftsResponse> => {
     try {
         hasAdminPosition();

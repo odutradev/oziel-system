@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 
-import { getCalendarItems, scheduleDraft, sendForApproval, reviewCalendarItem, getDrafts, createDraft, updateDraft, deleteDraft } from "@actions/marketingRequests";
+import { getCalendarItems, scheduleDraft, sendForApproval, reviewCalendarItem, getDrafts, deleteDraft } from "@actions/marketingRequests";
 import useAction from "@hooks/useAction";
 
-import type { DraftFormData, ScheduleFormData, ReviewFormData, MarketingHookProps } from "../types";
+import type { ScheduleFormData, ReviewFormData, MarketingHookProps } from "../types";
 import type { MarketingItemModelType } from "@actions/marketingRequests/types";
 
 const useMarketingHook = (): MarketingHookProps => {
@@ -13,7 +13,6 @@ const useMarketingHook = (): MarketingHookProps => {
     const [drafts, setDrafts] = useState<MarketingItemModelType[]>([]);
     const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
     const [reviewModalOpen, setReviewModalOpen] = useState(false);
-    const [draftModalOpen, setDraftModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const fetchDraftsData = useCallback(async () => {
@@ -39,13 +38,7 @@ const useMarketingHook = (): MarketingHookProps => {
         setSelectedCalendarItem(null);
         setScheduleModalOpen(false);
         setReviewModalOpen(false);
-        setDraftModalOpen(false);
         setSelectedDraft(null);
-    }, []);
-
-    const handleOpenDraftModal = useCallback((draft?: MarketingItemModelType) => {
-        if (draft) setSelectedDraft(draft._id);
-        setDraftModalOpen(true);
     }, []);
 
     const handleOpenScheduleModal = useCallback((draftId: string) => {
@@ -57,18 +50,6 @@ const useMarketingHook = (): MarketingHookProps => {
         setSelectedCalendarItem(item._id);
         setReviewModalOpen(true);
     }, []);
-
-    const handleSaveDraft = useCallback(async (data: DraftFormData) => {
-        const payload = { title: data.title, description: data.description, strategy: data.strategy, content: data.content };
-        await useAction({
-            action: async () => data._id ? await updateDraft(data._id, payload) : await createDraft(payload),
-            toastMessages: { success: "Rascunho salvo com sucesso", error: "Erro ao salvar rascunho", pending: "Salvando..." },
-            callback: () => {
-                fetchDraftsData();
-                handleCloseModals();
-            }
-        });
-    }, [fetchDraftsData, handleCloseModals]);
 
     const handleDeleteDraft = useCallback(async (id: string) => {
         await useAction({
@@ -113,24 +94,21 @@ const useMarketingHook = (): MarketingHookProps => {
         handleOpenScheduleModal,
         handleOpenReviewModal,
         selectedCalendarItem,
-        handleOpenDraftModal,
         handleScheduleDraft,
         handleDeleteDraft,
         handleSendApproval,
         handleReviewItem,
         scheduleModalOpen,
         handleCloseModals,
-        handleSaveDraft,
         reviewModalOpen,
-        draftModalOpen,
         calendarItems,
         selectedDraft,
         loading,
         drafts
     }), [
-        handleOpenScheduleModal, handleOpenReviewModal, selectedCalendarItem, handleOpenDraftModal, handleScheduleDraft,
-        handleDeleteDraft, handleSendApproval, handleReviewItem, scheduleModalOpen, handleCloseModals, handleSaveDraft,
-        reviewModalOpen, draftModalOpen, calendarItems, selectedDraft, loading, drafts
+        handleOpenScheduleModal, handleOpenReviewModal, selectedCalendarItem, handleScheduleDraft,
+        handleDeleteDraft, handleSendApproval, handleReviewItem, scheduleModalOpen, handleCloseModals,
+        reviewModalOpen, calendarItems, selectedDraft, loading, drafts
     ]);
 };
 

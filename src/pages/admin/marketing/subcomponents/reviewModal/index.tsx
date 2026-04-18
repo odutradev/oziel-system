@@ -1,9 +1,10 @@
 import { DialogTitle, DialogContent, DialogActions, Typography, Divider, Dialog, Button, Box } from "@mui/material";
 import { CheckCircle, Cancel } from "@mui/icons-material";
+import MDEditor from "@uiw/react-md-editor";
 import { useState, useEffect } from "react";
 
-import { FormContainer, ReadOnlySection, ContentBlock } from "./styles";
 import InputWithCounter from "@components/inputWithCounter";
+import { FormContainer, ReadOnlySection } from "./styles";
 
 import type { ReviewModalProps } from "./types";
 
@@ -27,12 +28,12 @@ const ReviewModal = ({ open, item, onClose, onSave }: ReviewModalProps) => {
             <DialogTitle>Revisar Conteúdo: {item.title}</DialogTitle>
             <DialogContent>
                 <FormContainer>
-                    <ReadOnlySection>
-                        <Typography variant="subtitle2" color="textSecondary">Estratégia Proposta</Typography>
-                        <ContentBlock>{item.strategy || "Nenhuma estratégia definida."}</ContentBlock>
+                    <ReadOnlySection data-color-mode="light">
+                        <Typography variant="subtitle2" color="textSecondary" mb={1}>Estratégia Proposta</Typography>
+                        <MDEditor.Markdown source={item.strategy || "Nenhuma estratégia definida."} />
                         <Divider sx={{ my: 2 }} />
-                        <Typography variant="subtitle2" color="textSecondary">Conteúdo / Legenda</Typography>
-                        <ContentBlock>{item.content || "Nenhum conteúdo definido."}</ContentBlock>
+                        <Typography variant="subtitle2" color="textSecondary" mb={1}>Conteúdo / Legenda</Typography>
+                        <MDEditor.Markdown source={item.content || "Nenhum conteúdo definido."} />
                     </ReadOnlySection>
                     <InputWithCounter label="Feedback / Notas de Revisão" value={feedbackNotes} onChange={(e) => setFeedbackNotes(e.target.value)} maxLength={1000} multiline rows={4} placeholder="Obrigatório em caso de rejeição" />
                 </FormContainer>

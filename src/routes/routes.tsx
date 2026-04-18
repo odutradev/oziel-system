@@ -13,6 +13,7 @@ import InitialRoute from "@routes/components/initialRoute";
 import MonthlyClosing from "@pages/normal/monthlyClosing";
 import TicketsManagement from "@pages/normal/itTickets";
 import PasswordReset from "@pages/normal/passwordReset";
+import EditMarketing from "@pages/admin/editMarketing";
 import EditHrMember from "@pages/normal/editHrMember";
 import EditContract from "@pages/normal/editContract";
 import EmailsManagement from "@pages/admin/emails";
@@ -81,6 +82,8 @@ const routes = [
             ['/emails/edit/:templateID', <EmailTemplateEdit />],
             ['/emails/send-bulk', <SendBulkEmail />],
             ['/marketing', <MarketingManagement />],
+            ['/marketing/new', <EditMarketing />],
+            ['/marketing/edit/:itemID', <EditMarketing />],
             ['/logs', <SystemLogs />],
         ]
     },
