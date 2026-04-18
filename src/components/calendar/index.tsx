@@ -1,10 +1,10 @@
-import { IconButton, Typography } from "@mui/material";
 import { ChevronRight, ChevronLeft } from "@mui/icons-material";
+import { IconButton, Typography } from "@mui/material";
 import { useState, useMemo } from "react";
 
 import { CalendarContainer, CalendarHeader, WeekDaysRow, WeekDayCell, DaysGrid, DayCell, DayNumber, EventChip } from "./styles";
 
-import type { CalendarProps, CalendarEvent } from "./types";
+import type { CalendarProps } from "./types";
 
 const WEEK_DAYS = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 const MONTHS = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
