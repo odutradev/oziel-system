@@ -1,4 +1,4 @@
-import { Autocomplete, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, Box } from "@mui/material";
+import { Autocomplete, DialogTitle, DialogContent, DialogActions, TextField, Dialog, Button, Box } from "@mui/material";
 
 import InputWithCounter from "@components/inputWithCounter";
 import { formatCurrency } from "@utils/formatters";
@@ -6,7 +6,7 @@ import { FormContainer, FormRow } from "./styles";
 
 import type { OperationModalProps } from "./types";
 
-const OperationModal = ({ open, formData, operators, fleets, onClose, onSave, onChange }: OperationModalProps) => {
+const OperationModal = ({ open, formData, operators, assets, onClose, onSave, onChange }: OperationModalProps) => {
     return (
         <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
             <DialogTitle>{formData._id ? "Editar Operação" : "Nova Operação"}</DialogTitle>
@@ -14,7 +14,7 @@ const OperationModal = ({ open, formData, operators, fleets, onClose, onSave, on
                 <FormContainer>
                     <FormRow>
                         <Autocomplete options={operators} getOptionLabel={(option) => option.name} value={formData.operator} onChange={(_, newValue) => onChange("operator", newValue)} renderInput={(params) => <TextField {...params} label="Operador" required />} fullWidth />
-                        <Autocomplete options={fleets} getOptionLabel={(option) => option.name} value={formData.fleet} onChange={(_, newValue) => onChange("fleet", newValue)} renderInput={(params) => <TextField {...params} label="Frota" required />} fullWidth />
+                        <Autocomplete options={assets} getOptionLabel={(option) => option.name} value={formData.asset} onChange={(_, newValue) => onChange("asset", newValue)} renderInput={(params) => <TextField {...params} label="Ativo" required />} fullWidth />
                     </FormRow>
                     <FormRow>
                         <TextField type="date" label="Data da Operação" value={formData.operationDate} onChange={(e) => onChange("operationDate", e.target.value)} InputLabelProps={{ shrink: true }} fullWidth required />
@@ -35,7 +35,7 @@ const OperationModal = ({ open, formData, operators, fleets, onClose, onSave, on
             </DialogContent>
             <DialogActions sx={{ padding: 2 }}>
                 <Button onClick={onClose} color="inherit">Cancelar</Button>
-                <Button onClick={onSave} variant="contained" color="primary" disabled={!formData.operator || !formData.fleet || !formData.serviceDescription}>Salvar</Button>
+                <Button onClick={onSave} variant="contained" color="primary" disabled={!formData.operator || !formData.asset || !formData.serviceDescription}>Salvar</Button>
             </DialogActions>
         </Dialog>
     );

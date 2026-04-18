@@ -1,15 +1,15 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 
-import { getMonthlyDashboard, createMachineOperation, updateMachineOperation, updateMachineOperationStatus, deleteMachineOperation } from "@actions/machineOperations";
+import { updateMachineOperationStatus, createMachineOperation, updateMachineOperation, deleteMachineOperation, getMonthlyDashboard } from "@actions/machineOperations";
 import { formatInputDate } from "@utils/formatters";
 import { getOperators } from "@actions/operators";
-import { getFleets } from "@actions/fleets";
+import { getAssets } from "@actions/assets";
 import useAction from "@hooks/useAction";
 
-import type { MonthlyDashboardMetrics, MachineOperationModelType, CreateOperationData, MachineOperationStatusType } from "@actions/machineOperations/types";
+import type { MachineOperationStatusType, MachineOperationModelType, MonthlyDashboardMetrics, CreateOperationData } from "@actions/machineOperations/types";
 import type { MachineOperationsHookProps, OperationFormData } from "../types";
 import type { OperatorModelType } from "@actions/operators/types";
-import type { FleetModelType } from "@actions/fleets/types";
+import type { AssetModelType } from "@actions/assets/types";
 
 const INITIAL_FORM_DATA: OperationFormData = {
     operationDate: formatInputDate(new Date()),
@@ -20,7 +20,7 @@ const INITIAL_FORM_DATA: OperationFormData = {
     serviceDescription: "",
     hourlyRate: 0,
     operator: null,
-    fleet: null
+    asset: null
 };
 
 const useMachineOperationsHook = (): MachineOperationsHookProps => {
@@ -29,14 +29,14 @@ const useMachineOperationsHook = (): MachineOperationsHookProps => {
     const [metrics, setMetrics] = useState<MonthlyDashboardMetrics | null>(null);
     const [operators, setOperators] = useState<OperatorModelType[]>([]);
     const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-    const [fleets, setFleets] = useState<FleetModelType[]>([]);
+    const [assets, setAssets] = useState<AssetModelType[]>([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const fetchDependencies = useCallback(async () => {
-        const [opsRes, fleetsRes] = await Promise.all([getOperators({ limit: 1000 }), getFleets({ limit: 1000 })]);
+        const [opsRes, assetsRes] = await Promise.all([getOperators({ limit: 1000 }), getAssets({ limit: 1000 })]);
         if (opsRes && !("error" in opsRes)) setOperators(opsRes.data);
-        if (fleetsRes && !("error" in fleetsRes)) setFleets(fleetsRes.data);
+        if (assetsRes && !("error" in assetsRes)) setAssets(assetsRes.data);
     }, []);
 
     const fetchDashboard = useCallback(async () => {
@@ -61,7 +61,7 @@ const useMachineOperationsHook = (): MachineOperationsHookProps => {
     const handleOpenModal = useCallback((operation?: MachineOperationModelType) => {
         if (operation) {
             const opId = typeof operation.operator === "object" && operation.operator ? (operation.operator as OperatorModelType)._id : operation.operator as string;
-            const flId = typeof operation.fleet === "object" && operation.fleet ? (operation.fleet as FleetModelType)._id : operation.fleet as string;
+            const assetId = typeof operation.asset === "object" && operation.asset ? (operation.asset as AssetModelType)._id : operation.asset as string;
             setFormData({
                 _id: operation._id,
                 operationDate: formatInputDate(operation.operationDate ? new Date(operation.operationDate) : new Date()),
@@ -72,13 +72,13 @@ const useMachineOperationsHook = (): MachineOperationsHookProps => {
                 serviceDescription: operation.serviceDescription || "",
                 hourlyRate: operation.hourlyRate || 0,
                 operator: operators.find(o => o._id === opId) || null,
-                fleet: fleets.find(f => f._id === flId) || null,
+                asset: assets.find(a => a._id === assetId) || null,
             });
         } else {
             setFormData(INITIAL_FORM_DATA);
         }
         setModalOpen(true);
-    }, [operators, fleets]);
+    }, [operators, assets]);
 
     const handleCloseModal = useCallback(() => {
         setModalOpen(false);
@@ -98,7 +98,7 @@ const useMachineOperationsHook = (): MachineOperationsHookProps => {
     }, []);
 
     const handleSave = useCallback(async () => {
-        if (!formData.operator || !formData.fleet || !formData.operationDate || !formData.serviceDescription) return;
+        if (!formData.operator || !formData.asset || !formData.operationDate || !formData.serviceDescription) return;
         const payload: CreateOperationData = {
             hourMeterServiceStart: formData.hourMeterServiceStart,
             hourMeterServiceEnd: formData.hourMeterServiceEnd,
@@ -108,7 +108,7 @@ const useMachineOperationsHook = (): MachineOperationsHookProps => {
             operationDate: formData.operationDate,
             hourlyRate: formData.hourlyRate,
             operator: formData.operator._id,
-            fleet: formData.fleet._id,
+            asset: formData.asset._id,
         };
         await useAction({
             action: async () => formData._id ? await updateMachineOperation(formData._id, payload) : await createMachineOperation(payload),
@@ -137,22 +137,22 @@ const useMachineOperationsHook = (): MachineOperationsHookProps => {
     }, [fetchDashboard]);
 
     return useMemo(() => ({
-        metrics,
-        loading,
-        formData,
-        modalOpen,
-        operations,
-        selectedDate,
-        operators,
-        fleets,
-        handleSave,
-        handleDelete,
-        handleOpenModal,
-        handleCloseModal,
-        handleFormChange,
+        handleStatusChange,
         handleChangeMonth,
-        handleStatusChange
-    }), [metrics, loading, formData, modalOpen, operations, selectedDate, operators, fleets, handleSave, handleDelete, handleOpenModal, handleCloseModal, handleFormChange, handleChangeMonth, handleStatusChange]);
+        handleFormChange,
+        handleCloseModal,
+        handleOpenModal,
+        selectedDate,
+        handleDelete,
+        handleSave,
+        operations,
+        modalOpen,
+        operators,
+        formData,
+        loading,
+        metrics,
+        assets
+    }), [metrics, loading, formData, modalOpen, operations, selectedDate, operators, assets, handleSave, handleDelete, handleOpenModal, handleCloseModal, handleFormChange, handleChangeMonth, handleStatusChange]);
 };
 
 export default useMachineOperationsHook;

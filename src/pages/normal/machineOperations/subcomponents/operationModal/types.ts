@@ -1,13 +1,13 @@
-import type { OperationFormData } from "../../types";
 import type { OperatorModelType } from "@actions/operators/types";
-import type { FleetModelType } from "@actions/fleets/types";
+import type { AssetModelType } from "@actions/assets/types";
+import type { OperationFormData } from "../../types";
 
 export interface OperationModalProps {
-    open: boolean;
+    onChange: (field: keyof OperationFormData, value: unknown) => void;
     operators: OperatorModelType[];
+    assets: AssetModelType[];
     formData: OperationFormData;
-    fleets: FleetModelType[];
     onClose: () => void;
     onSave: () => void;
-    onChange: (field: keyof OperationFormData, value: unknown) => void;
+    open: boolean;
 }

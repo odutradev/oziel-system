@@ -10,7 +10,7 @@ import Layout from "@components/layout";
 import metadata from "./metadata";
 
 const MachineOperations = () => {
-    const { metrics, operators, fleets, operations, modalOpen, formData, selectedDate, handleSave, handleDelete, handleStatusChange, handleOpenModal, handleCloseModal, handleFormChange, handleChangeMonth } = useMachineOperationsHook();
+    const { metrics, operators, assets, operations, modalOpen, formData, selectedDate, handleSave, handleDelete, handleStatusChange, handleOpenModal, handleCloseModal, handleFormChange, handleChangeMonth } = useMachineOperationsHook();
     const monthName = new Intl.DateTimeFormat("pt-BR", { month: "long", year: "numeric" }).format(selectedDate);
 
     return (
@@ -29,8 +29,8 @@ const MachineOperations = () => {
                     </ActionButtonsWrapper>
                 </HeaderControls>
                 <DashboardCards metrics={metrics} />
-                <OperationTable operations={operations} operators={operators} fleets={fleets} onEdit={handleOpenModal} onDelete={handleDelete} onStatusChange={handleStatusChange} />
-                <OperationModal open={modalOpen} formData={formData} operators={operators} fleets={fleets} onClose={handleCloseModal} onSave={handleSave} onChange={handleFormChange} />
+                <OperationTable operations={operations} operators={operators} assets={assets} onEdit={handleOpenModal} onDelete={handleDelete} onStatusChange={handleStatusChange} />
+                <OperationModal open={modalOpen} formData={formData} operators={operators} assets={assets} onClose={handleCloseModal} onSave={handleSave} onChange={handleFormChange} />
             </PageContainer>
         </Layout>
     );

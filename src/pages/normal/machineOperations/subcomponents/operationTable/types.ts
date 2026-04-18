@@ -1,12 +1,12 @@
 import type { MachineOperationStatusType, MachineOperationModelType } from "@actions/machineOperations/types";
 import type { OperatorModelType } from "@actions/operators/types";
-import type { FleetModelType } from "@actions/fleets/types";
+import type { AssetModelType } from "@actions/assets/types";
 
 export interface OperationTableProps {
+    onStatusChange: (id: string, status: MachineOperationStatusType) => void;
+    onEdit: (operation: MachineOperationModelType) => void;
     operations: MachineOperationModelType[];
     operators: OperatorModelType[];
-    fleets: FleetModelType[];
-    onEdit: (operation: MachineOperationModelType) => void;
     onDelete: (id: string) => void;
-    onStatusChange: (id: string, status: MachineOperationStatusType) => void;
+    assets: AssetModelType[];
 }
