@@ -9,10 +9,10 @@ export const getMarketingItemById = async (id: string): TypeOrError<MarketingIte
         hasAdminPosition();
         try {
             const response = await api.get(`/marketing/drafts/${id}`);
-            return response.data;
+            return response.data?.data || response.data;
         } catch {
             const response = await api.get(`/marketing/calendar/${id}`);
-            return response.data;
+            return response.data?.data || response.data;
         }
     } catch (error) {
         return manageActionError(error);

@@ -8,6 +8,15 @@ import type { EditMarketingFormData } from "../types";
 
 const INITIAL_STATE: EditMarketingFormData = { title: "", description: "", strategy: "", content: "", status: "DRAFT" };
 
+const getSafeDate = (date?: string | Date) => {
+    if (!date) return undefined;
+    try {
+        return new Date(date).toISOString().slice(0, 16);
+    } catch {
+        return undefined;
+    }
+};
+
 const useEditMarketing = (itemID?: string) => {
     const [formData, setFormData] = useState<EditMarketingFormData>(INITIAL_STATE);
     const [loading, setLoading] = useState(false);
@@ -18,20 +27,25 @@ const useEditMarketing = (itemID?: string) => {
         setLoading(true);
         const response = await getMarketingItemById(id);
         if (response && !("error" in response)) {
+            const data = "data" in response && response.data ? (response as any).data : response;
             setFormData({
-                title: response.title,
-                description: response.description,
-                strategy: response.strategy || "",
-                content: response.content || "",
-                plannedDate: response.plannedDate ? new Date(response.plannedDate).toISOString().slice(0, 16) : undefined,
-                status: response.status
+                title: data.title || "",
+                description: data.description || "",
+                strategy: data.strategy || "",
+                content: data.content || "",
+                plannedDate: getSafeDate(data.plannedDate),
+                status: data.status || "DRAFT"
             });
         }
         setLoading(false);
     }, []);
 
     useEffect(() => {
-        if (itemID) fetchItem(itemID);
+        if (itemID) {
+            fetchItem(itemID);
+        } else {
+            setFormData(INITIAL_STATE);
+        }
     }, [itemID, fetchItem]);
 
     const handleChange = useCallback((field: keyof EditMarketingFormData, value: string) => {
