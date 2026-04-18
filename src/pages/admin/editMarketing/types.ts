@@ -1,10 +1,11 @@
 import type { MarketingStatus } from "@actions/marketingRequests/types";
 
 export interface EditMarketingFormData {
-    description: string;
+    feedbackNotes?: string;
     plannedDate?: string;
-    strategy: string;
     status: MarketingStatus;
+    description: string;
+    strategy: string;
     content: string;
     title: string;
 }

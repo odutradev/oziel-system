@@ -1,12 +1,12 @@
-import { useState, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { createDraft, updateDraft, updateCalendarItem, getMarketingItemById } from "@actions/marketingRequests";
+import { updateCalendarItem, reviewCalendarItem, getMarketingItemById, updateDraft, createDraft } from "@actions/marketingRequests";
 import useAction from "@hooks/useAction";
 
 import type { EditMarketingFormData } from "../types";
 
-const INITIAL_STATE: EditMarketingFormData = { title: "", description: "", strategy: "", content: "", status: "DRAFT" };
+const INITIAL_STATE: EditMarketingFormData = { title: "", description: "", strategy: "", content: "", status: "DRAFT", feedbackNotes: "" };
 
 const getSafeDate = (date?: string | Date) => {
     if (!date) return undefined;
@@ -29,12 +29,13 @@ const useEditMarketing = (itemID?: string) => {
         if (response && !("error" in response)) {
             const data = "data" in response && response.data ? (response as any).data : response;
             setFormData({
-                title: data.title || "",
                 description: data.description || "",
-                strategy: data.strategy || "",
-                content: data.content || "",
+                feedbackNotes: data.feedbackNotes || "",
                 plannedDate: getSafeDate(data.plannedDate),
-                status: data.status || "DRAFT"
+                strategy: data.strategy || "",
+                status: data.status || "DRAFT",
+                content: data.content || "",
+                title: data.title || ""
             });
         }
         setLoading(false);
@@ -66,7 +67,18 @@ const useEditMarketing = (itemID?: string) => {
         setSaving(false);
     }, [itemID, formData, navigate]);
 
-    return { formData, loading, saving, handleChange, handleSave };
+    const handleReview = useCallback(async (approved: boolean) => {
+        if (!itemID) return;
+        setSaving(true);
+        await useAction({
+            action: async () => await reviewCalendarItem(itemID, { approved, feedbackNotes: formData.feedbackNotes || "" }),
+            toastMessages: { success: "Revisão concluída", error: "Erro ao revisar", pending: "Processando..." },
+            callback: () => navigate("/dashboard/admin/marketing")
+        });
+        setSaving(false);
+    }, [itemID, formData.feedbackNotes, navigate]);
+
+    return { handleChange, handleReview, handleSave, formData, loading, saving };
 };
 
 export default useEditMarketing;

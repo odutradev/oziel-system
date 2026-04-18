@@ -1,12 +1,12 @@
-import { Menu, MenuItem, ListItemIcon, ListItemText } from "@mui/material";
-import { Edit, Send, RateReview, Delete } from "@mui/icons-material";
+import { ListItemText, ListItemIcon, MenuItem, Menu } from "@mui/material";
+import { RateReview, Delete, Send, Edit } from "@mui/icons-material";
 import { useState } from "react";
 
 import Calendar from "@components/calendar";
 import { ViewContainer } from "./styles";
 
 import type { MarketingItemModelType, MarketingStatus } from "@actions/marketingRequests/types";
-import type { CalendarEvent, CalendarEventColor } from "@components/calendar/types";
+import type { CalendarEventColor, CalendarEvent } from "@components/calendar/types";
 import type { CalendarViewProps } from "./types";
 
 const getStatusColor = (status: MarketingStatus): CalendarEventColor => {
@@ -21,7 +21,7 @@ const getStatusColor = (status: MarketingStatus): CalendarEventColor => {
     return map[status] || "default";
 };
 
-const CalendarView = ({ items, onEdit, onSendApproval, onReview, onDelete }: CalendarViewProps) => {
+const CalendarView = ({ items, onEdit, onSendApproval, onDelete }: CalendarViewProps) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [selectedItem, setSelectedItem] = useState<MarketingItemModelType | null>(null);
 
@@ -46,11 +46,10 @@ const CalendarView = ({ items, onEdit, onSendApproval, onReview, onDelete }: Cal
         setSelectedItem(null);
     };
 
-    const handleAction = (action: "send" | "review" | "edit" | "delete") => {
+    const handleAction = (action: "send" | "edit" | "delete") => {
         if (!selectedItem) return;
 
         if (action === "send" && selectedItem._id) onSendApproval(selectedItem._id);
-        if (action === "review") onReview(selectedItem);
         if (action === "edit") onEdit(selectedItem);
         if (action === "delete" && selectedItem._id) onDelete(selectedItem._id);
 
@@ -72,14 +71,14 @@ const CalendarView = ({ items, onEdit, onSendApproval, onReview, onDelete }: Cal
                     </MenuItem>
                 )}
                 {selectedItem?.status === "WAITING_APPROVAL" && (
-                    <MenuItem onClick={() => handleAction("review")}>
+                    <MenuItem onClick={() => handleAction("edit")}>
                         <ListItemIcon>
                             <RateReview color="warning" fontSize="small" />
                         </ListItemIcon>
                         <ListItemText>Revisar</ListItemText>
                     </MenuItem>
                 )}
-                {selectedItem?.status !== "APPROVED" && selectedItem?.status !== "COMPLETED" && (
+                {selectedItem?.status !== "APPROVED" && selectedItem?.status !== "COMPLETED" && selectedItem?.status !== "WAITING_APPROVAL" && (
                     <MenuItem onClick={() => handleAction("edit")}>
                         <ListItemIcon>
                             <Edit fontSize="small" />

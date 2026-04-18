@@ -1,4 +1,4 @@
-import { TextField, Typography, Box } from "@mui/material";
+import { Typography, TextField, Box } from "@mui/material";
 
 import MarkdownEditor from "@components/markdownEditor";
 import { FormContainer } from "./styles";
@@ -7,54 +7,26 @@ import type { MarketingFormProps } from "./types";
 
 const MarketingForm = ({ formData, onChange, isEditing }: MarketingFormProps) => {
     const isLocked = isEditing && formData.status !== "DRAFT";
+    const isReviewMode = formData.status === "WAITING_APPROVAL";
 
     return (
         <FormContainer>
-            <TextField
-                label="Título da Campanha/Post"
-                value={formData.title}
-                onChange={(e) => onChange("title", e.target.value)}
-                disabled={isLocked}
-                fullWidth
-                required
-            />
-            <TextField
-                label="Descrição Inicial"
-                value={formData.description}
-                onChange={(e) => onChange("description", e.target.value)}
-                disabled={isLocked}
-                fullWidth
-                required
-                rows={3}
-            />
+            <TextField label="Título da Campanha/Post" value={formData.title} onChange={(e) => onChange("title", e.target.value)} disabled={isLocked} fullWidth required />
+            <TextField label="Descrição Inicial" value={formData.description} onChange={(e) => onChange("description", e.target.value)} disabled={isLocked} fullWidth required rows={3} multiline />
             {isLocked && (
-                <TextField
-                    label="Data Planejada"
-                    type="datetime-local"
-                    value={formData.plannedDate || ""}
-                    onChange={(e) => onChange("plannedDate", e.target.value)}
-                    InputLabelProps={{ shrink: true }}
-                    fullWidth
-                />
+                <TextField label="Data Planejada" type="datetime-local" value={formData.plannedDate || ""} onChange={(e) => onChange("plannedDate", e.target.value)} InputLabelProps={{ shrink: true }} disabled={formData.status !== "PLANNED" && formData.status !== "WAITING_APPROVAL"} fullWidth />
             )}
             <Box display="flex" flexDirection="column" gap={1}>
                 <Typography variant="subtitle2" color="textSecondary">Estratégia (Markdown)</Typography>
-                <MarkdownEditor
-                    value={formData.strategy || ""}
-                    onChange={(val) => onChange("strategy", val)}
-                    preview={isLocked ? "preview" : "live"}
-                    hideToolbar={isLocked}
-                    height={300}
-                />
+                <MarkdownEditor value={formData.strategy || ""} onChange={(val) => onChange("strategy", val)} preview={isLocked ? "preview" : "live"} hideToolbar={isLocked} height={300} />
             </Box>
             <Box display="flex" flexDirection="column" gap={1}>
                 <Typography variant="subtitle2" color="textSecondary">Conteúdo / Legenda (Markdown)</Typography>
-                <MarkdownEditor
-                    value={formData.content || ""}
-                    onChange={(val) => onChange("content", val)}
-                    height={400}
-                />
+                <MarkdownEditor value={formData.content || ""} onChange={(val) => onChange("content", val)} height={400} preview={isReviewMode ? "preview" : "live"} hideToolbar={isReviewMode} />
             </Box>
+            {(isReviewMode || formData.feedbackNotes) && (
+                <TextField label="Feedback / Notas de Revisão" value={formData.feedbackNotes || ""} onChange={(e) => onChange("feedbackNotes", e.target.value)} disabled={!isReviewMode} placeholder="Obrigatório em caso de rejeição" fullWidth required={isReviewMode} rows={4} multiline />
+            )}
         </FormContainer>
     );
 };

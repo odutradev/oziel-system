@@ -5,26 +5,16 @@ export interface ScheduleFormData {
     _id: string;
 }
 
-export interface ReviewFormData {
-    feedbackNotes: string;
-    approved: boolean;
-    _id: string;
-}
-
 export interface MarketingHookProps {
     handleDeleteCalendarItem: (id: string) => Promise<void>;
-    handleOpenReviewModal: (item: MarketingItemModelType) => void;
     handleScheduleDraft: (data: ScheduleFormData) => Promise<void>;
-    handleReviewItem: (data: ReviewFormData) => Promise<void>;
     handleOpenScheduleModal: (draftId: string) => void;
     handleDeleteDraft: (id: string) => Promise<void>;
     handleSendApproval: (id: string) => Promise<void>;
     handleCloseModals: () => void;
     calendarItems: MarketingItemModelType[];
-    selectedCalendarItem: string | null;
     drafts: MarketingItemModelType[];
     scheduleModalOpen: boolean;
-    reviewModalOpen: boolean;
     selectedDraft: string | null;
     loading: boolean;
 }
