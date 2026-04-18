@@ -12,7 +12,7 @@ import metadata from "./metadata";
 const MarketingManagement = () => {
     const navigate = useNavigate();
     const {
-        handleOpenScheduleModal, handleOpenReviewModal, handleScheduleDraft, handleDeleteDraft, handleSendApproval, handleReviewItem, handleCloseModals,
+        handleOpenScheduleModal, handleOpenReviewModal, handleScheduleDraft, handleDeleteDraft, handleDeleteCalendarItem, handleSendApproval, handleReviewItem, handleCloseModals,
         calendarItems, selectedCalendarItem, scheduleModalOpen, reviewModalOpen, selectedDraft, drafts
     } = useMarketingHook();
 
@@ -22,7 +22,7 @@ const MarketingManagement = () => {
         <Layout {...metadata}>
             <PageContainer>
                 <SectionContainer>
-                    <CalendarView items={calendarItems} onReview={handleOpenReviewModal} onSendApproval={handleSendApproval} onEdit={(item) => navigate(`/dashboard/admin/marketing/edit/${item._id}`)} />
+                    <CalendarView items={calendarItems} onReview={handleOpenReviewModal} onSendApproval={handleSendApproval} onDelete={handleDeleteCalendarItem} onEdit={(item) => navigate(`/dashboard/admin/marketing/edit/${item._id}`)} />
                 </SectionContainer>
                 <SectionContainer>
                     <DraftsTable drafts={drafts} onEdit={(item) => navigate(`/dashboard/admin/marketing/edit/${item._id}`)} onSchedule={handleOpenScheduleModal} onDelete={handleDeleteDraft} onNew={() => navigate("/dashboard/admin/marketing/new")} />

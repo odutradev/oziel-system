@@ -12,6 +12,7 @@ export interface ReviewFormData {
 }
 
 export interface MarketingHookProps {
+    handleDeleteCalendarItem: (id: string) => Promise<void>;
     handleOpenReviewModal: (item: MarketingItemModelType) => void;
     handleScheduleDraft: (data: ScheduleFormData) => Promise<void>;
     handleReviewItem: (data: ReviewFormData) => Promise<void>;

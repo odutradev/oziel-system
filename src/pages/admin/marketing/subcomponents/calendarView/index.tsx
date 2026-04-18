@@ -1,5 +1,5 @@
 import { Menu, MenuItem, ListItemIcon, ListItemText } from "@mui/material";
-import { Edit, Send, RateReview } from "@mui/icons-material";
+import { Edit, Send, RateReview, Delete } from "@mui/icons-material";
 import { useState } from "react";
 
 import Calendar from "@components/calendar";
@@ -21,7 +21,7 @@ const getStatusColor = (status: MarketingStatus): CalendarEventColor => {
     return map[status] || "default";
 };
 
-const CalendarView = ({ items, onEdit, onSendApproval, onReview }: CalendarViewProps) => {
+const CalendarView = ({ items, onEdit, onSendApproval, onReview, onDelete }: CalendarViewProps) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [selectedItem, setSelectedItem] = useState<MarketingItemModelType | null>(null);
 
@@ -46,12 +46,13 @@ const CalendarView = ({ items, onEdit, onSendApproval, onReview }: CalendarViewP
         setSelectedItem(null);
     };
 
-    const handleAction = (action: "send" | "review" | "edit") => {
+    const handleAction = (action: "send" | "review" | "edit" | "delete") => {
         if (!selectedItem) return;
 
         if (action === "send" && selectedItem._id) onSendApproval(selectedItem._id);
         if (action === "review") onReview(selectedItem);
         if (action === "edit") onEdit(selectedItem);
+        if (action === "delete" && selectedItem._id) onDelete(selectedItem._id);
 
         handleCloseMenu();
     };
@@ -86,6 +87,12 @@ const CalendarView = ({ items, onEdit, onSendApproval, onReview }: CalendarViewP
                         <ListItemText>Editar</ListItemText>
                     </MenuItem>
                 )}
+                <MenuItem onClick={() => handleAction("delete")}>
+                    <ListItemIcon>
+                        <Delete color="error" fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText sx={{ color: "error.main" }}>Excluir</ListItemText>
+                </MenuItem>
             </Menu>
         </ViewContainer>
     );

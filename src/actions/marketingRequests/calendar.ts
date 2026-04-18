@@ -53,3 +53,13 @@ export const reviewCalendarItem = async (id: string, data: ReviewCalendarItemDat
         return manageActionError(error);
     }
 };
+
+export const deleteCalendarItem = async (id: string): TypeOrError<{ success: boolean }> => {
+    try {
+        hasAdminPosition();
+        const response = await api.delete(`/marketing/calendar/${id}`);
+        return response.data;
+    } catch (error) {
+        return manageActionError(error);
+    }
+};

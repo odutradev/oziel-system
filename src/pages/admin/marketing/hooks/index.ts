@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 
-import { getCalendarItems, scheduleDraft, sendForApproval, reviewCalendarItem, getDrafts, deleteDraft } from "@actions/marketingRequests";
+import { getCalendarItems, scheduleDraft, sendForApproval, reviewCalendarItem, getDrafts, deleteDraft, deleteCalendarItem } from "@actions/marketingRequests";
 import useAction from "@hooks/useAction";
 
-import type { ScheduleFormData, ReviewFormData, MarketingHookProps } from "../types";
 import type { MarketingItemModelType } from "@actions/marketingRequests/types";
+import type { ScheduleFormData, ReviewFormData, MarketingHookProps } from "../types";
 
 const useMarketingHook = (): MarketingHookProps => {
     const [calendarItems, setCalendarItems] = useState<MarketingItemModelType[]>([]);
@@ -59,6 +59,17 @@ const useMarketingHook = (): MarketingHookProps => {
         });
     }, [fetchDraftsData]);
 
+    const handleDeleteCalendarItem = useCallback(async (id: string) => {
+        await useAction({
+            action: async () => await deleteCalendarItem(id),
+            toastMessages: { success: "Item do calendário removido", error: "Erro ao remover do calendário", pending: "Removendo..." },
+            callback: () => {
+                fetchCalendarData();
+                handleCloseModals();
+            }
+        });
+    }, [fetchCalendarData, handleCloseModals]);
+
     const handleScheduleDraft = useCallback(async (data: ScheduleFormData) => {
         await useAction({
             action: async () => await scheduleDraft(data._id, { plannedDate: new Date(data.plannedDate).toISOString() }),
@@ -91,6 +102,7 @@ const useMarketingHook = (): MarketingHookProps => {
     }, [fetchCalendarData, handleCloseModals]);
 
     return useMemo(() => ({
+        handleDeleteCalendarItem,
         handleOpenScheduleModal,
         handleOpenReviewModal,
         selectedCalendarItem,
@@ -106,7 +118,7 @@ const useMarketingHook = (): MarketingHookProps => {
         loading,
         drafts
     }), [
-        handleOpenScheduleModal, handleOpenReviewModal, selectedCalendarItem, handleScheduleDraft,
+        handleDeleteCalendarItem, handleOpenScheduleModal, handleOpenReviewModal, selectedCalendarItem, handleScheduleDraft,
         handleDeleteDraft, handleSendApproval, handleReviewItem, scheduleModalOpen, handleCloseModals,
         reviewModalOpen, calendarItems, selectedDraft, loading, drafts
     ]);
