@@ -10,23 +10,23 @@ import metadata from './metadata';
 
 const EditMachineResource = () => {
     const {
-        isNew,
-        isFleet,
-        loading,
-        canSave,
-        isSaving,
-        formData,
-        handleSave,
+        handleFieldChange,
         handleCancel,
         handleDelete,
-        handleFieldChange
+        handleSave,
+        formData,
+        isSaving,
+        canSave,
+        loading,
+        isAsset,
+        isNew
     } = useEditMachineResource();
 
-    const resourceName = isFleet ? "Frota" : "Operador";
+    const resourceName = isAsset ? "Ativo" : "Operador";
 
     const currentMetadata = {
         ...metadata,
-        pageTitle: isNew ? `Nov${isFleet ? 'a' : 'o'} ${resourceName}` : `Editar ${resourceName}`,
+        pageTitle: isNew ? `Novo ${resourceName}` : `Editar ${resourceName}`,
         breadcrumbs: [
             ...(metadata.breadcrumbs || []),
             { name: isNew ? "Novo" : "Editar", url: '#' }
@@ -42,24 +42,24 @@ const EditMachineResource = () => {
             ) : (
                 <PageContainer>
                     <ResourceInfo
-                        formData={formData}
-                        isFleet={isFleet}
                         onChange={handleFieldChange}
+                        formData={formData}
+                        isAsset={isAsset}
                     />
 
                     <ResourceStatus
-                        formData={formData}
                         onChange={handleFieldChange}
+                        formData={formData}
                     />
 
                     <FormActions
-                        saveLabel="Salvar"
                         deleteLabel={`Deletar ${resourceName}`}
+                        onDelete={isNew ? undefined : handleDelete}
+                        onCancel={handleCancel}
                         disabled={!canSave}
                         loading={isSaving}
                         onSave={handleSave}
-                        onCancel={handleCancel}
-                        onDelete={isNew ? undefined : handleDelete}
+                        saveLabel="Salvar"
                     />
                 </PageContainer>
             )}

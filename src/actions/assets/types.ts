@@ -1,6 +1,6 @@
 import type { PaginationMeta } from "@utils/types/action";
 
-export interface FleetModelType {
+export interface AssetModelType {
     description?: string;
     updatedAt: string;
     createdAt: string;
@@ -9,20 +9,20 @@ export interface FleetModelType {
     _id: string;
 }
 
-export interface GetFleetsParams {
+export interface GetAssetsParams {
     limit?: number;
     page?: number;
 }
 
-export interface CreateFleetData {
+export interface CreateAssetData {
     description?: string;
     active?: boolean;
     name: string;
 }
 
-export type UpdateFleetData = Partial<CreateFleetData>;
+export type UpdateAssetData = Partial<CreateAssetData>;
 
-export interface GetFleetsResponse {
-    data: FleetModelType[];
+export interface GetAssetsResponse {
+    data: AssetModelType[];
     meta: PaginationMeta;
 }

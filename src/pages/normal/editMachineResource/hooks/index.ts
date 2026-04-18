@@ -1,27 +1,27 @@
 import { getOperatorById, updateOperator, createOperator, deleteOperator } from '@actions/operators';
-import { getFleetById, updateFleet, createFleet, deleteFleet } from '@actions/fleets';
+import { getAssetById, updateAsset, createAsset, deleteAsset } from '@actions/assets';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect, useMemo } from 'react';
 
 import { defaultResourceFormData } from './defaultValues';
 import useAction from '@hooks/useAction';
 
-import type { ResourceFormData, EditMachineResourceHookProps } from '../types';
+import type { EditMachineResourceHookProps, ResourceFormData } from '../types';
 
 const useEditMachineResource = (): EditMachineResourceHookProps => {
     const { type, resourceID } = useParams<{ type: string; resourceID: string }>();
     const navigate = useNavigate();
 
     const isNew = !resourceID;
-    const isFleet = type === 'fleets';
+    const isAsset = type === 'assets';
 
-    const [formData, setFormData] = useState<ResourceFormData>(defaultResourceFormData);
     const [initialFormData, setInitialFormData] = useState<ResourceFormData>(defaultResourceFormData);
+    const [formData, setFormData] = useState<ResourceFormData>(defaultResourceFormData);
     const [isSaving, setIsSaving] = useState(false);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        if (type !== 'fleets' && type !== 'operators') {
+        if (type !== 'assets' && type !== 'operators') {
             navigate('/dashboard/maintenance/machine-resources');
             return;
         }
@@ -32,7 +32,7 @@ const useEditMachineResource = (): EditMachineResourceHookProps => {
         if (!resourceID) return;
         setLoading(true);
 
-        const result = isFleet ? await getFleetById(resourceID) : await getOperatorById(resourceID);
+        const result = isAsset ? await getAssetById(resourceID) : await getOperatorById(resourceID);
 
         if ('error' in result) {
             navigate('/dashboard/maintenance/machine-resources');
@@ -40,10 +40,10 @@ const useEditMachineResource = (): EditMachineResourceHookProps => {
         }
 
         const mappedData: ResourceFormData = {
-            name: result.name,
-            active: result.active,
             description: 'description' in result ? result.description || '' : '',
-            document: 'document' in result ? result.document || '' : ''
+            document: 'document' in result ? result.document || '' : '',
+            active: result.active,
+            name: result.name
         };
 
         setFormData(mappedData);
@@ -64,19 +64,19 @@ const useEditMachineResource = (): EditMachineResourceHookProps => {
         setIsSaving(true);
 
         const payload = {
-            name: formData.name,
+            ...(isAsset ? { description: formData.description } : { document: formData.document }),
             active: formData.active,
-            ...(isFleet ? { description: formData.description } : { document: formData.document })
+            name: formData.name
         };
 
         await useAction({
             action: async () => {
-                if (isNew) return isFleet ? await createFleet(payload) : await createOperator(payload);
-                return isFleet ? await updateFleet(resourceID!, payload) : await updateOperator(resourceID!, payload);
+                if (isNew) return isAsset ? await createAsset(payload) : await createOperator(payload);
+                return isAsset ? await updateAsset(resourceID!, payload) : await updateOperator(resourceID!, payload);
             },
             toastMessages: {
-                success: `${isFleet ? 'Frota' : 'Operador'} salvo(a) com sucesso`,
-                error: `Erro ao salvar ${isFleet ? 'frota' : 'operador'}`,
+                success: `${isAsset ? 'Ativo' : 'Operador'} salvo com sucesso`,
+                error: `Erro ao salvar ${isAsset ? 'ativo' : 'operador'}`,
                 pending: 'Salvando...'
             },
             callback: () => {
@@ -89,13 +89,13 @@ const useEditMachineResource = (): EditMachineResourceHookProps => {
 
     const handleDelete = async () => {
         if (!resourceID) return;
-        if (!confirm(`Tem certeza que deseja deletar est${isFleet ? 'a frota' : 'e operador'}?`)) return;
+        if (!confirm(`Tem certeza que deseja deletar este ${isAsset ? 'ativo' : 'operador'}?`)) return;
 
         await useAction({
-            action: async () => isFleet ? await deleteFleet(resourceID) : await deleteOperator(resourceID),
+            action: async () => isAsset ? await deleteAsset(resourceID) : await deleteOperator(resourceID),
             toastMessages: {
-                success: `${isFleet ? 'Frota' : 'Operador'} deletado(a) com sucesso`,
-                error: `Erro ao deletar ${isFleet ? 'frota' : 'operador'}`,
+                success: `${isAsset ? 'Ativo' : 'Operador'} deletado com sucesso`,
+                error: `Erro ao deletar ${isAsset ? 'ativo' : 'operador'}`,
                 pending: 'Deletando...'
             },
             callback: () => navigate('/dashboard/maintenance/machine-resources')
@@ -105,16 +105,16 @@ const useEditMachineResource = (): EditMachineResourceHookProps => {
     const handleCancel = () => navigate('/dashboard/maintenance/machine-resources');
 
     return {
-        isNew,
-        isFleet,
-        loading,
-        isSaving,
-        formData,
-        canSave: (isNew && isValid) || (isDirty && isValid),
         handleFieldChange,
-        handleDelete,
         handleCancel,
-        handleSave
+        handleDelete,
+        handleSave,
+        formData,
+        isSaving,
+        loading,
+        canSave: (isNew && isValid) || (isDirty && isValid),
+        isAsset,
+        isNew
     };
 };
 

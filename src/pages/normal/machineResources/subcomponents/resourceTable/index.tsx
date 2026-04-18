@@ -6,16 +6,16 @@ import FullTable from "@components/fullTable";
 import { StatusChip } from "./styles";
 
 import type { TableColumn, RowAction } from "@components/fullTable/types";
-import type { ResourceItemType } from "../../types";
 import type { ResourceTableProps } from "./types";
+import type { ResourceItemType } from "../../types";
 
 const TAB_OPTIONS = [
-    { value: "fleets", label: "Ativos" },
+    { value: "assets", label: "Ativos" },
     { value: "operators", label: "Operadores" }
 ];
 
 const ResourceTable = ({ items, meta, activeTab, loading, onTabChange, onPaginationChange, onEdit, onCreate, onDelete }: ResourceTableProps) => {
-    const isAsset = activeTab === "fleets";
+    const isAsset = activeTab === "assets";
 
     const columns: TableColumn<ResourceItemType>[] = [
         { key: "name", label: isAsset ? "Nome do Ativo" : "Nome do Operador" },
@@ -44,9 +44,9 @@ const ResourceTable = ({ items, meta, activeTab, loading, onTabChange, onPaginat
         <Box sx={{ display: "flex", gap: 2, alignItems: "center", flexWrap: "wrap", justifyContent: "flex-end" }}>
             <Box sx={{ minWidth: 280 }}>
                 <ToggleGroup
+                    onChange={onTabChange}
                     options={TAB_OPTIONS}
                     value={activeTab}
-                    onChange={onTabChange}
                     size="small"
                 />
             </Box>
@@ -58,18 +58,18 @@ const ResourceTable = ({ items, meta, activeTab, loading, onTabChange, onPaginat
 
     return (
         <FullTable
-            data={items}
-            columns={columns}
-            totalCount={meta.total}
-            page={meta.page}
-            limit={meta.limit}
-            loading={loading}
-            onPaginationChange={onPaginationChange}
-            rowActions={rowActions}
-            onRowClick={onEdit}
             title={isAsset ? "Ativos Cadastrados" : "Operadores Cadastrados"}
+            onPaginationChange={onPaginationChange}
             chipName={isAsset ? "ativos" : "operadores"}
             headerContent={headerContent}
+            rowActions={rowActions}
+            totalCount={meta.total}
+            onRowClick={onEdit}
+            columns={columns}
+            limit={meta.limit}
+            loading={loading}
+            page={meta.page}
+            data={items}
         />
     );
 };

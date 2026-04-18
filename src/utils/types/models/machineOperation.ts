@@ -2,7 +2,7 @@ export type MachineOperationStatusType = "PENDING" | "IN_PROGRESS" | "COMPLETED"
 
 export interface MachineOperationModelType {
     _id: string;
-    fleet: string;
+    asset: string;
     operator: string;
     operationDate: string;
     hourlyRate: number;

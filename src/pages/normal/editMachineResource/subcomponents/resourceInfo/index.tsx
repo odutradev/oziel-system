@@ -6,39 +6,39 @@ import { InfoContainer, Row } from './styles';
 
 import type { ResourceInfoProps } from './types';
 
-const ResourceInfo = ({ formData, isFleet, onChange }: ResourceInfoProps) => {
+const ResourceInfo = ({ formData, isAsset, onChange }: ResourceInfoProps) => {
   const isNameEmpty = !(formData.name || '').trim();
 
   return (
-    <EditSection title={isFleet ? "Informações da Frota" : "Informações do Operador"}>
+    <EditSection title={isAsset ? "Informações do Ativo" : "Informações do Operador"}>
       <InfoContainer>
         <Row>
           <InputWithCounter
-            label={isFleet ? "Nome da Frota" : "Nome do Operador"}
-            value={formData.name || ''}
             onChange={(e) => onChange('name', e.target.value)}
-            error={isNameEmpty}
+            label={isAsset ? "Nome do Ativo" : "Nome do Operador"}
             helperText={isNameEmpty ? "O nome é obrigatório" : ""}
+            value={formData.name || ''}
+            error={isNameEmpty}
             maxLength={100}
-            required
             fullWidth
+            required
           />
         </Row>
         <Row>
-          {isFleet ? (
+          {isAsset ? (
             <TextField
-              label="Descrição"
-              value={formData.description || ''}
               onChange={(e) => onChange('description', e.target.value)}
+              value={formData.description || ''}
+              label="Descrição"
               fullWidth
               multiline
               rows={3}
             />
           ) : (
             <TextField
-              label="Documento (CPF/CNPJ)"
-              value={formData.document || ''}
               onChange={(e) => onChange('document', e.target.value)}
+              value={formData.document || ''}
+              label="Documento (CPF/CNPJ)"
               fullWidth
             />
           )}

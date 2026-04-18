@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getOperators, deleteOperator } from "@actions/operators";
-import { getFleets, deleteFleet } from "@actions/fleets";
+import { getAssets, deleteAsset } from "@actions/assets";
 import usePagination from "@hooks/usePagination";
 import useAction from "@hooks/useAction";
 
@@ -11,10 +11,10 @@ import type { ResourceTabType, MachineResourcesHookProps, ResourceItemType } fro
 const useMachineResourcesHook = (): MachineResourcesHookProps => {
     const navigate = useNavigate();
 
-    const [activeTab, setActiveTab] = useState<ResourceTabType>("fleets");
+    const [activeTab, setActiveTab] = useState<ResourceTabType>("assets");
 
     const fetchList = useCallback(async (page: number, limit: number) => {
-        if (activeTab === "fleets") return await getFleets({ page, limit });
+        if (activeTab === "assets") return await getAssets({ page, limit });
         return await getOperators({ page, limit });
     }, [activeTab]);
 
@@ -45,11 +45,11 @@ const useMachineResourcesHook = (): MachineResourcesHookProps => {
     }, [navigate, activeTab]);
 
     const handleDelete = useCallback(async (id: string) => {
-        const isAsset = activeTab === "fleets";
-        if (!confirm(`Tem certeza que deseja remover est${isAsset ? 'e ativo' : 'e operador'}?`)) return;
+        const isAsset = activeTab === "assets";
+        if (!confirm(`Tem certeza que deseja remover este ${isAsset ? "ativo" : "operador"}?`)) return;
 
         await useAction({
-            action: async () => isAsset ? await deleteFleet(id) : await deleteOperator(id),
+            action: async () => isAsset ? await deleteAsset(id) : await deleteOperator(id),
             toastMessages: {
                 success: `${isAsset ? "Ativo" : "Operador"} removido com sucesso`,
                 error: `Erro ao remover ${isAsset ? "ativo" : "operador"}`,
@@ -60,15 +60,15 @@ const useMachineResourcesHook = (): MachineResourcesHookProps => {
     }, [activeTab, refresh]);
 
     return useMemo(() => ({
-        meta,
-        items,
-        loading,
-        activeTab,
-        handleEdit,
-        handleCreate,
-        handleDelete,
+        handlePaginationChange,
         handleTabChange,
-        handlePaginationChange
+        handleDelete,
+        handleCreate,
+        handleEdit,
+        activeTab,
+        loading,
+        items,
+        meta
     }), [meta, items, loading, activeTab, handleEdit, handleCreate, handleDelete, handleTabChange, handlePaginationChange]);
 };
 
