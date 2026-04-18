@@ -7,7 +7,7 @@ import { StatusChip } from "./styles";
 import type { MachineOperationStatusType, MachineOperationModelType } from "@actions/machineOperations/types";
 import type { TableColumn, RowAction } from "@components/fullTable/types";
 import type { OperatorModelType } from "@actions/operators/types";
-import type { FleetModelType } from "@actions/fleets/types";
+import type { FleetModelType } from "@actions/ma/types";
 import type { OperationTableProps } from "./types";
 
 const OperationTable = ({ operations, operators, fleets, onEdit, onDelete, onStatusChange }: OperationTableProps) => {

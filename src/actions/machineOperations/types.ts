@@ -24,7 +24,7 @@ export interface CreateOperationData {
     operationDate: string;
     hourlyRate: number;
     operator: string;
-    fleet: string;
+    asset: string;
 }
 
 export type UpdateOperationData = Partial<CreateOperationData>;
