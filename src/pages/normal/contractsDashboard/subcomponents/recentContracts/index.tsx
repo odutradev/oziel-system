@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 
-import { CONTRACT_STATUS_TRANSLATIONS, CONTRACT_TYPE_TRANSLATIONS } from "@utils/types/models/contract";
+import { CONTRACT_STATUS_TRANSLATIONS, CONTRACT_SITUATION_TRANSLATIONS, CONTRACT_TYPE_TRANSLATIONS } from "@utils/types/models/contract";
 import { formatCurrency, formatDate } from "@utils/formatters";
 import FullTable from "@components/fullTable";
 
@@ -15,6 +15,7 @@ const RecentContracts = ({ contracts }: RecentContractsProps) => {
         { key: "code", label: "Código", render: (item) => <Typography fontWeight={600} variant="body2">{item.code}</Typography> },
         { key: "type", label: "Tipo", render: (item) => CONTRACT_TYPE_TRANSLATIONS[item.type] },
         { key: "status", label: "Status", render: (item) => CONTRACT_STATUS_TRANSLATIONS[item.status] },
+        { key: "situation", label: "Situação", render: (item) => CONTRACT_SITUATION_TRANSLATIONS[item.situation] },
         { key: "contractDate", label: "Data", render: (item) => formatDate(item.contractDate as string) },
         { key: "totalValue", label: "Custo", render: (item) => formatCurrency(item.totalValue) },
         { key: "totalSalePrice", label: "Venda", render: (item) => <Typography fontWeight={600} color="primary.main" variant="body2">{formatCurrency(item.totalSalePrice)}</Typography> }

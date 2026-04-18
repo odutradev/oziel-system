@@ -1,13 +1,13 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { useState, useEffect, useMemo } from 'react';
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect, useMemo } from "react";
 
-import { getContractById, updateContract, createContract, deleteContract } from '@actions/contracts';
-import { defaultContractFormData } from './defaultValues';
-import { formatInputDate } from '@utils/formatters';
-import useAction from '@hooks/useAction';
+import { getContractById, updateContract, createContract, deleteContract } from "@actions/contracts";
+import { defaultContractFormData } from "./defaultValues";
+import { formatInputDate } from "@utils/formatters";
+import useAction from "@hooks/useAction";
 
-import type { CreateContractData, UpdateContractData } from '@actions/contracts/types';
-import type { ContractFormData, EditContractHookProps } from '../types';
+import type { CreateContractData, UpdateContractData } from "@actions/contracts/types";
+import type { ContractFormData, EditContractHookProps } from "../types";
 
 const useEditContract = (): EditContractHookProps => {
     const { contractID } = useParams<{ contractID: string }>();
@@ -27,21 +27,22 @@ const useEditContract = (): EditContractHookProps => {
         if (!contractID) return;
         setLoading(true);
         const result = await getContractById(contractID);
-        if ('error' in result) {
-            navigate('/dashboard/contracts');
+        if ("error" in result) {
+            navigate("/dashboard/contracts");
             return;
         }
 
         const mappedData: ContractFormData = {
             code: result.code,
             type: result.type,
-            status: result.status || 'ACTIVE',
-            contractDate: result.contractDate ? formatInputDate(new Date(result.contractDate)) : '',
-            deliveryForecast: result.deliveryForecast ? formatInputDate(new Date(result.deliveryForecast)) : '',
-            endDate: result.endDate ? formatInputDate(new Date(result.endDate)) : '',
+            status: result.status || "ACTIVE",
+            situation: result.situation || "REGULAR",
+            contractDate: result.contractDate ? formatInputDate(new Date(result.contractDate)) : "",
+            deliveryForecast: result.deliveryForecast ? formatInputDate(new Date(result.deliveryForecast)) : "",
+            endDate: result.endDate ? formatInputDate(new Date(result.endDate)) : "",
             totalValue: result.totalValue || 0,
             totalSalePrice: result.totalSalePrice || 0,
-            detailsMarkdown: result.detailsMarkdown || ''
+            detailsMarkdown: result.detailsMarkdown || ""
         };
 
         setFormData(mappedData);
@@ -52,7 +53,7 @@ const useEditContract = (): EditContractHookProps => {
     const isDirty = useMemo(() => JSON.stringify(formData) !== JSON.stringify(initialFormData), [formData, initialFormData]);
 
     const isValid = useMemo(() => {
-        return !!formData.code && !!formData.type && !!formData.status && !!formData.contractDate && formData.totalValue > 0;
+        return !!formData.code && !!formData.type && !!formData.status && !!formData.situation && !!formData.contractDate && formData.totalValue > 0;
     }, [formData]);
 
     const handleFieldChange = (field: keyof ContractFormData, value: string | number) => {
@@ -67,6 +68,7 @@ const useEditContract = (): EditContractHookProps => {
             code: formData.code,
             type: formData.type,
             status: formData.status,
+            situation: formData.situation,
             totalValue: formData.totalValue,
             totalSalePrice: formData.totalSalePrice,
             contractDate: formData.contractDate,
@@ -78,13 +80,13 @@ const useEditContract = (): EditContractHookProps => {
         await useAction({
             action: async () => isNew ? await createContract(payload as CreateContractData) : await updateContract(contractID!, payload as UpdateContractData),
             toastMessages: {
-                success: 'Contrato salvo com sucesso',
-                error: 'Erro ao salvar contrato',
-                pending: 'Salvando...',
+                success: "Contrato salvo com sucesso",
+                error: "Erro ao salvar contrato",
+                pending: "Salvando..."
             },
             callback: () => {
                 setIsSaving(false);
-                navigate('/dashboard/contracts');
+                navigate("/dashboard/contracts");
             },
             onError: () => setIsSaving(false)
         });
@@ -92,19 +94,19 @@ const useEditContract = (): EditContractHookProps => {
 
     const handleDelete = async () => {
         if (!contractID) return;
-        if (!confirm('Tem certeza que deseja deletar este contrato?')) return;
+        if (!confirm("Tem certeza que deseja deletar este contrato?")) return;
         await useAction({
             action: async () => await deleteContract(contractID),
             toastMessages: {
-                success: 'Contrato deletado com sucesso',
-                error: 'Erro ao deletar contrato',
-                pending: 'Deletando...',
+                success: "Contrato deletado com sucesso",
+                error: "Erro ao deletar contrato",
+                pending: "Deletando..."
             },
-            callback: () => navigate('/dashboard/contracts'),
+            callback: () => navigate("/dashboard/contracts")
         });
     };
 
-    const handleCancel = () => navigate('/dashboard/contracts');
+    const handleCancel = () => navigate("/dashboard/contracts");
 
     return {
         isNew,

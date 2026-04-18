@@ -1,9 +1,10 @@
-import type { ContractType, ContractStatusType } from "@utils/types/models/contract";
+import type { ContractType, ContractStatusType, ContractSituationType } from "@utils/types/models/contract";
 
 export interface ContractFormData {
     code: string;
     type: ContractType | "";
     status: ContractStatusType;
+    situation: ContractSituationType;
     contractDate: string;
     deliveryForecast?: string;
     endDate: string;

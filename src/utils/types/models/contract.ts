@@ -5,17 +5,22 @@ export const CONTRACT_TYPES = {
 } as const;
 
 export const CONTRACT_STATUS = {
-    IRREGULAR: "IRREGULAR",
     INACTIVE: "INACTIVE",
-    REGULAR: "REGULAR",
     ACTIVE: "ACTIVE"
+} as const;
+
+export const CONTRACT_SITUATION = {
+    IRREGULAR: "IRREGULAR",
+    REGULAR: "REGULAR"
 } as const;
 
 export type ContractType = typeof CONTRACT_TYPES[keyof typeof CONTRACT_TYPES];
 export type ContractStatusType = typeof CONTRACT_STATUS[keyof typeof CONTRACT_STATUS];
+export type ContractSituationType = typeof CONTRACT_SITUATION[keyof typeof CONTRACT_SITUATION];
 
 export const CONTRACT_TYPES_ARRAY = Object.values(CONTRACT_TYPES);
 export const CONTRACT_STATUS_ARRAY = Object.values(CONTRACT_STATUS);
+export const CONTRACT_SITUATION_ARRAY = Object.values(CONTRACT_SITUATION);
 
 export const CONTRACT_TYPE_TRANSLATIONS: Record<ContractType, string> = {
     OTHERS: "Outros",
@@ -24,10 +29,13 @@ export const CONTRACT_TYPE_TRANSLATIONS: Record<ContractType, string> = {
 };
 
 export const CONTRACT_STATUS_TRANSLATIONS: Record<ContractStatusType, string> = {
-    IRREGULAR: "Irregular",
     INACTIVE: "Inativo",
-    REGULAR: "Regular",
     ACTIVE: "Ativo"
+};
+
+export const CONTRACT_SITUATION_TRANSLATIONS: Record<ContractSituationType, string> = {
+    IRREGULAR: "Irregular",
+    REGULAR: "Regular"
 };
 
 export interface ContractModelType {
@@ -35,6 +43,7 @@ export interface ContractModelType {
     code: string;
     type: ContractType;
     status: ContractStatusType;
+    situation: ContractSituationType;
     contractDate: string | Date;
     deliveryForecast?: string | Date;
     endDate?: string | Date;

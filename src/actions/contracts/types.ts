@@ -1,10 +1,11 @@
-import type { ContractModelType, ContractType, ContractStatusType } from "@utils/types/models/contract";
+import type { ContractModelType, ContractType, ContractStatusType, ContractSituationType } from "@utils/types/models/contract";
 import type { PaginationMeta } from "@utils/types/action";
 
 export interface CreateContractData {
     code: string;
     type: ContractType;
     status: ContractStatusType;
+    situation: ContractSituationType;
     totalValue: number;
     totalSalePrice: number;
     contractDate: string | Date;
@@ -17,6 +18,7 @@ export interface UpdateContractData {
     code?: string;
     type?: ContractType;
     status?: ContractStatusType;
+    situation?: ContractSituationType;
     totalValue?: number;
     totalSalePrice?: number;
     contractDate?: string | Date;
@@ -51,6 +53,11 @@ export interface DashboardMetricsResponse {
     distribution: {
         byStatus: Array<{
             status: string;
+            count: number;
+            value: number;
+        }>;
+        bySituation: Array<{
+            situation: string;
             count: number;
             value: number;
         }>;

@@ -3,19 +3,23 @@ import { Add, Edit, Delete, MoreVert, Event, LocalShipping, EventAvailable, Paym
 import { useState, MouseEvent } from "react";
 
 import { Container, Header, HeaderInfo, Grid, Card, CardHeader, ChipsWrapper, CardContent, InfoGrid, InfoRow, InfoTextWrapper, StatusChip, Footer } from "./styles";
-import { CONTRACT_TYPE_TRANSLATIONS, CONTRACT_STATUS_TRANSLATIONS } from "@utils/types/models/contract";
+import { CONTRACT_TYPE_TRANSLATIONS, CONTRACT_STATUS_TRANSLATIONS, CONTRACT_SITUATION_TRANSLATIONS } from "@utils/types/models/contract";
 import { formatCurrency, formatDate } from "@utils/formatters";
 import Pagination from "@components/pagination";
 import NoData from "@components/noData";
 
-import type { ContractModelType, ContractStatusType } from "@utils/types/models/contract";
+import type { ContractModelType, ContractStatusType, ContractSituationType } from "@utils/types/models/contract";
 import type { ContractGridProps } from "./types";
 
 const getStatusColor = (status?: ContractStatusType) => {
     if (status === "ACTIVE") return "success";
-    if (status === "REGULAR") return "info";
-    if (status === "IRREGULAR") return "warning";
     if (status === "INACTIVE") return "error";
+    return "default";
+};
+
+const getSituationColor = (situation?: ContractSituationType) => {
+    if (situation === "REGULAR") return "info";
+    if (situation === "IRREGULAR") return "warning";
     return "default";
 };
 
@@ -74,6 +78,7 @@ const ContractGrid = ({ contracts, meta, onEdit, onDelete, onPaginationChange, o
                                     <ChipsWrapper>
                                         <Chip label={CONTRACT_TYPE_TRANSLATIONS[contract.type]} size="small" variant="outlined" color="primary" />
                                         <StatusChip label={CONTRACT_STATUS_TRANSLATIONS[contract.status]} variantcolor={getStatusColor(contract.status)} size="small" />
+                                        <StatusChip label={CONTRACT_SITUATION_TRANSLATIONS[contract.situation]} variantcolor={getSituationColor(contract.situation)} size="small" />
                                     </ChipsWrapper>
                                 </Box>
                                 <IconButton size="small" onClick={(e) => handleOpenMenu(e, contract)}>
