@@ -1,7 +1,7 @@
 import { Tabs, Tab, Box } from "@mui/material";
 
+import CalendarView from "./subcomponents/calendarView";
 import ScheduleModal from "./subcomponents/scheduleModal";
-import CalendarTable from "./subcomponents/calendarTable";
 import ReviewModal from "./subcomponents/reviewModal";
 import DraftsTable from "./subcomponents/draftsTable";
 import DraftModal from "./subcomponents/draftModal";
@@ -30,7 +30,7 @@ const MarketingManagement = () => {
                 </Box>
                 <TabPanelContainer>
                     {currentTab === 0 && <DraftsTable drafts={drafts} onEdit={handleOpenDraftModal} onSchedule={(id) => handleOpenScheduleModal(id)} onDelete={handleDeleteDraft} onNew={() => handleOpenDraftModal()} />}
-                    {currentTab === 1 && <CalendarTable items={calendarItems} onReview={handleOpenReviewModal} onSendApproval={handleSendApproval} onEdit={handleOpenDraftModal} />}
+                    {currentTab === 1 && <CalendarView items={calendarItems} onReview={handleOpenReviewModal} onSendApproval={handleSendApproval} onEdit={handleOpenDraftModal} />}
                 </TabPanelContainer>
                 <DraftModal open={draftModalOpen} draft={activeDraft} onClose={handleCloseModals} onSave={handleSaveDraft} />
                 <ScheduleModal open={scheduleModalOpen} draftId={selectedDraft} onClose={handleCloseModals} onSave={handleScheduleDraft} />
