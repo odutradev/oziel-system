@@ -1,5 +1,6 @@
 import { DialogTitle, DialogContent, DialogActions, Typography, Divider, Dialog, Button, Box } from "@mui/material";
 import { CheckCircle, Cancel } from "@mui/icons-material";
+import { useTheme } from "@mui/material/styles";
 import MDEditor from "@uiw/react-md-editor";
 import { useState, useEffect } from "react";
 
@@ -9,7 +10,8 @@ import { FormContainer, ReadOnlySection } from "./styles";
 import type { ReviewModalProps } from "./types";
 
 const ReviewModal = ({ open, item, onClose, onSave }: ReviewModalProps) => {
-    const [feedbackNotes, setFeedbackNotes] = useState<string>("");
+    const [feedbackNotes, setFeedbackNotes] = useState("");
+    const theme = useTheme();
 
     useEffect(() => {
         if (open) setFeedbackNotes("");
@@ -28,7 +30,7 @@ const ReviewModal = ({ open, item, onClose, onSave }: ReviewModalProps) => {
             <DialogTitle>Revisar Conteúdo: {item.title}</DialogTitle>
             <DialogContent>
                 <FormContainer>
-                    <ReadOnlySection data-color-mode="light">
+                    <ReadOnlySection data-color-mode={theme.palette.mode}>
                         <Typography variant="subtitle2" color="textSecondary" mb={1}>Estratégia Proposta</Typography>
                         <MDEditor.Markdown source={item.strategy || "Nenhuma estratégia definida."} />
                         <Divider sx={{ my: 2 }} />

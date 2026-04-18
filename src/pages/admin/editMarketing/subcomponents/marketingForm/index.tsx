@@ -1,7 +1,7 @@
 import { TextField, Typography, Box } from "@mui/material";
-import MDEditor from "@uiw/react-md-editor";
 
-import { FormContainer, EditorWrapper } from "./styles";
+import MarkdownEditor from "@components/markdownEditor";
+import { FormContainer } from "./styles";
 
 import type { MarketingFormProps } from "./types";
 
@@ -23,7 +23,6 @@ const MarketingForm = ({ formData, onChange, isEditing }: MarketingFormProps) =>
                 value={formData.description}
                 onChange={(e) => onChange("description", e.target.value)}
                 disabled={isLocked}
-                multiline
                 fullWidth
                 required
                 rows={3}
@@ -40,25 +39,21 @@ const MarketingForm = ({ formData, onChange, isEditing }: MarketingFormProps) =>
             )}
             <Box display="flex" flexDirection="column" gap={1}>
                 <Typography variant="subtitle2" color="textSecondary">Estratégia (Markdown)</Typography>
-                <EditorWrapper data-color-mode="light">
-                    <MDEditor
-                        value={formData.strategy || ""}
-                        onChange={(val) => onChange("strategy", val || "")}
-                        preview={isLocked ? "preview" : "live"}
-                        hideToolbar={isLocked}
-                        height={300}
-                    />
-                </EditorWrapper>
+                <MarkdownEditor
+                    value={formData.strategy || ""}
+                    onChange={(val) => onChange("strategy", val)}
+                    preview={isLocked ? "preview" : "live"}
+                    hideToolbar={isLocked}
+                    height={300}
+                />
             </Box>
             <Box display="flex" flexDirection="column" gap={1}>
                 <Typography variant="subtitle2" color="textSecondary">Conteúdo / Legenda (Markdown)</Typography>
-                <EditorWrapper data-color-mode="light">
-                    <MDEditor
-                        value={formData.content || ""}
-                        onChange={(val) => onChange("content", val || "")}
-                        height={400}
-                    />
-                </EditorWrapper>
+                <MarkdownEditor
+                    value={formData.content || ""}
+                    onChange={(val) => onChange("content", val)}
+                    height={400}
+                />
             </Box>
         </FormContainer>
     );
