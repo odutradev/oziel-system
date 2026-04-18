@@ -1,4 +1,4 @@
-import { Menu, MenuItem, ListItemIcon, ListItemText } from "@mui/material";
+import { Menu, MenuItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import { Edit, Send, RateReview } from "@mui/icons-material";
 import { useState } from "react";
 
@@ -61,6 +61,7 @@ const CalendarView = ({ items, onEdit, onSendApproval, onReview }: CalendarViewP
 
     return (
         <ViewContainer>
+            <Typography variant="h6" fontWeight={600}>Calendário e Aprovações</Typography>
             <Calendar events={calendarEvents} onEventClick={handleEventClick} />
 
             <Menu anchorEl={anchorEl} open={open} onClose={handleCloseMenu} PaperProps={{ sx: { minWidth: 200 } }}>

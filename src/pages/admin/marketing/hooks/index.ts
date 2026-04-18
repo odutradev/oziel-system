@@ -3,18 +3,17 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import { getCalendarItems, scheduleDraft, sendForApproval, reviewCalendarItem, getDrafts, createDraft, updateDraft, deleteDraft } from "@actions/marketingRequests";
 import useAction from "@hooks/useAction";
 
-import type { MarketingItemModelType } from "@actions/marketingRequests/types";
 import type { DraftFormData, ScheduleFormData, ReviewFormData, MarketingHookProps } from "../types";
+import type { MarketingItemModelType } from "@actions/marketingRequests/types";
 
 const useMarketingHook = (): MarketingHookProps => {
     const [calendarItems, setCalendarItems] = useState<MarketingItemModelType[]>([]);
-    const [drafts, setDrafts] = useState<MarketingItemModelType[]>([]);
     const [selectedCalendarItem, setSelectedCalendarItem] = useState<string | null>(null);
-    const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
     const [selectedDraft, setSelectedDraft] = useState<string | null>(null);
+    const [drafts, setDrafts] = useState<MarketingItemModelType[]>([]);
+    const [scheduleModalOpen, setScheduleModalOpen] = useState(false);
     const [reviewModalOpen, setReviewModalOpen] = useState(false);
     const [draftModalOpen, setDraftModalOpen] = useState(false);
-    const [currentTab, setCurrentTab] = useState(0);
     const [loading, setLoading] = useState(false);
 
     const fetchDraftsData = useCallback(async () => {
@@ -32,13 +31,9 @@ const useMarketingHook = (): MarketingHookProps => {
     }, []);
 
     useEffect(() => {
-        if (currentTab === 0) fetchDraftsData();
-        if (currentTab === 1) fetchCalendarData();
-    }, [currentTab, fetchDraftsData, fetchCalendarData]);
-
-    const handleTabChange = useCallback((newValue: number) => {
-        setCurrentTab(newValue);
-    }, []);
+        fetchDraftsData();
+        fetchCalendarData();
+    }, [fetchDraftsData, fetchCalendarData]);
 
     const handleCloseModals = useCallback(() => {
         setSelectedCalendarItem(null);
@@ -89,11 +84,11 @@ const useMarketingHook = (): MarketingHookProps => {
             toastMessages: { success: "Agendado com sucesso", error: "Erro ao agendar", pending: "Agendando..." },
             callback: () => {
                 fetchDraftsData();
+                fetchCalendarData();
                 handleCloseModals();
-                setCurrentTab(1);
             }
         });
-    }, [fetchDraftsData, handleCloseModals]);
+    }, [fetchDraftsData, fetchCalendarData, handleCloseModals]);
 
     const handleSendApproval = useCallback(async (id: string) => {
         await useAction({
@@ -126,18 +121,16 @@ const useMarketingHook = (): MarketingHookProps => {
         scheduleModalOpen,
         handleCloseModals,
         handleSaveDraft,
-        handleTabChange,
         reviewModalOpen,
         draftModalOpen,
         calendarItems,
         selectedDraft,
-        currentTab,
         loading,
         drafts
     }), [
         handleOpenScheduleModal, handleOpenReviewModal, selectedCalendarItem, handleOpenDraftModal, handleScheduleDraft,
         handleDeleteDraft, handleSendApproval, handleReviewItem, scheduleModalOpen, handleCloseModals, handleSaveDraft,
-        handleTabChange, reviewModalOpen, draftModalOpen, calendarItems, selectedDraft, currentTab, loading, drafts
+        reviewModalOpen, draftModalOpen, calendarItems, selectedDraft, loading, drafts
     ]);
 };
 

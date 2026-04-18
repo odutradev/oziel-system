@@ -28,7 +28,6 @@ export interface MarketingHookProps {
     handleSaveDraft: (data: DraftFormData) => Promise<void>;
     handleDeleteDraft: (id: string) => Promise<void>;
     handleSendApproval: (id: string) => Promise<void>;
-    handleTabChange: (newValue: number) => void;
     handleCloseModals: () => void;
     calendarItems: MarketingItemModelType[];
     selectedCalendarItem: string | null;
@@ -37,7 +36,6 @@ export interface MarketingHookProps {
     reviewModalOpen: boolean;
     draftModalOpen: boolean;
     selectedDraft: string | null;
-    currentTab: number;
     loading: boolean;
 }
 
