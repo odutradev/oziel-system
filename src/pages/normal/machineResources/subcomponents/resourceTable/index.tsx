@@ -10,21 +10,21 @@ import type { ResourceItemType } from "../../types";
 import type { ResourceTableProps } from "./types";
 
 const TAB_OPTIONS = [
-    { value: "fleets", label: "Frotas" },
+    { value: "fleets", label: "Ativos" },
     { value: "operators", label: "Operadores" }
 ];
 
 const ResourceTable = ({ items, meta, activeTab, loading, onTabChange, onPaginationChange, onEdit, onCreate, onDelete }: ResourceTableProps) => {
-    const isFleet = activeTab === "fleets";
+    const isAsset = activeTab === "fleets";
 
     const columns: TableColumn<ResourceItemType>[] = [
-        { key: "name", label: isFleet ? "Nome da Frota" : "Nome do Operador" },
+        { key: "name", label: isAsset ? "Nome do Ativo" : "Nome do Operador" },
         {
-            key: isFleet ? "description" : "document",
-            label: isFleet ? "Descrição" : "Documento",
+            key: isAsset ? "description" : "document",
+            label: isAsset ? "Descrição" : "Documento",
             render: (row) => {
-                if (isFleet && "description" in row) return row.description || "-";
-                if (!isFleet && "document" in row) return row.document || "-";
+                if (isAsset && "description" in row) return row.description || "-";
+                if (!isAsset && "document" in row) return row.document || "-";
                 return "-";
             }
         },
@@ -51,7 +51,7 @@ const ResourceTable = ({ items, meta, activeTab, loading, onTabChange, onPaginat
                 />
             </Box>
             <Button variant="contained" color="primary" startIcon={<Add />} onClick={onCreate} sx={{ whiteSpace: "nowrap", height: 40 }}>
-                {isFleet ? "Nova Frota" : "Novo Operador"}
+                {isAsset ? "Novo Ativo" : "Novo Operador"}
             </Button>
         </Box>
     );
@@ -67,8 +67,8 @@ const ResourceTable = ({ items, meta, activeTab, loading, onTabChange, onPaginat
             onPaginationChange={onPaginationChange}
             rowActions={rowActions}
             onRowClick={onEdit}
-            title={isFleet ? "Frotas Cadastradas" : "Operadores Cadastrados"}
-            chipName={isFleet ? "frotas" : "operadores"}
+            title={isAsset ? "Ativos Cadastrados" : "Operadores Cadastrados"}
+            chipName={isAsset ? "ativos" : "operadores"}
             headerContent={headerContent}
         />
     );

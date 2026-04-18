@@ -45,14 +45,14 @@ const useMachineResourcesHook = (): MachineResourcesHookProps => {
     }, [navigate, activeTab]);
 
     const handleDelete = useCallback(async (id: string) => {
-        const isFleet = activeTab === "fleets";
-        if (!confirm(`Tem certeza que deseja remover est${isFleet ? 'a frota' : 'e operador'}?`)) return;
+        const isAsset = activeTab === "fleets";
+        if (!confirm(`Tem certeza que deseja remover est${isAsset ? 'e ativo' : 'e operador'}?`)) return;
 
         await useAction({
-            action: async () => isFleet ? await deleteFleet(id) : await deleteOperator(id),
+            action: async () => isAsset ? await deleteFleet(id) : await deleteOperator(id),
             toastMessages: {
-                success: `${isFleet ? "Frota" : "Operador"} removido(a) com sucesso`,
-                error: `Erro ao remover ${isFleet ? "frota" : "operador"}`,
+                success: `${isAsset ? "Ativo" : "Operador"} removido com sucesso`,
+                error: `Erro ao remover ${isAsset ? "ativo" : "operador"}`,
                 pending: "Removendo..."
             },
             callback: refresh
