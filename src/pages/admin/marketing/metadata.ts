@@ -5,7 +5,7 @@ const metadata: Partial<LayoutProps> = {
         { name: "Dashboard", url: "/dashboard/general" },
         { name: "Marketing", url: "/dashboard/admin/marketing" }
     ],
-    pageTitle: "Gestão de Solicitações de Marketing"
+    pageTitle: "Gestão de Marketing"
 };
 
 export default metadata;

@@ -4,9 +4,9 @@ import EditMachineResource from "@pages/normal/editMachineResource";
 import RecurringTransactions from "@pages/normal/recurringTransactions";
 import ContractsDashboard from "@pages/normal/contractsDashboard";
 import ContractsManagement from "@pages/normal/contracts";
-import MarketingRequests from "@pages/admin/marketingRequests";
 import MachineOperations from "@pages/normal/machineOperations";
 import MachineResources from "@pages/normal/machineResources";
+import MarketingManagement from "@pages/admin/marketing";
 import EmailTemplateEdit from "@pages/admin/editTemplate";
 import AccountBlocked from "@pages/normal/accountBlocked";
 import InitialRoute from "@routes/components/initialRoute";
@@ -75,12 +75,12 @@ const routes = [
         path: "/dashboard/admin",
         privateRoute: true,
         routes: [
-            ['/marketing', <MarketingRequests />],
             ['/users', <UsersManagement />],
             ['/users/edit/:userID', <UserEdit />],
             ['/emails', <EmailsManagement />],
             ['/emails/edit/:templateID', <EmailTemplateEdit />],
             ['/emails/send-bulk', <SendBulkEmail />],
+            ['/marketing', <MarketingManagement />],
             ['/logs', <SystemLogs />],
         ]
     },
