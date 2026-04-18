@@ -1,4 +1,4 @@
-import { DialogTitle, DialogContent, DialogActions, Typography, Dialog, Button, Divider } from "@mui/material";
+import { DialogTitle, DialogContent, DialogActions, Typography, Divider, Dialog, Button, Box } from "@mui/material";
 import { CheckCircle, Cancel } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 
