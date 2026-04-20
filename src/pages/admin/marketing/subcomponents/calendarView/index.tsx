@@ -1,13 +1,20 @@
-import { ListItemText, ListItemIcon, MenuItem, Menu } from "@mui/material";
+import { Typography, ListItemText, ListItemIcon, MenuItem, Menu } from "@mui/material";
 import { RateReview, Delete, Send, Edit } from "@mui/icons-material";
 import { useState } from "react";
 
+import { LegendContainer, LegendItem, ColorBox, ViewContainer } from "./styles";
 import Calendar from "@components/calendar";
-import { ViewContainer } from "./styles";
 
 import type { MarketingItemModelType, MarketingStatus } from "@actions/marketingRequests/types";
 import type { CalendarEventColor, CalendarEvent } from "@components/calendar/types";
 import type { CalendarViewProps } from "./types";
+
+const LEGEND_ITEMS = [
+    { label: "Aprovada / Concluída", color: "success.main" },
+    { label: "Aguardando Aprovação", color: "warning.main" },
+    { label: "Revisão Necessária", color: "error.main" },
+    { label: "Planejada", color: "info.main" }
+];
 
 const getStatusColor = (status: MarketingStatus): CalendarEventColor => {
     const map: Record<MarketingStatus, CalendarEventColor> = {
@@ -28,10 +35,10 @@ const CalendarView = ({ items, onEdit, onSendApproval, onDelete }: CalendarViewP
     const calendarEvents: CalendarEvent<MarketingItemModelType>[] = items
         .filter((item) => item.plannedDate)
         .map((item) => ({
-            id: item._id,
-            title: item.title,
-            date: item.plannedDate as string,
             color: getStatusColor(item.status),
+            date: item.plannedDate as string,
+            title: item.title,
+            id: item._id,
             data: item
         }));
 
@@ -42,8 +49,8 @@ const CalendarView = ({ items, onEdit, onSendApproval, onDelete }: CalendarViewP
     };
 
     const handleCloseMenu = () => {
-        setAnchorEl(null);
         setSelectedItem(null);
+        setAnchorEl(null);
     };
 
     const handleAction = (action: "send" | "edit" | "delete") => {
@@ -60,6 +67,16 @@ const CalendarView = ({ items, onEdit, onSendApproval, onDelete }: CalendarViewP
 
     return (
         <ViewContainer>
+            <LegendContainer>
+                {LEGEND_ITEMS.map((item) => (
+                    <LegendItem key={item.label}>
+                        <ColorBox sx={{ bgcolor: item.color }} />
+                        <Typography variant="caption" color="textSecondary">
+                            {item.label}
+                        </Typography>
+                    </LegendItem>
+                ))}
+            </LegendContainer>
             <Calendar events={calendarEvents} onEventClick={handleEventClick} />
             <Menu anchorEl={anchorEl} open={open} onClose={handleCloseMenu} PaperProps={{ sx: { minWidth: 200 } }}>
                 {(selectedItem?.status === "PLANNED" || selectedItem?.status === "REVISION_REQUIRED" || selectedItem?.status === "APPROVED") && (
@@ -90,7 +107,7 @@ const CalendarView = ({ items, onEdit, onSendApproval, onDelete }: CalendarViewP
                     <ListItemIcon>
                         <Delete color="error" fontSize="small" />
                     </ListItemIcon>
-                        <ListItemText sx={{ color: "error.main" }}>Excluir</ListItemText>
+                    <ListItemText sx={{ color: "error.main" }}>Excluir</ListItemText>
                 </MenuItem>
             </Menu>
         </ViewContainer>
