@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { updateCalendarItem, reviewCalendarItem, getMarketingItemById, updateDraft, createDraft } from "@actions/marketingRequests";
+import { updateCalendarItem, reviewCalendarItem, getMarketingItemById, updateDraft, createDraft, sendForApproval } from "@actions/marketingRequests";
 import useAction from "@hooks/useAction";
 
 import type { EditMarketingFormData } from "../types";
@@ -78,6 +78,42 @@ const useEditMarketing = (itemID?: string) => {
         setSaving(false);
     }, [itemID, formData, navigate]);
 
+    const handleSendApproval = useCallback(async () => {
+        setSaving(true);
+        await useAction({
+            action: async () => {
+                const payload = {
+                    description: formData.description,
+                    strategy: formData.strategy,
+                    content: formData.content,
+                    title: formData.title
+                };
+
+                let currentId = itemID;
+
+                if (!currentId) {
+                    const res = await createDraft(payload as any);
+                    const data = res && "data" in res ? (res as any).data : res;
+                    currentId = data?._id;
+                } else if (formData.status === "DRAFT") {
+                    await updateDraft(currentId, payload);
+                } else {
+                    await updateCalendarItem(currentId, {
+                        ...payload,
+                        plannedDate: formData.plannedDate ? new Date(formData.plannedDate).toISOString() : undefined
+                    });
+                }
+
+                if (currentId) return await sendForApproval(currentId);
+
+                throw new Error("Erro ao preparar item para aprovação");
+            },
+            toastMessages: { success: "Enviado para revisão", error: "Erro ao enviar", pending: "Enviando..." },
+            callback: () => navigate("/dashboard/admin/marketing")
+        });
+        setSaving(false);
+    }, [itemID, formData, navigate]);
+
     const handleReview = useCallback(async (approved: boolean) => {
         if (!itemID) return;
         setSaving(true);
@@ -89,7 +125,7 @@ const useEditMarketing = (itemID?: string) => {
         setSaving(false);
     }, [itemID, formData.feedbackNotes, navigate]);
 
-    return { handleChange, handleReview, handleSave, formData, loading, saving };
+    return { handleChange, handleSendApproval, handleReview, handleSave, formData, loading, saving };
 };
 
 export default useEditMarketing;
