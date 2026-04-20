@@ -3,8 +3,8 @@ import { CircularProgress, Box } from "@mui/material";
 
 import MarketingForm from "./subcomponents/marketingForm";
 import FormActions from "@components/formActions";
-import Layout from "@components/layout";
 import { PageContainer } from "./styles";
+import Layout from "@components/layout";
 import useEditMarketing from "./hooks";
 import metadata from "./metadata";
 
@@ -26,7 +26,7 @@ const EditMarketing = () => {
                     </Box>
                 ) : (
                     <>
-                        <MarketingForm isEditing={isEditing} onChange={handleChange} formData={formData} />
+                        <MarketingForm onChange={handleChange} formData={formData} />
                         <FormActions
                             onCancel={() => navigate("/dashboard/admin/marketing")}
                             onSave={isReviewMode ? () => handleReview(true) : handleSave}

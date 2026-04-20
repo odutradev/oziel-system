@@ -57,9 +57,20 @@ const useEditMarketing = (itemID?: string) => {
         setSaving(true);
         await useAction({
             action: async () => {
-                if (!itemID) return await createDraft({ title: formData.title, description: formData.description, strategy: formData.strategy, content: formData.content } as any);
-                if (formData.status === "DRAFT") return await updateDraft(itemID, { title: formData.title, description: formData.description, strategy: formData.strategy, content: formData.content });
-                return await updateCalendarItem(itemID, { content: formData.content, plannedDate: formData.plannedDate ? new Date(formData.plannedDate).toISOString() : undefined });
+                const payload = {
+                    description: formData.description,
+                    strategy: formData.strategy,
+                    content: formData.content,
+                    title: formData.title
+                };
+
+                if (!itemID) return await createDraft(payload as any);
+                if (formData.status === "DRAFT") return await updateDraft(itemID, payload);
+
+                return await updateCalendarItem(itemID, {
+                    ...payload,
+                    plannedDate: formData.plannedDate ? new Date(formData.plannedDate).toISOString() : undefined
+                });
             },
             toastMessages: { success: "Salvo com sucesso", error: "Erro ao salvar", pending: "Salvando..." },
             callback: () => navigate("/dashboard/admin/marketing")
