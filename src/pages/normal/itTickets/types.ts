@@ -1,26 +1,26 @@
 import type { TicketModelType, TicketPriority, TicketStatus } from "@actions/itTickets/types";
 
-export const TICKET_PRIORITIES = ["CRITICAL", "HIGH", "MEDIUM", "LOW"];
-export const TICKET_STATUSES = ["OPEN", "ANALYSIS", "INTERVENTION", "WAITING_USER", "TESTING", "VALIDATION", "CLOSED"];
+export const TICKET_PRIORITY_LABELS: Record<TicketPriority, string> = {
+    CRITICAL: "Crítico",
+    HIGH: "Alta",
+    MEDIUM: "Média",
+    LOW: "Baixa"
+};
 
-export interface TicketFormData {
-    priority: TicketPriority | "";
-    status: TicketStatus | "";
-    resolutionNotes?: string;
-    assignedTo?: string;
-    description: string;
-    title: string;
-    _id?: string;
-}
+export const TICKET_STATUS_LABELS: Record<TicketStatus, string> = {
+    OPEN: "Aberto",
+    ANALYSIS: "Em Análise",
+    INTERVENTION: "Em Intervenção",
+    WAITING_USER: "Aguardando Usuário",
+    TESTING: "Em Testes",
+    VALIDATION: "Em Validação",
+    CLOSED: "Fechado"
+};
 
 export interface TicketsHookProps {
-    handleFormChange: (field: keyof TicketFormData, value: unknown) => void;
-    handleOpenModal: (ticket?: TicketModelType) => void;
     handleDelete: (id: string) => Promise<void>;
+    handleCreateNew: () => void;
+    handleEdit: (id: string) => void;
     tickets: TicketModelType[];
-    formData: TicketFormData;
-    handleCloseModal: () => void;
-    handleSave: () => Promise<void>;
-    modalOpen: boolean;
     loading: boolean;
 }

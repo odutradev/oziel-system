@@ -2,6 +2,8 @@ import type { TicketModelType } from "@actions/itTickets/types";
 
 export interface TicketTableProps {
     tickets: TicketModelType[];
-    onEdit: (ticket: TicketModelType) => void;
+    loading: boolean;
+    onCreateNew: () => void;
+    onEdit: (id: string) => void;
     onDelete: (id: string) => void;
 }

@@ -1,9 +1,10 @@
 import type { TicketFormData } from "../../types";
 
-export interface TicketModalProps {
+export interface TicketFormProps {
     onChange: (field: keyof TicketFormData, value: unknown) => void;
+    onCancel: () => void;
+    onSave: () => Promise<void>;
     formData: TicketFormData;
-    handleClose: () => void;
-    handleSave: () => void;
-    open: boolean;
+    isEditing: boolean;
+    loading: boolean;
 }
