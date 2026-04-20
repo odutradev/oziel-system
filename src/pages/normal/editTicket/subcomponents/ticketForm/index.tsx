@@ -15,7 +15,7 @@ const TicketForm = ({ formData, isEditing, loading, onChange, onSave, onCancel }
         <Box display="flex" flexDirection="column" gap={3}>
             <EditSection title="Informações Básicas">
                 <Grid container spacing={3}>
-                    <Grid item xs={12} md={6}>
+                    <Grid size={{ xs: 12, md: 6 }}>
                         <TextField
                             fullWidth
                             label="Título"
@@ -24,7 +24,7 @@ const TicketForm = ({ formData, isEditing, loading, onChange, onSave, onCancel }
                             disabled={loading}
                         />
                     </Grid>
-                    <Grid item xs={12} md={3}>
+                    <Grid size={{ xs: 12, md: 3 }}>
                         <TextField
                             select
                             fullWidth
@@ -39,7 +39,7 @@ const TicketForm = ({ formData, isEditing, loading, onChange, onSave, onCancel }
                         </TextField>
                     </Grid>
                     {isEditing && (
-                        <Grid item xs={12} md={3}>
+                        <Grid size={{ xs: 12, md: 3 }}>
                             <TextField
                                 select
                                 fullWidth

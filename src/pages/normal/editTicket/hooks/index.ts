@@ -31,7 +31,7 @@ const useEditTicketHook = (): EditTicketHookProps => {
             setFormData({
                 title: response.title || "",
                 description: response.description || "",
-                resolutionNotes: response.resolutionNotes || "",
+                resolutionNotes: (response as any).resolutionNotes || "",
                 priority: response.priority || "LOW",
                 status: response.status || "OPEN"
             });
@@ -59,7 +59,7 @@ const useEditTicketHook = (): EditTicketHookProps => {
             : { title: formData.title, description: formData.description, priority: formData.priority } as CreateTicketData;
 
         await useAction({
-            action: async () => isEditing ? await updateTicket(ticketID, payload as UpdateTicketData) : await createTicket(payload as CreateTicketData),
+            action: async () => isEditing ? await updateTicket(ticketID as string, payload as UpdateTicketData) : await createTicket(payload as CreateTicketData),
             toastMessages: { success: "Chamado salvo com sucesso", error: "Erro ao salvar chamado", pending: "Salvando..." },
             callback: handleCancel
         });
