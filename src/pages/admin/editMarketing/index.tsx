@@ -15,7 +15,7 @@ const EditMarketing = () => {
 
     const isEditing = Boolean(itemID);
     const isReviewMode = formData.status === "WAITING_APPROVAL";
-    const canSendReview = !isReviewMode && !["APPROVED", "COMPLETED"].includes(formData.status);
+    const canSendReview = !isReviewMode && formData.status !== "COMPLETED";
     const pageMetadata = { ...metadata, pageTitle: isReviewMode ? "Revisar Solicitação de Marketing" : isEditing ? "Editar Solicitação de Marketing" : "Novo Rascunho de Marketing" };
 
     return (

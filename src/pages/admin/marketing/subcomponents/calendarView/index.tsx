@@ -62,7 +62,7 @@ const CalendarView = ({ items, onEdit, onSendApproval, onDelete }: CalendarViewP
         <ViewContainer>
             <Calendar events={calendarEvents} onEventClick={handleEventClick} />
             <Menu anchorEl={anchorEl} open={open} onClose={handleCloseMenu} PaperProps={{ sx: { minWidth: 200 } }}>
-                {(selectedItem?.status === "PLANNED" || selectedItem?.status === "REVISION_REQUIRED") && (
+                {(selectedItem?.status === "PLANNED" || selectedItem?.status === "REVISION_REQUIRED" || selectedItem?.status === "APPROVED") && (
                     <MenuItem onClick={() => handleAction("send")}>
                         <ListItemIcon>
                             <Send color="primary" fontSize="small" />
@@ -78,7 +78,7 @@ const CalendarView = ({ items, onEdit, onSendApproval, onDelete }: CalendarViewP
                         <ListItemText>Revisar</ListItemText>
                     </MenuItem>
                 )}
-                {selectedItem?.status !== "APPROVED" && selectedItem?.status !== "COMPLETED" && selectedItem?.status !== "WAITING_APPROVAL" && (
+                {selectedItem?.status !== "COMPLETED" && selectedItem?.status !== "WAITING_APPROVAL" && (
                     <MenuItem onClick={() => handleAction("edit")}>
                         <ListItemIcon>
                             <Edit fontSize="small" />
@@ -90,7 +90,7 @@ const CalendarView = ({ items, onEdit, onSendApproval, onDelete }: CalendarViewP
                     <ListItemIcon>
                         <Delete color="error" fontSize="small" />
                     </ListItemIcon>
-                    <ListItemText sx={{ color: "error.main" }}>Excluir</ListItemText>
+                        <ListItemText sx={{ color: "error.main" }}>Excluir</ListItemText>
                 </MenuItem>
             </Menu>
         </ViewContainer>
