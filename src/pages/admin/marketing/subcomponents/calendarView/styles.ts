@@ -9,6 +9,7 @@ export const ViewContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const LegendContainer = styled(Box)(({ theme }) => ({
+    justifyContent: "space-between",
     marginBottom: theme.spacing(1),
     gap: theme.spacing(2),
     flexWrap: "wrap",
