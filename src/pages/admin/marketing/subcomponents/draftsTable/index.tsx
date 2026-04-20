@@ -1,4 +1,4 @@
-import { Edit, Delete, EventAvailable, Add } from "@mui/icons-material";
+import { EventAvailable, Delete, Edit, Add } from "@mui/icons-material";
 import { Button } from "@mui/material";
 
 import FullTable from "@components/fullTable";
@@ -30,6 +30,7 @@ const DraftsTable = ({ drafts, onEdit, onSchedule, onDelete, onNew }: DraftsTabl
                 totalCount={drafts.length}
                 chipName="rascunhos"
                 rowActions={rowActions}
+                onRowClick={onEdit}
                 columns={columns}
                 data={drafts}
                 page={1}
