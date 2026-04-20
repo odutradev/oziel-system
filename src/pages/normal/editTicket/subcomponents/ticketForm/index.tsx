@@ -1,9 +1,9 @@
 import { Grid, TextField, MenuItem, Typography, Box } from "@mui/material";
 
-import MarkdownEditor from "@components/markdownEditor";
-import EditSection from "@components/editSection";
-import FormActions from "@components/formActions";
 import { TICKET_PRIORITY_LABELS, TICKET_STATUS_LABELS } from "../../../itTickets/types";
+import MarkdownEditor from "@components/markdownEditor";
+import FormActions from "@components/formActions";
+import EditSection from "@components/editSection";
 
 import type { TicketPriority, TicketStatus } from "@actions/itTickets/types";
 import type { TicketFormProps } from "./types";
@@ -17,6 +17,7 @@ const TicketForm = ({ formData, isEditing, loading, onChange, onSave, onCancel }
                 <Grid container spacing={3}>
                     <Grid size={{ xs: 12, md: 6 }}>
                         <TextField
+                            required
                             fullWidth
                             label="Título"
                             value={formData.title}
@@ -57,7 +58,7 @@ const TicketForm = ({ formData, isEditing, loading, onChange, onSave, onCancel }
                 </Grid>
             </EditSection>
 
-            <EditSection title="Descrição do Chamado">
+            <EditSection title="Descrição do Chamado *">
                 <Typography variant="body2" color="text.secondary" mb={2}>
                     Descreva o problema ou solicitação com o máximo de detalhes possível.
                 </Typography>
