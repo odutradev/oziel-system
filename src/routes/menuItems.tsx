@@ -4,7 +4,7 @@ import { ROLES } from "@utils/types/models/user";
 
 import type { MenuSection } from "../components/layout/types";
 
-const ALL_ROLES_EXCEPT_NORMAL = Object.values(ROLES).filter(role => role !== ROLES.NORMAL);
+//const ALL_ROLES_EXCEPT_NORMAL = Object.values(ROLES).filter(role => role !== ROLES.NORMAL);
 
 export const appMenuItems: MenuSection[] = [
   // {
