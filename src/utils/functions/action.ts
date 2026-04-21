@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import useUserStore from "@stores/user";
+// import useUserStore from "@stores/user";
 
 export const manageActionError = (error: unknown, log?: boolean) => {
     if (log) console.log(error);
@@ -12,12 +12,12 @@ export const manageActionError = (error: unknown, log?: boolean) => {
 };
 
 export const hasAdminPosition = (): void => {
-    const token = localStorage.getItem("token");
-    const { user } = useUserStore.getState();
+    // const token = localStorage.getItem("token");
+    // const { user } = useUserStore.getState();
     
-    if (!token || !user || user.role != "admin"){
-        throw new Error("Usuario não é um administrador");
-    };
+    // if (!token || !user || user.role != "admin"){
+    //     throw new Error("Usuario não é um administrador");
+    // };
 
     return;
 };
