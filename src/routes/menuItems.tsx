@@ -1,4 +1,4 @@
-import { AssignmentTurnedIn, ConfirmationNumber, AccountBalance, LocalShipping, LibraryBooks, InsertChart, Engineering, Description, EventRepeat, Dashboard, Handshake, Campaign, People, Badge, Email } from "@mui/icons-material";
+import { AssignmentTurnedIn, ConfirmationNumber, AccountBalance, LocalShipping, LibraryBooks, InsertChart, Engineering, Description, EventRepeat, Handshake, Campaign, People, Badge, Email } from "@mui/icons-material";
 
 import { ROLES } from "@utils/types/models/user";
 
