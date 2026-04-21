@@ -1,27 +1,28 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Box } from '@mui/material';
 
-import { menuItemsAdmin, menuItemsViewer } from '../../routes/menuItems';
 import ProfileManager from './subcomponents/profileManager';
 import LayoutDrawer from './subcomponents/layoutDrawer';
+import { SUPER_ROLES } from '@utils/types/models/user';
 import MenuSection from './subcomponents/menuSection';
-import Content from './subcomponents/content';
+import { appMenuItems } from '../../routes/menuItems';
 import useMountOnce from '@hooks/useMountOnce';
-import Navbar from './subcomponents/navbar';
+import Content from './subcomponents/content';
 import useSystemStore from '@stores/system';
+import Navbar from './subcomponents/navbar';
 import Loading from '@components/loading';
+import useDevice from '@hooks/useDevice';
 import Errors from '@components/errors';
 import useUserStore from '@stores/user';
-import useDevice from '@hooks/useDevice';
 import { getUser } from '@actions/user';
 import { MenuContent } from './styles';
 
+import type { MenuSection as MenuSectionType } from './types';
 import type { LayoutProps } from './types';
 
 const Layout = ({ children, breadcrumbs, navbarComponent, disableGetUser, loading, pageTitle = 'AMaisFácil', padding = 3 }: LayoutProps) => {
   const { system, updateSystem } = useSystemStore(x => x);
-  const [hasPermission] = useState(true);
   const { user } = useUserStore(x => x);
   const { isMobile } = useDevice();
   const location = useLocation();
@@ -45,13 +46,42 @@ const Layout = ({ children, breadcrumbs, navbarComponent, disableGetUser, loadin
     if (isMobile) handleClose();
   };
 
-  const menuItems = user?.role === 'normal' ? menuItemsViewer : menuItemsAdmin;
+  const userRole = user?.role;
+  const isSuperAdmin = Boolean(userRole && (SUPER_ROLES as string[]).includes(userRole));
+
+  const filteredMenuItems = useMemo(() => {
+    return appMenuItems.reduce<MenuSectionType[]>((acc, section) => {
+      const validItems = section.items.filter(item => {
+        if (isSuperAdmin) return true;
+        if (!item.permissions || item.permissions.length === 0) return true;
+        return Boolean(userRole && item.permissions.includes(userRole));
+      });
+
+      if (validItems.length > 0) {
+        acc.push({ ...section, items: validItems });
+      }
+
+      return acc;
+    }, []);
+  }, [userRole, isSuperAdmin]);
 
   const activePath = useMemo(() => {
-    const allItems = menuItems.flatMap(section => section.items);
+    const allItems = filteredMenuItems.flatMap(section => section.items);
     const matches = allItems.filter(item => location.pathname === item.path || location.pathname.startsWith(`${item.path}/`));
     return matches.sort((a, b) => b.path.length - a.path.length)[0]?.path || '';
-  }, [location.pathname, menuItems]);
+  }, [location.pathname, filteredMenuItems]);
+
+  const hasPermission = useMemo(() => {
+    if (isSuperAdmin) return true;
+
+    const allAppItems = appMenuItems.flatMap(section => section.items);
+    const currentItem = allAppItems.find(item => location.pathname === item.path || location.pathname.startsWith(`${item.path}/`));
+
+    if (!currentItem) return true;
+    if (!currentItem.permissions || currentItem.permissions.length === 0) return true;
+
+    return Boolean(userRole && currentItem.permissions.includes(userRole));
+  }, [location.pathname, userRole, isSuperAdmin]);
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
@@ -64,7 +94,7 @@ const Layout = ({ children, breadcrumbs, navbarComponent, disableGetUser, loadin
         width={width}
       >
         <MenuContent>
-          {menuItems.map(section => (
+          {filteredMenuItems.map(section => (
             <MenuSection
               key={section.sectionName}
               section={section}
