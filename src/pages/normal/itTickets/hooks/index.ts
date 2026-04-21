@@ -1,28 +1,36 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getTickets, deleteTicket } from "@actions/itTickets";
+import { getTickets, deleteTicket, getTicketsDashboard } from "@actions/itTickets";
 import useAction from "@hooks/useAction";
 
-import type { TicketModelType } from "@actions/itTickets/types";
+import type { DashboardMetricsResponse, TicketModelType } from "@actions/itTickets/types";
 import type { TicketsHookProps } from "../types";
 
 const useTicketsHook = (): TicketsHookProps => {
     const navigate = useNavigate();
 
+    const [metrics, setMetrics] = useState<DashboardMetricsResponse | null>(null);
     const [tickets, setTickets] = useState<TicketModelType[]>([]);
     const [loading, setLoading] = useState(false);
 
-    const fetchTickets = useCallback(async () => {
+    const fetchData = useCallback(async () => {
         setLoading(true);
-        const response = await getTickets({ limit: 1000 });
-        if (response && !("error" in response)) setTickets(response.data);
+
+        const [ticketsResponse, metricsResponse] = await Promise.all([
+            getTickets({ limit: 1000 }),
+            getTicketsDashboard()
+        ]);
+
+        if (ticketsResponse && !("error" in ticketsResponse)) setTickets(ticketsResponse.data);
+        if (metricsResponse && !("error" in metricsResponse)) setMetrics(metricsResponse);
+
         setLoading(false);
     }, []);
 
     useEffect(() => {
-        fetchTickets();
-    }, [fetchTickets]);
+        fetchData();
+    }, [fetchData]);
 
     const handleCreateNew = useCallback(() => {
         navigate("/dashboard/tickets/new");
@@ -36,17 +44,18 @@ const useTicketsHook = (): TicketsHookProps => {
         await useAction({
             action: async () => await deleteTicket(id),
             toastMessages: { success: "Chamado removido com sucesso", error: "Erro ao remover", pending: "Removendo..." },
-            callback: fetchTickets
+            callback: fetchData
         });
-    }, [fetchTickets]);
+    }, [fetchData]);
 
     return useMemo(() => ({
         handleCreateNew,
         handleDelete,
         handleEdit,
         loading,
-        tickets
-    }), [handleCreateNew, handleDelete, handleEdit, loading, tickets]);
+        tickets,
+        metrics
+    }), [handleCreateNew, handleDelete, handleEdit, loading, tickets, metrics]);
 };
 
 export default useTicketsHook;

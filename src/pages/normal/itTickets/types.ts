@@ -1,4 +1,4 @@
-import type { TicketModelType, TicketPriority, TicketStatus } from "@actions/itTickets/types";
+import type { DashboardMetricsResponse, TicketModelType, TicketPriority, TicketStatus } from "@actions/itTickets/types";
 
 export const TICKET_PRIORITY_LABELS: Record<TicketPriority, string> = {
     CRITICAL: "Crítico",
@@ -18,6 +18,7 @@ export const TICKET_STATUS_LABELS: Record<TicketStatus, string> = {
 };
 
 export interface TicketsHookProps {
+    metrics: DashboardMetricsResponse | null;
     handleDelete: (id: string) => Promise<void>;
     handleCreateNew: () => void;
     handleEdit: (id: string) => void;
