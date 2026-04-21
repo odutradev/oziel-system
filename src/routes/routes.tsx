@@ -1,8 +1,9 @@
 import { Navigate } from "react-router-dom";
 
-import EditMachineResource from "@pages/normal/editMachineResource";
 import RecurringTransactions from "@pages/normal/recurringTransactions";
+import EditMachineResource from "@pages/normal/editMachineResource";
 import ContractsDashboard from "@pages/normal/contractsDashboard";
+import MeetingMinutes from "@pages/admin/meetingMinutes";
 import ContractsManagement from "@pages/normal/contracts";
 import MachineOperations from "@pages/normal/machineOperations";
 import MachineResources from "@pages/normal/machineResources";
@@ -10,27 +11,28 @@ import MarketingManagement from "@pages/admin/marketing";
 import EmailTemplateEdit from "@pages/admin/editTemplate";
 import AccountBlocked from "@pages/normal/accountBlocked";
 import InitialRoute from "@routes/components/initialRoute";
-import MonthlyClosing from "@pages/normal/monthlyClosing";
 import TicketsManagement from "@pages/normal/itTickets";
+import MonthlyClosing from "@pages/normal/monthlyClosing";
 import PasswordReset from "@pages/normal/passwordReset";
 import EditMarketing from "@pages/admin/editMarketing";
 import EditHrMember from "@pages/normal/editHrMember";
-import EditContract from "@pages/normal/editContract";
 import EmailsManagement from "@pages/admin/emails";
-import SendBulkEmail from "@pages/admin/sendBulk";
 import UsersManagement from "@pages/admin/users";
-import PwaInstall from "@pages/normal/pwaInstall";
+import EditContract from "@pages/normal/editContract";
+import SendBulkEmail from "@pages/admin/sendBulk";
+import EditMinute from "@pages/admin/editMinute";
 import EditTicket from "@pages/normal/editTicket";
-import Dashboard from "@pages/normal/dashboard";
+import PwaInstall from "@pages/normal/pwaInstall";
 import HrMembers from "@pages/normal/hrMembers";
+import Dashboard from "@pages/normal/dashboard";
 import Treasury from "@pages/normal/treasury";
 import NotFound from "@pages/normal/notFound";
 import UserEdit from "@pages/admin/editUser";
-import Profile from "@pages/normal/profile";
 import SystemLogs from "@pages/admin/logs";
-import Logout from "@pages/normal/logout";
+import Profile from "@pages/normal/profile";
 import SignIn from "@pages/normal/signIn";
 import SignUp from "@pages/normal/signUp";
+import Logout from "@pages/normal/logout";
 import Logs from "@pages/normal/viewLogs";
 
 const routes = [
@@ -87,6 +89,9 @@ const routes = [
             ['/marketing', <MarketingManagement />],
             ['/marketing/new', <EditMarketing />],
             ['/marketing/edit/:itemID', <EditMarketing />],
+            ['/secretary/minutes', <MeetingMinutes />],
+            ['/secretary/minutes/new', <EditMinute />],
+            ['/secretary/minutes/edit/:minuteID', <EditMinute />],
             ['/logs', <SystemLogs />],
         ]
     },
