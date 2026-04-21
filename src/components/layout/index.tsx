@@ -5,23 +5,31 @@ import { Box } from '@mui/material'
 import ProfileManager from './subcomponents/profileManager'
 import LayoutDrawer from './subcomponents/layoutDrawer'
 import { SUPER_ROLES } from '@utils/types/models/user'
-import { appMenuItems } from '../../routes/menuItems'
 import MenuSection from './subcomponents/menuSection'
+import { appMenuItems } from '../../routes/menuItems'
 import useMountOnce from '@hooks/useMountOnce'
 import Content from './subcomponents/content'
-import useSystemStore from '@stores/system'
 import Navbar from './subcomponents/navbar'
+import useSystemStore from '@stores/system'
 import Loading from '@components/loading'
-import useDevice from '@hooks/useDevice'
 import useUserStore from '@stores/user'
 import { getUser } from '@actions/user'
 import Errors from '@components/errors'
+import useDevice from '@hooks/useDevice'
 import { MenuContent } from './styles'
 
 import type { MenuSection as MenuSectionType } from './types'
 import type { LayoutProps } from './types'
 
-const Layout = ({ children, breadcrumbs, navbarComponent, disableGetUser, loading, pageTitle = 'AMaisFácil', padding = 3 }: LayoutProps) => {
+const Layout = ({
+  children,
+  breadcrumbs,
+  navbarComponent,
+  disableGetUser,
+  loading,
+  pageTitle = 'PRO+ GESTÃO',
+  padding = 3
+}: LayoutProps) => {
   const { system, updateSystem } = useSystemStore(x => x)
   const { user } = useUserStore(x => x)
   const { isMobile } = useDevice()
