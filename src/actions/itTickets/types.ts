@@ -3,11 +3,17 @@ import type { PaginationMeta } from "@utils/types/action";
 export type TicketPriority = "CRITICAL" | "MEDIUM" | "HIGH" | "LOW";
 export type TicketStatus = "INTERVENTION" | "WAITING_USER" | "VALIDATION" | "ANALYSIS" | "TESTING" | "CLOSED" | "OPEN";
 
+export interface DashboardMetricsResponse {
+    byPriority: Record<string, number>;
+    byStatus: Record<string, number>;
+    total: number;
+}
+
 export interface TicketModelType {
-    assignedTo?: string;
     priority?: TicketPriority;
-    description: string;
     status?: TicketStatus;
+    assignedTo?: string;
+    description: string;
     requester: string;
     title: string;
     _id: string;
@@ -15,8 +21,8 @@ export interface TicketModelType {
 
 export interface CreateTicketData {
     priority?: TicketPriority;
-    description: string;
     status?: TicketStatus;
+    description: string;
     title: string;
 }
 

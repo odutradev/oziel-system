@@ -1,8 +1,17 @@
 import { manageActionError } from "@utils/functions/action";
 import api from "@utils/functions/api";
 
-import type { CreateTicketData, GetTicketsParams, GetTicketsResponse, TicketModelType, UpdateTicketData } from "./types";
+import type { DashboardMetricsResponse, GetTicketsResponse, UpdateTicketData, CreateTicketData, GetTicketsParams, TicketModelType } from "./types";
 import type { TypeOrError } from "@utils/types/action";
+
+export const getTicketsDashboard = async (): TypeOrError<DashboardMetricsResponse> => {
+    try {
+        const response = await api.get("/it/tickets/dashboard");
+        return response.data;
+    } catch (error) {
+        return manageActionError(error);
+    }
+};
 
 export const getTickets = async (params?: GetTicketsParams): TypeOrError<GetTicketsResponse> => {
     try {
