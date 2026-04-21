@@ -4,6 +4,8 @@ import { ROLES } from "@utils/types/models/user";
 
 import type { MenuSection } from "../components/layout/types";
 
+const ALL_ROLES_EXCEPT_NORMAL = Object.values(ROLES).filter(role => role !== ROLES.NORMAL);
+
 export const appMenuItems: MenuSection[] = [
   {
     sectionName: 'Visão Geral',
@@ -11,6 +13,7 @@ export const appMenuItems: MenuSection[] = [
       {
         name: 'Dashboard',
         path: '/dashboard/general',
+        permissions: ALL_ROLES_EXCEPT_NORMAL,
         icon: <Dashboard />
       }
     ]
@@ -21,7 +24,7 @@ export const appMenuItems: MenuSection[] = [
       {
         name: 'Monitorados',
         path: '/dashboard/hr/members',
-        permissions: [ROLES.DIRETOR_ADMINISTRATIVO_RH, ROLES.NORMAL],
+        permissions: [ROLES.DIRETOR_ADMINISTRATIVO_RH],
         icon: <Badge />
       }
     ]
@@ -32,13 +35,13 @@ export const appMenuItems: MenuSection[] = [
       {
         name: 'Tesouraria',
         path: '/dashboard/treasury',
-        permissions: [ROLES.DIRETOR_FINANCEIRO, ROLES.NORMAL],
+        permissions: [ROLES.DIRETOR_FINANCEIRO],
         icon: <AccountBalance />
       },
       {
         name: 'Agendamentos',
         path: '/dashboard/recurring-transactions',
-        permissions: [ROLES.DIRETOR_FINANCEIRO, ROLES.NORMAL],
+        permissions: [ROLES.DIRETOR_FINANCEIRO],
         icon: <EventRepeat />
       }
     ]
@@ -49,13 +52,13 @@ export const appMenuItems: MenuSection[] = [
       {
         name: 'Dashboard Contratos',
         path: '/dashboard/contracts/dashboard',
-        permissions: [ROLES.DIRETOR_SUPRIMENTOS_CONTRATOS, ROLES.NORMAL],
+        permissions: [ROLES.DIRETOR_SUPRIMENTOS_CONTRATOS],
         icon: <InsertChart />
       },
       {
         name: 'Contratos',
         path: '/dashboard/contracts',
-        permissions: [ROLES.DIRETOR_SUPRIMENTOS_CONTRATOS, ROLES.NORMAL],
+        permissions: [ROLES.DIRETOR_SUPRIMENTOS_CONTRATOS],
         icon: <Handshake />
       }
     ]
@@ -66,19 +69,19 @@ export const appMenuItems: MenuSection[] = [
       {
         name: 'Operações',
         path: '/dashboard/maintenance/operations',
-        permissions: [ROLES.DIRETOR_MANUTENCAO, ROLES.NORMAL],
+        permissions: [ROLES.DIRETOR_MANUTENCAO],
         icon: <Engineering />
       },
       {
         name: 'Fechamento',
         path: '/dashboard/maintenance/monthly-closing',
-        permissions: [ROLES.DIRETOR_MANUTENCAO, ROLES.NORMAL],
+        permissions: [ROLES.DIRETOR_MANUTENCAO],
         icon: <AssignmentTurnedIn />
       },
       {
         name: 'Ativos e Operadores',
         path: '/dashboard/maintenance/machine-resources',
-        permissions: [ROLES.DIRETOR_MANUTENCAO, ROLES.NORMAL],
+        permissions: [ROLES.DIRETOR_MANUTENCAO],
         icon: <LocalShipping />
       }
     ]
@@ -111,7 +114,7 @@ export const appMenuItems: MenuSection[] = [
       {
         name: 'Chamados TI',
         path: '/dashboard/tickets',
-        permissions: [ROLES.DIRETOR_TI_MARKETING, ROLES.NORMAL],
+        permissions: [ROLES.DIRETOR_TI_MARKETING],
         icon: <ConfirmationNumber />
       }
     ]
