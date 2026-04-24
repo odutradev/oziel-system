@@ -3,8 +3,8 @@ import { CircularProgress, Box } from "@mui/material";
 
 import ContentStrategy from "./subcomponents/contentStrategy";
 import ReviewSection from "./subcomponents/reviewSection";
-import BasicInfo from "./subcomponents/basicInfo";
 import FormActions from "@components/formActions";
+import BasicInfo from "./subcomponents/basicInfo";
 import Layout from "@components/layout";
 import useEditMarketing from "./hooks";
 import metadata from "./metadata";
@@ -16,7 +16,7 @@ const EditMarketing = () => {
 
     const isEditing = Boolean(itemID);
     const isReviewMode = formData.status === "WAITING_APPROVAL";
-    const canSendReview = !isReviewMode && formData.status !== "COMPLETED";
+    const canSendReview = isEditing && !isReviewMode && formData.status !== "COMPLETED";
     const pageMetadata = { ...metadata, pageTitle: isReviewMode ? "Revisar Solicitação de Marketing" : isEditing ? "Editar Solicitação de Marketing" : "Novo Rascunho de Marketing" };
 
     return (
