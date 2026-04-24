@@ -1,23 +1,20 @@
-import { AssignmentTurnedIn, ConfirmationNumber, AccountBalance, LocalShipping, LibraryBooks, InsertChart, Engineering, Description, EventRepeat, Handshake, Campaign, People, Badge, Email } from "@mui/icons-material";
+import { ConfirmationNumber, AssignmentTurnedIn, AccountBalance, LocalShipping, LibraryBooks, InsertChart, Engineering, Description, EventRepeat, Handshake, Dashboard, Campaign, People, Badge, Email } from "@mui/icons-material"
 
-import { ROLES } from "@utils/types/models/user";
+import { ROLES } from "@utils/types/models/user"
 
-import type { MenuSection } from "../components/layout/types";
-
-//const ALL_ROLES_EXCEPT_NORMAL = Object.values(ROLES).filter(role => role !== ROLES.NORMAL);
+import type { MenuSection } from "../components/layout/types"
 
 export const appMenuItems: MenuSection[] = [
-  // {
-  //   sectionName: 'Visão Geral',
-  //   items: [
-  //     {
-  //       name: 'Dashboard',
-  //       path: '/dashboard/general',
-  //       permissions: ALL_ROLES_EXCEPT_NORMAL,
-  //       icon: <Dashboard />
-  //     }
-  //   ]
-  // },
+  {
+    sectionName: 'Visão Geral',
+    items: [
+      {
+        name: 'Dashboard',
+        path: '/dashboard/general',
+        icon: <Dashboard />
+      }
+    ]
+  },
   {
     sectionName: 'Recursos Humanos',
     items: [
@@ -147,4 +144,4 @@ export const appMenuItems: MenuSection[] = [
       }
     ]
   }
-];
+]
