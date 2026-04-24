@@ -61,7 +61,7 @@ const useSignUp = (): SignUpContextType => {
             const token = localStorage.getItem('token');
             if (token) {
               clearInterval(checkToken);
-              navigate('/dashboard/profile');
+              navigate('/dashboard/general');
             }
           }, 1000);
         },

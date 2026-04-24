@@ -56,7 +56,7 @@ const useSignIn = () => {
               clearInterval(checkToken);
 
               const shouldPromptPwa = !!system.pwaEvent && !system.pwaInstallRejected && !isPwa;
-              navigate(shouldPromptPwa ? '/dashboard/pwa-install' : '/dashboard/profile');
+              navigate(shouldPromptPwa ? '/dashboard/pwa-install' : '/dashboard/general');
             }
           }, 1000);
         },

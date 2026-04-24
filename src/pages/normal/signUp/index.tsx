@@ -14,9 +14,12 @@ const SignUp = () => {
           src="/images/logo.svg"
           component="img"
           alt="Logo"
-          sx={{ width: '100%', maxWidth: 450, height: 'auto', mb: 4, objectFit: 'contain' }}
+          sx={{ width: '100%', maxWidth: 450, height: 'auto', mb: 2, objectFit: 'contain' }}
         />
-        <Typography component="h1" variant="h4" fontWeight={600} mb={1}>
+        <Typography component="h1" variant="h3" fontWeight={700} color="primary.main" mb={1}>
+          PRO+ GESTÃO
+        </Typography>
+        <Typography component="h2" variant="h5" fontWeight={600} mb={1}>
           Bem-vindo!
         </Typography>
         <Typography variant="body1" color="text.secondary" mb={3}>
